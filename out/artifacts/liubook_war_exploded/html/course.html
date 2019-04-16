@@ -14,37 +14,61 @@
 
 <body>
 <div id="courseInfo">
-    <div class="container d-flex flex-row"><img style="width:249px;height:190px;">
+    <div class="container d-flex flex-row"><img :src ="course.courseImg" style="width:249px;height:190px;">
         <div class="card" style="width:960px;">
             <div class="card-body" style="width:775px;margin:0px;margin-left:-7px;">
-                <h4 class="card-title" style="font-family:microsoft yahei;">程序员面试技巧</h4>
-                <h6 class="text-muted card-subtitle mb-2" style="width:722px;font-family:microsoft yahei;">编程技术类</h6><button class="btn btn-primary" type="button" style="margin-left:95%;margin-top:49px;margin-bottom:0px;margin-right:0px;font-family:Microsoft yahei;">预约</button></div>
-        </div>
+                <h4 class="card-title" style="font-family:microsoft yahei;">{{course.courseName}}</h4>
+                <h6 class="text-muted card-subtitle mb-2" style="width:722px;font-family:microsoft yahei;">{{course.courseType}}</h6>
+                <div ><a class="btn btn-primary btn-lg" role="button" href="#myModal" data-toggle="modal" style="margin-left:95%;margin-top:49px;margin-bottom:0px;margin-right:0px;font-family:Microsoft yahei;">预约</a>
+                    <div role="dialog" tabindex="-1" class="modal fade" id="myModal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" style="padding-left:0px">
+                                                       <h4 style="font-family:microsoft yahei;" >时间选择</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                <div class="modal-body">
+                                    <div id ="timeLines" class="row" style="width:480px;">
+                                    <div class="col-6" style="margin-bottom:10px;margin-top:10px;" v-for="(time,index) in times">
+                                        <button :id="index" @click ="changeColors(index)" class="btn btn-primary" type="button" style="margin-left:10px;background-color:rgb(193,134,239);color:rgb(255,255,255);">{{time}}
+                                        </button>
+                                    </div>
+                                </div>
+                                </div>
+                                 <div class="modal-footer">
+                                <button class="btn btn-light" type="button" data-dismiss="modal" style="font-family:microsoft yahei">取消</button>
+                                <button class="btn btn-primary" @click ="ack()" type="button" style="font-family:microsoft yahei">确认</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<button class="btn btn-primary" type="button" style="margin-left:95%;margin-top:49px;margin-bottom:0px;margin-right:0px;font-family:Microsoft yahei;">预约</button></div>-->
+            </div>
+            </div>
     </div>
-    <div class="container">
-        <ul class="nav nav-tabs">
-            <li class="nav-item"><a class="nav-link active" href="#" style="font-family:microsoft yahei;">介绍</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" style="font-family:microsoft yahei;">课程评价</a></li>
-        </ul>
-    </div>
+    <!--<div class="container">-->
+        <!--<ul class="nav nav-tabs">-->
+            <!--<li class="nav-item"><a class="nav-link active" href="#" style="font-family:microsoft yahei;">介绍</a></li>-->
+            <!--<li class="nav-item"><a class="nav-link" href="#" style="font-family:microsoft yahei;">课程评价</a></li>-->
+        <!--</ul>-->
+    <!--</div>-->
     <div class="flex-column">
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
                     <article></article>
-                    <div class="card">
+                    <div class="card" style ="margin-top: 10px;margin-bottom: 10px">
                         <div class="card-body">
-                            <h4 class="card-title">课程概述</h4>
-                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                            <h4 class="card-title" style="font-family:microsoft yahei">课程概述</h4>
+                            <p class="card-text">{{course.courseInfo}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card" style ="margin-top: 10px;margin-bottom: 10px">
                         <div class="card-body">
                             <h4 class="card-title" style="font-family:microsoft yahei;">讲师介绍</h4>
-                            <h6 class="text-muted card-subtitle mb-2" style="font-family:microsoft yahei;">刘老师</h6>
-                            <p class="card-text" style="font-family:microsoft yahei;">主修：哈哈哈哈哈</p>
+                            <h6 class="text-muted card-subtitle mb-2" style="font-family:microsoft yahei;">{{course.teacherName}}</h6>
+                            <p class="card-text" style="font-family:microsoft yahei;">主修：{{course.teacherMajor}}</p>
                         </div>
                     </div>
                 </div>
@@ -53,31 +77,31 @@
     </div>
     <div class="flex-column">
         <div class="container">
-            <div class="row" style="width:640px;">
-                <div class="col-6" style="margin-bottom:10px;margin-top:10px;"><button class="btn btn-primary" type="button" style="margin-left:50px;background-color:rgb(193,134,239);color:rgb(255,255,255);">2019-03-01 06:00-12:00</button></div>
-            </div>
-            <div class="row">
-                <div class="col"><button class="btn btn-primary" type="button" style="margin-left:55%;font-family:microsoft yahei;">确认预约</button></div>
-            </div>
+            <!--<div class="row" style="width:640px;">-->
+                <!--<div class="col-6" style="margin-bottom:10px;margin-top:10px;"><button class="btn btn-primary" type="button" style="margin-left:50px;background-color:rgb(193,134,239);color:rgb(255,255,255);">2019-03-01 06:00-12:00</button></div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="col"><button class="btn btn-primary" type="button" style="margin-left:55%;font-family:microsoft yahei;">确认预约</button></div>-->
+            <!--</div>-->
             <div class="row">
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            <h6 class="mb-0">Comments</h6>
+                            <h6 class="mb-0" style="font-family:microsoft yahei">课程评论</h6>
                         </div>
                         <div class="card-body">
                             <ul class="list-group">
-                                <li class="list-group-item" style="margin-bottom:6px;">
+                                <li class="list-group-item" style="margin-bottom:6px;" v-for="comment in course.comments">
                                     <div class="media">
                                         <div></div>
                                         <div class="media-body">
                                             <div class="media" style="overflow:visible;">
                                                 <div></div>
                                                 <div class="media-body" style="overflow:visible;">
-                                                    <div class="row">
+                                                    <div class="row" >
                                                         <div class="col-md-12">
-                                                            <p><a href="#">Sara Doe:</a> This guy has been going 100+ MPH on side streets. <br>
-<small class="text-muted">August 6, 2016 @ 10:35am </small></p>
+                                                            <p><a href="#">{{comment.studentName}}:</a> {{comment.comment}} <br>
+<small class="text-muted">{{comment.time}}</small></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -97,6 +121,7 @@
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 <script>
+    var tag = []
     var paras = location.search
     var result = paras.match(/[^\?&]*=[^&]*/g)
     paras = {}
@@ -105,20 +130,51 @@
         paras[temp[0]] = temp[1]
     }
     var itemId = paras.courseId
-
+    localStorage.setItem("itemId","itemId")
     var courseInfo = new Vue({
         el:'#courseInfo',
         data(){
             return {
-                menuitems:[],
-                times:["9:00-12:00","14:00-17:00"],
-                teachers:["liuyunping"],
+                course:{courseName:"程序员lyp",courseInfo:"课程介绍哈哈哈哈",courseType:"IT类",
+                courseImg:"/assets/img/2.jpg",teacherMajor:"BIG DATA,ITE",teacherName:"刘运平",
+                    comments:[{studentName:"Pursuing",comment:"hahaha",time:"2019-03-06 09:00:01"},
+                        {studentName:"Pursuing",comment:"hahaha",time:"2019-03-06 09:00:01"}]
+                },
+                times:["2019-01-01 06:01:01","2019-01-01 06:01:01","2019-01-01 06:01:01"]
             }
         },
         methods:{
+            changeColors(index){
+                tag.push(index)
+                var color = document.getElementById(index).style.backgroundColor.toString()
+
+                if(color == "rgb(193, 134, 239)"){
+                    document.getElementById(index).style.backgroundColor="rgb(0,98,204)"
+
+                }else {
+                    document.getElementById(index).style.backgroundColor="rgb(193,134,239)"
+                }
+
+            },
+            ack(){
+                var sets = new Set(tag)
+                var timeChoose =[]
+                console.log(sets)
+                for(var i of sets){
+                    if(document.getElementById(i).style.backgroundColor.toString() == "rgb(0, 98, 204)"){
+                        timeChoose.push(this.times[i])
+                    }
+                }
+                console.log(timeChoose)
+                $('#myModal').modal('hide')
+                console.log(sets)
+                for(var i of sets){
+                    document.getElementById(i).style.backgroundColor="rgb(193,134,239)"
+                }
+            }
         },
         mounted(){
-            console.log(itemId+'hh')
+            console.log(localStorage.getItem("itemId")+'hh')
             // axios.get('/course/getInfo').then((response) => {
             //     console.log(response)
             //
