@@ -1,0 +1,60 @@
+@media (max-width: 764px) {
+  .minimal-menu > #menu-toggle {
+    position:absolute;
+    width:30px;
+    height:25px;
+    top:15px;
+    right:15px;
+  }
+}
+
+@media (min-width: 765px) {
+  .minimal-menu > #menu-toggle {
+    position:absolute;
+    width:30px;
+    height:25px;
+    top:35px;
+    right:35px;
+  }
+}
+
+.minimal-menu > #menu-toggle > .bar {
+  position:relative;
+  clear:both;
+  height:2px;
+  background-color:#5e6973;
+  margin-bottom:9.5px;
+  float:right;
+  transition:0.2s;
+  -moz-transition:0.2s;
+}
+
+.minimal-menu > #menu-toggle > .bar:nth-child(1) {
+  width:10px;
+}
+
+.minimal-menu > #menu-toggle > .bar:nth-child(2) {
+  width:20px;
+}
+
+.minimal-menu > #menu-toggle > .bar:nth-child(3) {
+  width:30px;
+}
+
+.minimal-menu > #menu-toggle:hover > .bar:nth-child(1) {
+  width:30px;
+}
+
+.minimal-menu > #menu-toggle:hover > .bar:nth-child(2) {
+  width:30px;
+}
+
+.minimal-menu > #menu-toggle:hover > .bar:nth-child(3) {
+  width:30px;
+}
+
+.minimal-menu {
+  height:100px;
+  width:100%;
+}
+

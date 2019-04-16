@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="/assets/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+
+<body><div class="login-dark">
+        <form method="post" class="login">
+            <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+            <div class="form-group"><input class="form-control" type="email" name="email" id = "emailLogin" placeholder="Email"></div>
+            <div class="form-group"><input class="form-control" type="password" name="password" id = "passwordLogin" placeholder="Password"></div>
+            <div class="form-group d-inline-flex" style="margin-bottom:-20px;">
+            <div class="radio" id="student" style="width:100px;">
+            <label><input type="radio" name="optionsRadios" id="studentCheck" 
+            value="0" checked> Student</label></div>
+            <div class="radio" id="teacher" style="width:100px; margin-left:65px">
+            <label>  <input type="radio" name="optionsRadios" id="teacherCheck" 
+            value="1"> Teacher</label></div>
+            </div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit" id = "loginBtn">Log In</button></div><a href="http://hao123.com" id="toSignUp" class="forgot">No accout To Sign Up</a></form>
+        <form method="post" id="signUp" class="signUp" >
+            <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+            <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email"></div>
+            <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password"><input class="form-control" type="password" name="password" placeholder="Password" style="padding:13px;"></div>
+             <div class="form-group d-inline-flex" style="margin-bottom:-20px;">
+            <div class="radio" id="student2" style="width:100px;">
+            <label><input type="radio" name="optionsRadios" id="studentCheck2" 
+            value="option1" checked> Student</label></div>
+            <div class="radio" id="teacher2" style="width:100px; margin-left:65px">
+            <label>  <input type="radio" name="optionsRadios" id="teacherCheck2" 
+            value="option1"> Teacher</label></div>
+            </div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit" style="height:46px;">Sign Up</button></div><a href="#" class="forgot" style="height:18px;">Communicate with LiuYunping</a></form>
+    </div>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/js/loginAndSignUp.js"></script>
+</body>
+
+</html>

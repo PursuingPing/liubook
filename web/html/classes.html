@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程分类</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/assets/css/Features-Boxed.css">
+    <link rel="stylesheet" href="/assets/css/Minimal-Menu--Button-3-bars.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <script src="/assets/js/vue.js"></script>
+    <script src="/assets/js/vue-router.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body><meta charset="UTF-8">
+<title>课程分类</title>
+
+<link rel="stylesheet" href="/assets/css/common.css">
+
+
+<!-- 代码 开始 -->
+<div class="filter">
+	<div class="container">
+		<div id ="menu" class="box">
+		<dl>
+			<dt>课程类型</dt>
+			<dd>
+				<a href="#" rel="" name="mode" class="all on">全部</a>
+                <a href="#" :rel="menuitem" name="mode" class="sx_child" v-for="menuitem in menuitems">{{menuitem}}</a>
+			</dd>
+		</dl>
+		<dl>
+			<dt>上课时间</dt>
+			<dd>
+				<a href="#" rel="" name="stage" class="all on">全部</a>
+                <a href="#" :rel="time" name="stage" class="sx_child" v-for="time in times">{{time}}</a>
+			
+			</dd>
+		</dl>
+		<dl>
+			<dt>授课教师</dt>
+			<dd>
+				<a href="#" rel="" name="sector" class="all on">全部</a>
+                <a href="#" :rel="teacher" name="sector" class="sx_child" v-for="teacher in teachers">{{teacher}}</a>
+			
+			</dd>
+		</dl>
+		<!--<dl>-->
+			<!--<dt>热度评价</dt>-->
+			<!--<dd>-->
+				<!--<a href="#" rel="" name="board" class="all on">全部</a>-->
+                <!--<a href="#" :rel="star" name="board" class="sx_child" v-for="star in stars">{{star}}</a>-->
+
+			<!--</dd>-->
+		<!--</dl>-->
+		
+		</div>
+	</div>
+</div>
+
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/tagSelect.js"></script>
+
+<!-- 代码 结束 -->
+
+    <div  id="course" class="row container" style="margin:0 auto;background-color:rgba(255,255,255,0.6);">
+        <div class="col-2" style="height:251px;" v-for="row in rows">
+            <img :src="row.img" style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />
+            <div style="text-align:center;"><p @click="getInfo(row.id)" style="cursor:pointer">{{row.name}}</p></div>
+        </div>
+        <!--<div class="col-2" style="height:251px;"><img src="/assets/img/2.png" style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+            <!--<div style="text-align:center;"><a href="#">link</a></div>-->
+        <!--</div>-->
+        <!--<div class="col-2" style="height:251px;"><img src="/assets/img/3.png" style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+            <!--<div style="text-align:center;"><a href="#">link</a></div>-->
+        <!--</div>-->
+        <!--<div class="col-2" style="height:251px;"><img src="/assets/img/4.png" style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+            <!--<div style="text-align:center;"><a href="#">link</a></div>-->
+        <!--</div>-->
+        <!--<div class="col-2" style="height:251px;"><img src="/assets/img/5.png" style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+            <!--<div style="text-align:center;"><a href="#">link</a></div>-->
+        <!--</div>-->
+        <!--<div class="col-2" style="height:251px;"><img src="/assets/img/6.png" style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+            <!--<div style="text-align:center;"><a href="#">link</a></div>-->
+        <!--</div>-->
+        <!--<div class="col-2" style="height:251px;"><img src="/assets/img/7.png" style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+            <!--<div style="text-align:center;"><a href="#">link</a></div>-->
+        <!--</div>-->
+        <!--<div class="col-2" style="height:251px;"><img style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+            <!--<div style="text-align:center;"><a href="#">link</a></div>-->
+        <!--</div>-->
+        <!--<div class="col-2" style="height:251px;"><img style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+            <!--<div style="text-align:center;"><a href="#">link</a></div>-->
+        <!--</div>-->
+        <!--<div class="col-2" style="height:251px;"><img style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+            <!--<div style="text-align:center;"><a href="#">link</a></div>-->
+        <!--</div>-->
+        <!--<div class="col-2" style="height:251px;"><img style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+            <!--<div style="text-align:center;"><a href="#">link</a></div>-->
+        <!--</div>-->
+        <!--<div class="col-2" style="height:251px;"><img style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+            <!--<div style="text-align:center;"><a href="#">link</a></div>-->
+        <!--</div>-->
+
+    </div>
+    <div class="col">
+        <div style="text-align:center;">
+            <div role="group" class="btn-group"><button class="btn btn-primary" type="button" style="margin-right:25px;">上一页</button></div><button class="btn btn-primary" type="button">下一页</button></div>
+    </div>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/js/tagSelect.js"></script>
+<script>
+    var menu = new Vue({
+        el:'#menu',
+        data(){
+            return {
+                menuitems:[],
+                times:["9:00-12:00","14:00-17:00"],
+                teachers:["liuyunping"],
+            }
+        },
+        methods:{
+        },
+        mounted(){
+            axios.get('/course/getTypes').then((response) => {
+                console.log(response)
+                this.menuitems = response.data.data.type
+                this.teachers = response.data.data.teacher
+                console.log(this.menuitems)
+                console.log(this.teachers)
+            });
+
+
+        }
+    })
+    $(function(){
+        new SelectTag({
+            child : ".sx_child", //所有筛选范围内的子类
+            over : 'on', //选中状态样式名称
+            all : ".all"
+        });
+    })
+
+    var course = new Vue({
+        router:router,
+        el:'#course',
+        data(){
+            return {
+                rows:[{id:"1",name:"kecheng1",img:"/assets/img/1.jpg"},
+                    {id:"2",name:"kecheng2",img:"/assets/img/2.jpg"}
+                ]
+            }
+        },
+        methods:{
+            getInfo(data){
+                console.log(data)
+                location.replace('course.html?courseId='+data)
+            }
+        }
+    })
+</script>
+</body>
+
+</html>
