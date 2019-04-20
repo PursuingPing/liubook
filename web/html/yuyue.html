@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yuyue</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/tableOfClass.css">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="/assets/js/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<!-- 引入组件库 -->
+    <div class="container" id="yuyue">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0" style="font-family:Microsoft YaHei;">预约列表</h6>
+            </div>
+            <div class="card-body">
+                <!--<div >-->
+                    <!--<div  style="margin-bottom:10px;">-->
+                        <!--<div class="media">-->
+                            <!--<div></div>-->
+                            <!--<div class="media-body">-->
+                                <!--<div class="media" style="overflow:visible;">-->
+                                    <!--<div style="width:250px;height:190px;"><img src="/assets/img/star-sky.jpg" class="mr-3" style="width:250px;height:190px;"></div>-->
+                                    <!--<div class="media-body" style="overflow:visible;">-->
+                                        <!--<div class="row" style="margin-left:16px;">-->
+                                            <!--<div class="col-md-12">-->
+                                                <!--<p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a>JAVA<br>-->
+<!--</p>-->
+                                                <!--<p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">讲师:</a> lyp <br>-->
+<!--</p>-->
+                                                <!--<p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> 编程开发</p>-->
+                                                <!--<div style="margin-top:50px;margin-left:75%;width:200px;">-->
+                                                    <!--&lt;!&ndash;<button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;">评价</button>&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;<button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;">取消预约</button>&ndash;&gt;-->
+                                                    <!--<div >-->
+                                                        <!--<a class="btn btn-primary btn-lg" role="button" href="#myModal" data-toggle="modal" style="font-family:microsoft yahei;font-size:15px">评价</a>-->
+                                                        <!--<div class="modal fade" role="dialog" tabindex="-1" id="myModal">-->
+                                                            <!--<div class="modal-dialog" role="document">-->
+                                                                <!--<div class="modal-content">-->
+                                                                    <!--<div class="modal-header">-->
+                                                                        <!--<h5 style="font-family:microsoft yahei;">评价</h5>-->
+                                                                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>-->
+                                                                    <!--<div class="modal-body" style="margin-bottom:0px">-->
+                                                                        <!--<textarea style="font-family:microsoft yahei;width:465px;height:90px">hahah</textarea>-->
+                                                                    <!--</div>-->
+                                                                    <!--<div class="modal-footer" style="margin-top:0px"><button class="btn btn-light" type="button" data-dismiss="modal" style="font-family:microsoft yahei;">取消</button><button class="btn btn-primary" type="button" style="font-family:microsoft yahei;">确认</button></div>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                        <!--<button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;">取消预约</button></div>-->
+                                                <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div  style="margin-bottom:10px;">
+                        <div class="media">
+                            <div></div>
+                            <div class="media-body">
+                                <div class="media" style="overflow:visible;">
+                                    <div style="width:250px;height:190px;"><img src="/assets/img/1.jpg" class="mr-3" style="width:250px;height:190px;"></div>
+                                    <div class="media-body" style="overflow:visible;">
+                                        <div class="row" style="margin-left:16px;">
+                                            <div class="col-md-12">
+                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> Spring SpringMVC Mybatis <br>
+</p>
+                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">讲师:</a> LYP <br>
+</p>
+                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> 编程开发</p>
+                                                <div style="margin-top:50px;margin-left:75%;width:200px;">
+                                                    <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="comment">评价</button>
+                                                    <!--<div >-->
+                                                        <!--<a class="btn btn-primary btn-lg" role="button" href="#myModal" data-toggle="modal" style="font-family:microsoft yahei;font-size:15px">评价</a>-->
+                                                        <!--<div class="modal fade" role="dialog" tabindex="-1" id="myModal">-->
+                                                            <!--<div class="modal-dialog" role="document">-->
+                                                                <!--<div class="modal-content">-->
+                                                                    <!--<div class="modal-header">-->
+                                                                     <!--<h5 style="font-family:microsoft yahei;">评价</h5>-->
+                                                                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>-->
+                                                                    <!--<div class="modal-body" style="margin-bottom:0px">-->
+                                                                        <!--<textarea style="font-family:microsoft yahei;width:465px;height:90px">hahah</textarea>-->
+                                                                    <!--</div>-->
+                                                                    <!--<div class="modal-footer" style="margin-top:0px"><button class="btn btn-light" type="button" data-dismiss="modal" style="font-family:microsoft yahei;">取消</button><button class="btn btn-primary" type="button" style="font-family:microsoft yahei;">确认</button></div>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                        <!--<button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;">取消预约</button></div>-->
+                                                    <el-dialog title ="评价" :visible.sync="dialogFormVisible">
+                                                        <el-rate v-model="starValue" show-text style="margin-bottom: 5px"></el-rate>
+                                                        <el-input type="textarea" :rows="2" placeholder="写下评论" v-model="textarea" ></el-input>
+                                                        <div slot="footer" class="dialog-footer">
+                                                            <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                                            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                                                        </div>
+                                                    </el-dialog>
+                                                    <button class="btn btn-primary" type="button" @click = "deleteYuyue" style="font-family:Microsoft YaHei;">取消预约</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    var yuyue = new Vue({
+        el:'#yuyue',
+        data(){
+            return {
+                dialogFormVisible:false,
+                starValue:null,
+                textarea:''
+
+
+            }
+        },
+        methods:{
+            comment(){
+                this.dialogFormVisible = true
+                this.textarea=''
+                this.starValue=null
+
+            },
+            deleteYuyue() {
+                this.$confirm('此操作将取消该课程预约, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$message({
+                        type: 'success',
+                        message: '取消预约成功!'
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消该操作'
+                    });
+                });
+            }
+        },
+        mounted(){
+        }
+    })
+</script>
+</body>
+
+</html>
