@@ -23,7 +23,7 @@
                     class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav" style="height:40px;width:237px;">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="/html/classes.html" style="color:rgba(0,0,0,0.6);font-family:Microsoft YaHei;">课程</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="/html/yuyue.html" style="color:rgba(0,0,0,0.6);font-family:Microsoft YaHei;">预约</a></li>
+                    <!--<li class="nav-item" role="presentation"><a class="nav-link" href="/html/yuyue.html" style="color:rgba(0,0,0,0.6);font-family:Microsoft YaHei;">预约</a></li>-->
                     <li class="nav-item" role="presentation"><a class="nav-link" href="/html/studentInfo.html" style="color:rgba(0,0,0,0.6);font-family:Microsoft YaHei;">个人中心</a></li>
                 </ul>
                 <form class="form-inline mr-auto" target="_self">
@@ -123,23 +123,215 @@
             <div style="text-align: center;margin-top: 10px">
                 <el-button icon="el-icon-plus" circle @click="addCourse()" style="width: 50px;height: 50px;background-color: rgb(0,123,255);color:rgb(255,255,255)"></el-button>
             </div>
-            <el-dialog title="增加课程" :visible.sync="dialogFormVisible2">
-                <el-form :model="addForm">
-                    <el-form-item label="原密码" :label-width="formLabelWidth">
-                        <el-input v-model="form.oldPassword"style="width: 200px" show-password autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="新密码" :label-width="formLabelWidth">
-                        <el-input v-model="form.newPassword" style="width: 200px" show-password autocomplete="off"></el-input>
-                    </el-form-item>
-                </el-form>
+            <el-dialog title="增加课程" :visible.sync="addCoursesFormVisible" style="padding-top: 0px">
+                <el-tabs type="border-card">
+                    <el-tab-pane label="一次性课程">
+                        <el-form :model="addForm">
+                            <el-form-item label="课程图片" :label-width="formLabelWidth">
+                                <el-upload
+                                        class="avatar-uploader"
+                                        action="http://localhost:8080/assets/img"
+                                        :show-file-list="false"
+                                        :on-success="handleAvatarSuccess"
+                                        :before-upload="beforeAvatarUpload">
+                                    <img v-if="addForm.courseImg" :src="addForm.courseImg" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+
+                            </el-form-item>
+                            <el-form-item label="课程名" :label-width="formLabelWidth">
+                                <el-input v-model="addForm.courseName"style="width: 200px"  autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="课程类别" :label-width="formLabelWidth">
+                                <!--<el-input v-model="addForm.courseType" style="width: 200px"  autocomplete="off"></el-input>-->
+                                <el-select v-model="addForm.courseType" placeholder="请选择">
+                                    <el-option
+                                            v-for="item in courseTypes"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="开始时间" :label-width="formLabelWidth">
+                                <!--<el-input v-model="addForm.courseStartTime" style="width: 200px"  autocomplete="off"></el-input>-->
+                                <el-date-picker
+                                        v-model="addForm.courseStartTime"
+                                        type="datetime"
+                                        placeholder="选择开始日期时间">
+                                </el-date-picker>
+                            </el-form-item>
+                            <el-form-item label="结束时间" :label-width="formLabelWidth">
+                                <el-date-picker
+                                        v-model="addForm.courseEndTime"
+                                        type="datetime"
+                                        placeholder="选择结束日期时间">
+                                </el-date-picker>
+                                <!--<el-input v-model="addForm.courseEndTime" style="width: 200px"  autocomplete="off"></el-input>-->
+                            </el-form-item>
+                            <el-form-item label="课程介绍" :label-width="formLabelWidth">
+                                <el-input type="textarea"  v-model="addForm.courseInfo" style="width: 300px;height:80px "  autocomplete="off"></el-input>
+                            </el-form-item>
+                        </el-form>
+                    </el-tab-pane>
+                    <el-tab-pane label="周期性课程">
+                        <el-form :model="addForm">
+                            <el-form-item label="课程图片" :label-width="formLabelWidth">
+                                <el-upload
+                                        class="avatar-uploader"
+                                        action="http://localhost:8080/assets/img"
+                                        :show-file-list="false"
+                                        :on-success="handleAvatarSuccess"
+                                        :before-upload="beforeAvatarUpload">
+                                    <img v-if="addForm.courseImg" :src="addForm.courseImg" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+
+                            </el-form-item>
+                            <el-form-item label="课程名" :label-width="formLabelWidth">
+                                <el-input v-model="addForm.courseName"style="width: 200px"  autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="课程类别" :label-width="formLabelWidth">
+                                <!--<el-input v-model="addForm.courseType" style="width: 200px"  autocomplete="off"></el-input>-->
+                                <el-select v-model="addForm.courseType" placeholder="请选择">
+                                    <el-option
+                                            v-for="item in courseTypes"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="每周" :label-width="formLabelWidth">
+                                <el-select  multiple v-model="addForm.unit" placeholder="请选择">
+                                    <el-option
+                                            v-for="item in options"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="时间" :label-width="formLabelWidth">
+                                <!--<el-input v-model="addForm.courseStartTime" style="width: 200px"  autocomplete="off"></el-input>-->
+                                <!--<el-date-picker-->
+                                        <!--v-model="addForm.courseStartTime"-->
+                                        <!--type="datetime"-->
+                                        <!--placeholder="选择开始日期时间">-->
+                                <!--</el-date-picker>-->
+                                <el-time-picker
+                                        is-range
+                                        v-model="addForm.times"
+                                        range-separator="-"
+                                        start-placeholder="开始时间"
+                                        end-placeholder="结束时间"
+                                        placeholder="选择时间范围">
+                                </el-time-picker>
+
+                            </el-form-item>
+                            <el-form-item label="课程介绍" :label-width="formLabelWidth">
+                                <el-input type="textarea"  v-model="addForm.courseInfo" style="width: 300px;height:80px "  autocomplete="off"></el-input>
+                            </el-form-item>
+                        </el-form>
+                    </el-tab-pane>
+                </el-tabs>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible2 = false">取 消</el-button>
-                    <el-button type="primary" @click="dialogFormVisible2 = false">确 定</el-button>
+                    <el-button @click="addCoursesFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="addCoursesFormVisible = false">确 定</el-button>
                 </div>
             </el-dialog>
     </el-tab-pane>
-        <el-tab-pane label="修改课程" name="second">
+        <el-tab-pane label="修改与删除" name="second">
+            <el-card class="box-card" shadow="hover" v-for="course in courses" style="margin-top: 5px">
+                <div  style="margin-bottom:10px;">
+                    <div class="media">
+                        <div></div>
+                        <div class="media-body">
+                            <div class="media" style="overflow:visible;">
+                                <div style="width:250px;height:190px;"><img src="/assets/img/1.jpg" class="mr-3" style="width:250px;height:190px;"></div>
+                                <div class="media-body" style="overflow:visible;">
+                                    <div class="row" style="margin-left:16px;">
+                                        <div class="col-md-12">
+                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{course.courseName}} <br>
+                                            </p>
+                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{course.courseType}}</p>
+                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">开始时间:</a> {{course.courseStartTime}} </p>
+                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">结束时间:</a> {{course.courseEndTime}}</p>
+                                            <div style="margin-top:30px;margin-left:75%;width:200px;">
+                                                <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="xiugaiCourse(course)">修改</button>
+                                                <el-dialog title ="修改课程" :visible.sync="course.xiugaiVisible">
+                                                    <el-form :model="course">
+                                                        <el-form-item label="课程图片" :label-width="formLabelWidth">
+                                                            <el-upload
+                                                                    class="avatar-uploader"
+                                                                    action="http://localhost:8080/assets/img"
+                                                                    :show-file-list="false"
+                                                                    :on-success="handleAvatarSuccess"
+                                                                    :before-upload="beforeAvatarUpload">
+                                                                <img v-if="course.courseImg" :src="course.courseImg" class="avatar">
+                                                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                                            </el-upload>
 
+                                                        </el-form-item>
+                                                        <el-form-item label="课程名" :label-width="formLabelWidth">
+                                                            <el-input v-model="course.courseName"style="width: 200px"  autocomplete="off"></el-input>
+                                                        </el-form-item>
+                                                        <el-form-item label="课程类别" :label-width="formLabelWidth">
+                                                            <el-select v-model="course.courseType" placeholder="请选择">
+                                                                <el-option
+                                                                        v-for="item in courseTypes"
+                                                                        :key="item.value"
+                                                                        :label="item.label"
+                                                                        :value="item.value">
+                                                                </el-option>
+                                                            </el-select>
+                                                            <!--<el-input v-model="xiugaiForm.courseType" style="width: 200px"  autocomplete="off"></el-input>-->
+                                                        </el-form-item>
+                                                        <el-form-item label="开始时间" :label-width="formLabelWidth">
+                                                            <!--<el-input v-model="addForm.courseStartTime" style="width: 200px"  autocomplete="off"></el-input>-->
+                                                            <el-date-picker
+                                                                    v-model="course.courseStartTime"
+                                                                    type="datetime"
+                                                                    placeholder="选择开始日期时间">
+                                                            </el-date-picker>
+                                                        </el-form-item>
+                                                        <el-form-item label="结束时间" :label-width="formLabelWidth">
+                                                            <el-date-picker
+                                                                    v-model="course.courseEndTime"
+                                                                    type="datetime"
+                                                                    placeholder="选择结束日期时间">
+                                                            </el-date-picker>
+                                                            <!--<el-input v-model="addForm.courseEndTime" style="width: 200px"  autocomplete="off"></el-input>-->
+                                                        </el-form-item>
+                                                        <el-form-item label="课程介绍" :label-width="formLabelWidth">
+                                                            <el-input type="textarea"  v-model="course.courseInfo" style="width: 300px;height:80px "  autocomplete="off"></el-input>
+                                                        </el-form-item>
+                                                    </el-form>
+                                                    <div slot="footer" class="dialog-footer">
+                                                        <el-button @click="course.xiugaiVisible = false">取 消</el-button>
+                                                        <el-button type="primary" @click="course.xiugaiVisible = false">确 定</el-button>
+                                                    </div>
+                                                </el-dialog>
+                                                <button class="btn btn-primary" type="button" @click = "shanchuCourse(course)" style="font-family:Microsoft YaHei;">删除</button>
+                                                <!--<el-dialog title ="评价" :visible.sync="course.shanchuVisible">-->
+
+                                                    <!--<div slot="footer" class="dialog-footer">-->
+                                                        <!--<el-button @click="course.shanchuVisible = false">取 消</el-button>-->
+                                                        <!--<el-button type="primary" @click="course.shanchuVisible = false">确 定</el-button>-->
+                                                    <!--</div>-->
+                                                <!--</el-dialog>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </el-card>
+            <!--<div style="text-align: center;margin-top: 10px">-->
+                <!--<el-button icon="el-icon-plus" circle @click="addCourse()" style="width: 50px;height: 50px;background-color: rgb(0,123,255);color:rgb(255,255,255)"></el-button>-->
+            <!--</div>-->
         </el-tab-pane>
     </el-tabs>
 
@@ -183,14 +375,40 @@
 </div>
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
+</style>
 <script>
     var course = new Vue({
         el:'#course',
         data(){
             return {
+                imageUrl:'',
                 inputWidth:'60px',
-                formLabelWidth:'250px',
-                addCoursesFormVisible: false,//不能共用
+                formLabelWidth:'38%',
+                addCoursesFormVisible: false,
                 courses:[{
                     courseId:"1",
                     courseName:"SSM",
@@ -202,6 +420,8 @@
                     couresImg:"1.png",
                     yuyueVisible:false,
                     pinglunVisible:false,
+                    xiugaiVisible:false,
+                    shanchuVisible:false
                 },{
                     courseId:"2",
                     courseName:"SSM2",
@@ -213,6 +433,8 @@
                     couresImg:"2.png",
                     yuyueVisible:false,
                     pinglunVisible:false,
+                    xiugaiVisible:false,
+                    shanchuVisible:false
                 }],
                 pinglunData: [{
                     date: '2016-05-02 03:01:00',
@@ -243,15 +465,79 @@
                 addForm:{
                     courseName:"SSM",
                     courseTeacher:"LYP",
-                    courseType:"编程开发",
+                    courseType:"",
                     courseStartTime:"2019-04-05 06:00:01",
                     courseEndTime:"2019-04-05 06:40:01",
                     courseInfo:"课程介绍",
-                    couresImg:"1.png",
+                    courseImg:"",
+                    unit: [],
+                    times:[new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
+                },
+                teacher:{
+                    name:"LYP",
+                    email:"1140131901@qq.com"
+                },
+                options: [{
+                    value: '1',
+                    label: '周一'
+                }, {
+                    value: '2',
+                    label: '周二'
+                }, {
+                    value: '3',
+                    label: '周三'
+                }, {
+                    value: '4',
+                    label: '周四'
+                }, {
+                    value: '5',
+                    label: '周五'
+                }],
+                courseTypes: [{
+                    value: '编程开发',
+                    label: '编程开发'
+                }, {
+                    value: '编程开发2',
+                    label: '编程开发2'
+                }, {
+                    value: '编程开发3',
+                    label: '编程开发3'
+                }, {
+                    value: '编程开发4',
+                    label: '编程开发4'
+                }, {
+                    value: '编程开发5',
+                    label: '编程开发5'
+                }],
+                xiugaiForm:{
+                    courseName:"",
+                    courseTeacher:"",
+                    courseType:"",
+                    courseStartTime:"",
+                    courseEndTime:"",
+                    courseInfo:"课程",
+                    courseImg:"",
                 }
             }
         },
         methods:{
+
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = URL.createObjectURL(file.raw);
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            },
+
             chakanyuyue(course){
                course.yuyueVisible=true
                 //查数据库填充预约表
@@ -268,6 +554,31 @@
             },
             addCourse(){
                 //增加课程
+                this.addCoursesFormVisible=true
+
+            },
+            xiugaiCourse(course){
+                //修改课程
+                course.xiugaiVisible=true
+            },
+            shanchuCourse(course){
+                //删除课程
+                // course.shanchuVisible=true
+                this.$confirm('此操作将删除该课程, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消该操作'
+                    });
+                });
             }
         },
         mounted(){
