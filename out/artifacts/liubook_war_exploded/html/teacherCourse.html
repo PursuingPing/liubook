@@ -156,6 +156,7 @@
                             <el-form-item label="开始时间" :label-width="formLabelWidth">
                                 <!--<el-input v-model="addForm.courseStartTime" style="width: 200px"  autocomplete="off"></el-input>-->
                                 <el-date-picker
+                                        value-format="yyyy-MM-dd HH:mm:ss"
                                         v-model="addForm.courseStartTime"
                                         type="datetime"
                                         placeholder="选择开始日期时间">
@@ -163,6 +164,7 @@
                             </el-form-item>
                             <el-form-item label="结束时间" :label-width="formLabelWidth">
                                 <el-date-picker
+                                        value-format="yyyy-MM-dd HH:mm:ss"
                                         v-model="addForm.courseEndTime"
                                         type="datetime"
                                         placeholder="选择结束日期时间">
@@ -220,6 +222,7 @@
                                         <!--placeholder="选择开始日期时间">-->
                                 <!--</el-date-picker>-->
                                 <el-time-picker
+                                        value-format="HH:mm:ss"
                                         is-range
                                         v-model="addForm.times"
                                         range-separator="-"
@@ -290,6 +293,7 @@
                                                         <el-form-item label="开始时间" :label-width="formLabelWidth">
                                                             <!--<el-input v-model="addForm.courseStartTime" style="width: 200px"  autocomplete="off"></el-input>-->
                                                             <el-date-picker
+                                                                    value-format="yyyy-MM-dd HH:mm:ss"
                                                                     v-model="course.courseStartTime"
                                                                     type="datetime"
                                                                     placeholder="选择开始日期时间">
@@ -297,6 +301,7 @@
                                                         </el-form-item>
                                                         <el-form-item label="结束时间" :label-width="formLabelWidth">
                                                             <el-date-picker
+                                                                    value-format="yyyy-MM-dd HH:mm:ss"
                                                                     v-model="course.courseEndTime"
                                                                     type="datetime"
                                                                     placeholder="选择结束日期时间">
