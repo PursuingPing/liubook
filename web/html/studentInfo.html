@@ -17,7 +17,7 @@
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 
-<body style="background-color:rgb(247,247,247);">
+<body>
 <header style="width:80%;margin-right:10%;margin-left:10%;">
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background-color:rgba(10,70,187,0.01);">
         <div class="container"><a class="navbar-brand" href="#" style="color:rgb(121,75,254);">LYP Class Booking</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -36,108 +36,141 @@
         </div>
     </nav>
 </header>
-<div  class="container" id="tags">
-    <el-tabs tab-position='left'>
-        <el-tab-pane label="个人信息" style="height: 550px;font-family:Microsoft YaHei">
-            <div class="container" style="height:300px;width:851px;background-color:#fffefe;">
-                <div class="row">
-                    <div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">Email</label>
-                    <el-input :disabled="true" v-model="form.email"style="margin-left:14px;width: 179px;height: 30px"></el-input></div>
-                </div>
-                <div class="row">
-                    <div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">姓名</label>
-                        <el-input :disabled="true" v-model="form.name" style="margin-left:14px;width: 179px;height: 30px"></el-input></div>
-                </div>
-                <div class="row">
-                    <div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">性别</label>
-                        <el-input :disabled="true" v-model="form.sex" style="margin-left:14px;width: 179px;height: 30px"></el-input></div>
-                </div>
-                <div class="row">
-                    <div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">手机</label>
-                        <el-input :disabled="true" v-model="form.phone" style="margin-left:14px;width: 179px;height: 30px"></el-input></div>
-                </div>
-                <div class="row">
-                    <div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">专业</label>
-                        <el-input :disabled="true" v-model="form.major" style="margin-left:14px;width: 179px;height: 30px"></el-input></div>
-                </div>
-                <div class="row">
-                    <div class="col" ><button class="btn btn-primary" type="button" @click ="modifyInfo" style="margin-left:80%;margin-top:10px;margin-bottom:15px;font-family:Microsoft yahei;">修改</button></div>
-                </div>
-                <el-dialog title="个人信息" :visible.sync="dialogFormVisible">
-                    <el-form :model="form">
-                        <el-form-item label="姓名" :label-width="formLabelWidth">
-                            <el-input v-model="form.name" style="width: 200px" autocomplete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="性别" :label-width="formLabelWidth">
-                            <el-select v-model="form.sex" placeholder="请选择性别" style="width: 80px">
-                                <el-option label="男" value="男"></el-option>
-                                <el-option label="女" value="女"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="手机" :label-width="formLabelWidth">
-                            <el-input v-model="form.phone" style="width: 200px" autocomplete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="专业" :label-width="formLabelWidth">
-                            <el-input v-model="form.major" style="width: 200px" autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogFormVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-                    </div>
-                </el-dialog>
-            </div>
-        </el-tab-pane>
-        <el-tab-pane label="密码管理">
-            <div class="container" style="height:300px;width:851px;background-color:#fffefe;">
+<div class="container" id="tags">
+    <el-tabs tab-position='left' >
+        <el-tab-pane label="个人信息">
+            <el-card class="box-card">
+                <el-form  style="margin-left: 35%">
+                    <el-form-item label="姓名">
+                        <el-input v-model="studentInfo.name" style="width: 180px" @focus="showButton"></el-input>
+                    </el-form-item>
+                    <el-form-item label="性别">
+                        <!--<el-input v-model="teacherInfo.sex"></el-input>-->
+                        <el-select v-model="studentInfo.sex" placeholder="请选择性别" style="width: 80px" @focus="showButton">
+                            <el-option label="男" value="男"></el-option>
+                            <el-option label="女" value="女"></el-option>
+                        </el-select>
+                    </el-form-item>
 
-                <div class="row">
-                    <div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">原密码</label>
-                        <el-input :disabled="true" value="*********" style="margin-left:14px;width: 179px;height: 30px"></el-input></div>
-                </div>
-                <div class="row">
-                    <div class="col" ><button class="btn btn-primary" type="button" @click ="modifyPassword" style="margin-left:80%;margin-top:10px;margin-bottom:15px;font-family:Microsoft yahei;">修改</button></div>
-                </div>
-                <el-dialog title="修改密码" :visible.sync="dialogFormVisible2">
-                    <el-form :model="form">
-                        <el-form-item label="原密码" :label-width="formLabelWidth">
-                            <el-input v-model="form.oldPassword"style="width: 200px" show-password autocomplete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="新密码" :label-width="formLabelWidth">
-                            <el-input v-model="form.newPassword" style="width: 200px" show-password autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogFormVisible2 = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogFormVisible2 = false">确 定</el-button>
-                    </div>
-                </el-dialog>
-            </div>
+                    <el-form-item label="主修">
+                        <el-input v-model="studentInfo.major" style="width: 180px" @focus="showButton"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话" >
+                        <el-input v-model="studentInfo.phone" style="width: 180px" @focus="showButton"></el-input>
+                    </el-form-item>
+                    <el-form-item v-show="buttonShow">
+                        <el-button type="primary" @click="xiugaiInfo(studentInfo.email)">保存</el-button>
+                        <el-button @click="hideButton(studentInfo)" >取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-card>
         </el-tab-pane>
-        <!--<el-tab-pane label="角色管理">角色管理</el-tab-pane>-->
-        <!--<el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>-->
+        <el-tab-pane label="修改密码">
+            <el-card class="box-card">
+                <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" style="margin-left: 25%">
+                    <el-form-item label="原密码" >
+                        <el-input disabled type="password" style="width: 180px" v-model="ruleForm.originPwd" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="新密码" prop="pass">
+                        <el-input type="password"  style="width: 180px" v-model="ruleForm.pass" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="确认新密码" prop="checkPass">
+                        <el-input type="password"  style="width: 180px" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                        <el-button @click="resetForm('ruleForm')">重置</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-card>
+        </el-tab-pane>
+        <el-tab-pane label="预约统计">
+
+        </el-tab-pane>
     </el-tabs>
 </div>
-    <!--<div class="container" style="width:851px;background-color:#fffefe;">-->
-        <!--<div class="row">-->
-            <!--<div class="col"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">Email</label><input type="text" style="margin-left:14px;"></div>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-            <!--<div class="col"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">姓名</label><input type="text" style="margin-left:14px;"></div>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-            <!--<div class="col"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">性别</label><input type="text" style="margin-left:14px;"></div>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-            <!--<div class="col"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">手机</label><input type="text" style="margin-left:14px;"></div>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-            <!--<div class="col"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">专业</label><input type="text" style="margin-left:14px;"></div>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-            <!--<div class="col"><button class="btn btn-primary" type="button" style="margin-left:407px;margin-top:10px;margin-bottom:15px;font-family:Microsoft yahei;">修改</button></div>-->
-        <!--</div>-->
-    <!--</div>-->
+<!--<div  class="container" id="tags">-->
+    <!--<el-tabs tab-position='left'>-->
+        <!--<el-tab-pane label="个人信息" style="height: 550px;font-family:Microsoft YaHei">-->
+            <!--<div class="container" style="height:300px;width:851px;background-color:#fffefe;">-->
+                <!--<div class="row">-->
+                    <!--<div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">Email</label>-->
+                    <!--<el-input :disabled="true" v-model="form.email"style="margin-left:14px;width: 179px;height: 30px"></el-input></div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                    <!--<div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">姓名</label>-->
+                        <!--<el-input :disabled="true" v-model="form.name" style="margin-left:14px;width: 179px;height: 30px"></el-input></div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                    <!--<div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">性别</label>-->
+                        <!--<el-input :disabled="true" v-model="form.sex" style="margin-left:14px;width: 179px;height: 30px"></el-input></div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                    <!--<div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">手机</label>-->
+                        <!--<el-input :disabled="true" v-model="form.phone" style="margin-left:14px;width: 179px;height: 30px"></el-input></div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                    <!--<div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">专业</label>-->
+                        <!--<el-input :disabled="true" v-model="form.major" style="margin-left:14px;width: 179px;height: 30px"></el-input></div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                    <!--<div class="col" ><button class="btn btn-primary" type="button" @click ="modifyInfo" style="margin-left:80%;margin-top:10px;margin-bottom:15px;font-family:Microsoft yahei;">修改</button></div>-->
+                <!--</div>-->
+                <!--<el-dialog title="个人信息" :visible.sync="dialogFormVisible">-->
+                    <!--<el-form :model="form">-->
+                        <!--<el-form-item label="姓名" :label-width="formLabelWidth">-->
+                            <!--<el-input v-model="form.name" style="width: 200px" autocomplete="off"></el-input>-->
+                        <!--</el-form-item>-->
+                        <!--<el-form-item label="性别" :label-width="formLabelWidth">-->
+                            <!--<el-select v-model="form.sex" placeholder="请选择性别" style="width: 80px">-->
+                                <!--<el-option label="男" value="男"></el-option>-->
+                                <!--<el-option label="女" value="女"></el-option>-->
+                            <!--</el-select>-->
+                        <!--</el-form-item>-->
+                        <!--<el-form-item label="手机" :label-width="formLabelWidth">-->
+                            <!--<el-input v-model="form.phone" style="width: 200px" autocomplete="off"></el-input>-->
+                        <!--</el-form-item>-->
+                        <!--<el-form-item label="专业" :label-width="formLabelWidth">-->
+                            <!--<el-input v-model="form.major" style="width: 200px" autocomplete="off"></el-input>-->
+                        <!--</el-form-item>-->
+                    <!--</el-form>-->
+                    <!--<div slot="footer" class="dialog-footer">-->
+                        <!--<el-button @click="dialogFormVisible = false">取 消</el-button>-->
+                        <!--<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>-->
+                    <!--</div>-->
+                <!--</el-dialog>-->
+            <!--</div>-->
+        <!--</el-tab-pane>-->
+        <!--<el-tab-pane label="密码管理">-->
+            <!--<div class="container" style="height:300px;width:851px;background-color:#fffefe;">-->
+
+                <!--<div class="row">-->
+                    <!--<div class="col" style="margin-top: 10px"><label class="col-form-label" style="margin-left:36%;font-family:microsoft yahei;width:52px;">原密码</label>-->
+                        <!--<el-input :disabled="true" value="*********" style="margin-left:14px;width: 179px;height: 30px"></el-input></div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                    <!--<div class="col" ><button class="btn btn-primary" type="button" @click ="modifyPassword" style="margin-left:80%;margin-top:10px;margin-bottom:15px;font-family:Microsoft yahei;">修改</button></div>-->
+                <!--</div>-->
+                <!--<el-dialog title="修改密码" :visible.sync="dialogFormVisible2">-->
+                    <!--<el-form :model="form">-->
+                        <!--<el-form-item label="原密码" :label-width="formLabelWidth">-->
+                            <!--<el-input v-model="form.oldPassword"style="width: 200px" show-password autocomplete="off"></el-input>-->
+                        <!--</el-form-item>-->
+                        <!--<el-form-item label="新密码" :label-width="formLabelWidth">-->
+                            <!--<el-input v-model="form.newPassword" style="width: 200px" show-password autocomplete="off"></el-input>-->
+                        <!--</el-form-item>-->
+                    <!--</el-form>-->
+                    <!--<div slot="footer" class="dialog-footer">-->
+                        <!--<el-button @click="dialogFormVisible2 = false">取 消</el-button>-->
+                        <!--<el-button type="primary" @click="dialogFormVisible2 = false">确 定</el-button>-->
+                    <!--</div>-->
+                <!--</el-dialog>-->
+            <!--</div>-->
+        <!--</el-tab-pane>-->
+        <!--&lt;!&ndash;<el-tab-pane label="角色管理">角色管理</el-tab-pane>&ndash;&gt;-->
+        <!--&lt;!&ndash;<el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>&ndash;&gt;-->
+    <!--</el-tabs>-->
+<!--</div>-->
 <div class="footer-clean" style="width: 100%;position: fixed;bottom: 0">
     <footer>
         <div class="container">
@@ -177,36 +210,127 @@
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 <script>
+    const student={
+        name: "fd",
+        sex: "男",
+        phone: "12312",
+        major: "hahha哈哈哈",
+    }
     var tags = new Vue({
         el:'#tags',
         data(){
+            var checkAge = (rule, value, callback) => {
+                if (!value) {
+                    return callback(new Error('年龄不能为空'));
+                }
+                setTimeout(() => {
+                    if (!Number.isInteger(value)) {
+                        callback(new Error('请输入数字值'));
+                    } else {
+                        if (value < 18) {
+                            callback(new Error('必须年满18岁'));
+                        } else {
+                            callback();
+                        }
+                    }
+                }, 1000);
+            };
+            var validatePass = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入密码'));
+                } else {
+                    if (this.ruleForm.checkPass !== '') {
+                        this.$refs.ruleForm.validateField('checkPass');
+                    }
+                    callback();
+                }
+            };
+            var validatePass2 = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请再次输入密码'));
+                } else if (value !== this.ruleForm.pass) {
+                    callback(new Error('两次输入密码不一致!'));
+                } else {
+                    callback();
+                }
+            };
             return {
-                inputWidth:'60px',
-                formLabelWidth:'250px',
-                dialogFormVisible: false,
-                dialogFormVisible2: false,
-                form: {
+                // inputWidth:'60px',
+                // formLabelWidth:'250px',
+                // dialogFormVisible: false,
+                // dialogFormVisible2: false,
+                studentInfo: {
                     email: "123@qq.com",
                     name: "fd",
                     sex: "男",
                     phone: "12312",
                     major: "hahha哈哈哈",
                     oldPassword:"",
-                    newPassword:""
+                },
+                buttonShow:false,
+                ruleForm: {
+                    pass: '',
+                    checkPass: '',
+                    originPwd: ''
+                },
+                rules: {
+                    pass: [
+                        { validator: validatePass, trigger: 'blur' }
+                    ],
+                    checkPass: [
+                        { validator: validatePass2, trigger: 'blur' }
+                    ],
+                    age: [
+                        { validator: checkAge, trigger: 'blur' }
+                    ]
                 }
             }
         },
         methods:{
-            modifyInfo(){
-                this.dialogFormVisible=true
-                // this.form.email="1140131901@qq.com"
-                // this.form.name="hhaha"
-                // this.form.sex="女"
-                // this.form.phone="13535"
-                // this.form.major="哈哈哈哈哈哈"
+            // modifyInfo(){
+            //     this.dialogFormVisible=true
+            //     // this.form.email="1140131901@qq.com"
+            //     // this.form.name="hhaha"
+            //     // this.form.sex="女"
+            //     // this.form.phone="13535"
+            //     // this.form.major="哈哈哈哈哈哈"
+            // },
+            // modifyPassword(){
+            //     this.dialogFormVisible2=true
+            // }
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        alert('submit!');//连接数据库修改
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
             },
-            modifyPassword(){
-                this.dialogFormVisible2=true
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+            },
+            showButton(){
+                this.buttonShow=true
+
+            },
+            hideButton(studentInfo){
+                if(student.name == studentInfo.name && student.sex == studentInfo.sex
+                    && student.major == studentInfo.major
+                    && student.phone == studentInfo.phone
+                ){
+                }else {
+                    studentInfo.name = student.name
+                    studentInfo.sex = student.sex
+                    studentInfo.phone = student.phone
+                    studentInfo.major = student.major
+                }
+                this.buttonShow=false
+
+            },
+            xiugaiInfo(email){
+                console.log(email)
             }
         },
         mounted(){
