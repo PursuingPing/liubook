@@ -8,177 +8,345 @@
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/Community-ChatComments.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/Navigation-with-Search.css">
+    <link rel="stylesheet" href="/assets/css/Footer-Clean.css">
+    <link rel="stylesheet" href="/assets/fonts/ionicons.min.css">
     <script src="/assets/js/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 
 <body>
-<div id="courseInfo">
-    <div class="container d-flex flex-row"><img :src ="course.courseImg" style="width:249px;height:190px;">
-        <div class="card" style="width:960px;">
-            <div class="card-body" style="width:775px;margin:0px;margin-left:-7px;">
-                <h4 class="card-title" style="font-family:microsoft yahei;">{{course.courseName}}</h4>
-                <h6 class="text-muted card-subtitle mb-2" style="width:722px;font-family:microsoft yahei;">{{course.courseType}}</h6>
-                <div ><a class="btn btn-primary btn-lg" role="button" href="#myModal" data-toggle="modal" style="margin-left:95%;margin-top:49px;margin-bottom:0px;margin-right:0px;font-family:Microsoft yahei;">预约</a>
-                    <div role="dialog" tabindex="-1" class="modal fade" id="myModal">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header" style="padding-left:0px">
-                                                       <h4 style="font-family:microsoft yahei;" >时间选择</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                                <div class="modal-body">
-                                    <div id ="timeLines" class="row" style="width:480px;">
-                                    <div class="col-6" style="margin-bottom:10px;margin-top:10px;" v-for="(time,index) in times">
-                                        <button :id="index" @click ="changeColors(index)" class="btn btn-primary" type="button" style="margin-left:10px;background-color:rgb(193,134,239);color:rgb(255,255,255);">{{time}}
-                                        </button>
-                                    </div>
-                                </div>
-                                </div>
-                                 <div class="modal-footer">
-                                <button class="btn btn-light" type="button" data-dismiss="modal" style="font-family:microsoft yahei">取消</button>
-                                <button class="btn btn-primary" @click ="ack()" type="button" style="font-family:microsoft yahei">确认</button>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--<button class="btn btn-primary" type="button" style="margin-left:95%;margin-top:49px;margin-bottom:0px;margin-right:0px;font-family:Microsoft yahei;">预约</button></div>-->
-            </div>
-            </div>
-    </div>
-    <!--<div class="container">-->
-        <!--<ul class="nav nav-tabs">-->
-            <!--<li class="nav-item"><a class="nav-link active" href="#" style="font-family:microsoft yahei;">介绍</a></li>-->
-            <!--<li class="nav-item"><a class="nav-link" href="#" style="font-family:microsoft yahei;">课程评价</a></li>-->
-        <!--</ul>-->
-    <!--</div>-->
-    <div class="flex-column">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <article></article>
-                    <div class="card" style ="margin-top: 10px;margin-bottom: 10px">
-                        <div class="card-body">
-                            <h4 class="card-title" style="font-family:microsoft yahei">课程概述</h4>
-                            <p class="card-text">{{course.courseInfo}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card" style ="margin-top: 10px;margin-bottom: 10px">
-                        <div class="card-body">
-                            <h4 class="card-title" style="font-family:microsoft yahei;">讲师介绍</h4>
-                            <h6 class="text-muted card-subtitle mb-2" style="font-family:microsoft yahei;">{{course.teacherName}}</h6>
-                            <p class="card-text" style="font-family:microsoft yahei;">主修：{{course.teacherMajor}}</p>
-                        </div>
-                    </div>
-                </div>
+<header style="width:80%;margin-right:10%;margin-left:10%;">
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background-color:rgba(10,70,187,0.01);">
+        <div class="container"><a class="navbar-brand" href="#" style="color:rgb(121,75,254);">LYP Class Booking</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div
+                    class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav" style="height:40px;width:237px;">
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/html/classes.html" style="color:rgba(0,0,0,0.6);font-family:Microsoft YaHei;">课程</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/html/yuyue.html" style="color:rgba(0,0,0,0.6);font-family:Microsoft YaHei;">预约</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/html/studentInfo.html" style="color:rgba(0,0,0,0.6);font-family:Microsoft YaHei;">个人中心</a></li>
+                </ul>
+                <form class="form-inline mr-auto" target="_self">
+                    <div class="form-group"><label for="search-field"></label><input class="form-control" type="search" name="search" placeholder="Class Or Tearcher" style="font-family:Microsoft YaHei;border-radius:60px;margin-left:305px;font-size:13px;"><i class="fa fa-search"
+                                                                                                                                                                                                                                                                  style="margin-left:9px;font-size:22px;color:rgb(230,210,210);"></i></div>
+                </form>
             </div>
         </div>
-    </div>
-    <div class="flex-column">
-        <div class="container">
-            <!--<div class="row" style="width:640px;">-->
-                <!--<div class="col-6" style="margin-bottom:10px;margin-top:10px;"><button class="btn btn-primary" type="button" style="margin-left:50px;background-color:rgb(193,134,239);color:rgb(255,255,255);">2019-03-01 06:00-12:00</button></div>-->
-            <!--</div>-->
-            <!--<div class="row">-->
-                <!--<div class="col"><button class="btn btn-primary" type="button" style="margin-left:55%;font-family:microsoft yahei;">确认预约</button></div>-->
-            <!--</div>-->
-            <div class="row">
-                <div class="col">
-                    <div class="card">
-                        <div class="card-header">
-                            <h6 class="mb-0" style="font-family:microsoft yahei">课程评论</h6>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-group">
-                                <li class="list-group-item" style="margin-bottom:6px;" v-for="comment in course.comments">
-                                    <div class="media">
-                                        <div></div>
-                                        <div class="media-body">
-                                            <div class="media" style="overflow:visible;">
-                                                <div></div>
-                                                <div class="media-body" style="overflow:visible;">
-                                                    <div class="row" >
-                                                        <div class="col-md-12">
-                                                            <p><a href="#">{{comment.studentName}}:</a> {{comment.comment}} <br>
-<small class="text-muted">{{comment.time}}</small></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+    </nav>
+</header>
+<div class="container" id="courseInfo">
+    <el-card class="box-card" shadow="always" style="margin-top: 5px">
+        <div  style="margin-bottom:10px;">
+            <div class="media">
+                <div></div>
+                <div class="media-body">
+                    <div class="media" style="overflow:visible;">
+                        <div style="width:250px;height:190px;"><img src="/assets/img/1.jpg" class="mr-3" style="width:250px;height:190px;"></div>
+                        <div class="media-body" style="overflow:visible;">
+                            <div class="row" style="margin-left:16px;">
+                                <div class="col-md-12">
+                                    <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{courses.courseName}} <br>
+                                    </p>
+                                    <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">讲师:</a> {{courses.courseTeacher}} <br>
+                                    </p>
+                                    <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{courses.courseType}}</p>
+                                    <div style="margin-top:30px;margin-left:75%;width:200px;">
+                                        <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="yuyue(courses.courseName)">预约</button>
+                                        <el-dialog title ="预约时间选择" :visible.sync="dialogFormVisible">
+                                            <div>
+                                                <el-checkbox-group v-model="timePicks">
+                                                    <el-checkbox-button v-for="time in times" :label="time" :key="time">{{time}}</el-checkbox-button>
+                                                </el-checkbox-group>
                                             </div>
-                                        </div>
+                                            <div slot="footer" class="dialog-footer">
+                                                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                                            </div>
+                                        </el-dialog>
                                     </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div></div>
+    </el-card>
+<el-tabs value="first" type="border-card">
+    <el-tab-pane label="课程介绍" name="first">
+        <el-card shadow="hover"><p>{{courses.courseInfo}}</p></el-card>
+    </el-tab-pane>
+    <el-tab-pane label="课程评论">
+        <el-card class="box-card" shadow="hover" v-for="comment in comments" style="margin-top: 5px">
+            <div class="media">
+                <div></div>
+                <div class="media-body">
+                    <div class="media" style="overflow:visible;">
+                        <div></div>
+                        <div class="media-body" style="overflow:visible;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p><a href="#">{{comment.studentName}}:</a>
+                                        <el-rate
+                                            v-model="comment.starValue"
+                                            disabled
+                                            show-score
+                                            text-color="#ff9900"
+                                            score-template="{value}">
+                                        </el-rate>{{comment.comment}} <br>
+                                        <small class="text-muted">{{comment.time}}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </el-card>
+    </el-tab-pane>
+
+    <el-tab-pane label="讲师介绍">
+        <el-card shadow="hover"><p>姓名：{{teacherInfo.name}}</p>
+            <p>性别：{{teacherInfo.sex}}</p>
+            <p>主修：{{teacherInfo.major}}</p>
+            <p>学历：{{teacherInfo.degree}}</p>
+            <p>毕业院校：{{teacherInfo.college}}</p></el-card>
+    </el-tab-pane>
+</el-tabs>
 </div>
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<!--<div id="courseInfo">-->
+    <!--<div class="container d-flex flex-row"><img :src ="course.courseImg" style="width:249px;height:190px;">-->
+        <!--<div class="card" style="width:960px;">-->
+            <!--<div class="card-body" style="width:775px;margin:0px;margin-left:-7px;">-->
+                <!--<h4 class="card-title" style="font-family:microsoft yahei;">{{course.courseName}}</h4>-->
+                <!--<h6 class="text-muted card-subtitle mb-2" style="width:722px;font-family:microsoft yahei;">{{course.courseType}}</h6>-->
+                <!--<div ><a class="btn btn-primary btn-lg" role="button" href="#myModal" data-toggle="modal" style="margin-left:95%;margin-top:49px;margin-bottom:0px;margin-right:0px;font-family:Microsoft yahei;">预约</a>-->
+                    <!--<div role="dialog" tabindex="-1" class="modal fade" id="myModal">-->
+                        <!--<div class="modal-dialog" role="document">-->
+                            <!--<div class="modal-content">-->
+                                <!--<div class="modal-header" style="padding-left:0px">-->
+                                    <!--                   <h4 style="font-family:microsoft yahei;" >时间选择</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>-->
+                                <!--<div class="modal-body">-->
+                                    <!--<div id ="timeLines" class="row" style="width:480px;">-->
+                                    <!--<div class="col-6" style="margin-bottom:10px;margin-top:10px;" v-for="(time,index) in times">-->
+                                        <!--<button :id="index" @click ="changeColors(index)" class="btn btn-primary" type="button" style="margin-left:10px;background-color:rgb(193,134,239);color:rgb(255,255,255);">{{time}}-->
+                                        <!--</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!-- <div class="modal-footer">-->
+                                <!--<button class="btn btn-light" type="button" data-dismiss="modal" style="font-family:microsoft yahei">取消</button>-->
+                                <!--<button class="btn btn-primary" @click ="ack()" type="button" style="font-family:microsoft yahei">确认</button>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<button class="btn btn-primary" type="button" style="margin-left:95%;margin-top:49px;margin-bottom:0px;margin-right:0px;font-family:Microsoft yahei;">预约</button></div>&ndash;&gt;-->
+            <!--</div>-->
+            <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
+        <!--&lt;!&ndash;<ul class="nav nav-tabs">&ndash;&gt;-->
+            <!--&lt;!&ndash;<li class="nav-item"><a class="nav-link active" href="#" style="font-family:microsoft yahei;">介绍</a></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li class="nav-item"><a class="nav-link" href="#" style="font-family:microsoft yahei;">课程评价</a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--<div class="flex-column">-->
+        <!--<div class="container">-->
+            <!--<div class="row">-->
+                <!--<div class="col-md-8">-->
+                    <!--<article></article>-->
+                    <!--<div class="card" style ="margin-top: 10px;margin-bottom: 10px">-->
+                        <!--<div class="card-body">-->
+                            <!--<h4 class="card-title" style="font-family:microsoft yahei">课程概述</h4>-->
+                            <!--<p class="card-text">{{course.courseInfo}}</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-4">-->
+                    <!--<div class="card" style ="margin-top: 10px;margin-bottom: 10px">-->
+                        <!--<div class="card-body">-->
+                            <!--<h4 class="card-title" style="font-family:microsoft yahei;">讲师介绍</h4>-->
+                            <!--<h6 class="text-muted card-subtitle mb-2" style="font-family:microsoft yahei;">{{course.teacherName}}</h6>-->
+                            <!--<p class="card-text" style="font-family:microsoft yahei;">主修：{{course.teacherMajor}}</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="flex-column">-->
+        <!--<div class="container">-->
+            <!--&lt;!&ndash;<div class="row" style="width:640px;">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="col-6" style="margin-bottom:10px;margin-top:10px;"><button class="btn btn-primary" type="button" style="margin-left:50px;background-color:rgb(193,134,239);color:rgb(255,255,255);">2019-03-01 06:00-12:00</button></div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="col"><button class="btn btn-primary" type="button" style="margin-left:55%;font-family:microsoft yahei;">确认预约</button></div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--<div class="row">-->
+                <!--<div class="col">-->
+                    <!--<div class="card">-->
+                        <!--<div class="card-header">-->
+                            <!--<h6 class="mb-0" style="font-family:microsoft yahei">课程评论</h6>-->
+                        <!--</div>-->
+                        <!--<div class="card-body">-->
+                            <!--<ul class="list-group">-->
+                                <!--<li class="list-group-item" style="margin-bottom:6px;" v-for="comment in course.comments">-->
+                                    <!--<div class="media">-->
+                                        <!--<div></div>-->
+                                        <!--<div class="media-body">-->
+                                            <!--<div class="media" style="overflow:visible;">-->
+                                                <!--<div></div>-->
+                                                <!--<div class="media-body" style="overflow:visible;">-->
+                                                    <!--<div class="row" >-->
+                                                        <!--<div class="col-md-12">-->
+                                                            <!--<p><a href="#">{{comment.studentName}}:</a> {{comment.comment}} <br>-->
+<!--<small class="text-muted">{{comment.time}}</small></p>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div></div>-->
+<!--</div>-->
+<div style="height: 197px;"></div>
+<div class="footer-clean" style="width: 100%;position: fixed;bottom: 0">
+    <footer>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Web design</a></li>
+                        <li><a href="#">Development</a></li>
+                        <li><a href="#">Hosting</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="#">Company</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Legacy</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>Careers</h3>
+                    <ul>
+                        <li><a href="#">Job openings</a></li>
+                        <li><a href="#">Employee success</a></li>
+                        <li><a href="#">Benefits</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a>
+                    <p class="copyright"
+                       style="font-family:Microsoft YaHei;">刘运平© 2019</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
 <script>
-    var tag = []
-    var paras = location.search
-    var result = paras.match(/[^\?&]*=[^&]*/g)
-    paras = {}
-    for(i in result){
-        var temp = result[i].split('=')
-        paras[temp[0]] = temp[1]
-    }
-    var itemId = paras.courseId
-    localStorage.setItem("itemId","itemId")
+    // var tag = []
+    // var paras = location.search
+    // var result = paras.match(/[^\?&]*=[^&]*/g)
+    // paras = {}
+    // for(i in result){
+    //     var temp = result[i].split('=')
+    //     paras[temp[0]] = temp[1]
+    // }
+    // var itemId = paras.courseId
+    // localStorage.setItem("itemId","itemId")
     var courseInfo = new Vue({
         el:'#courseInfo',
         data(){
             return {
-                course:{courseName:"程序员lyp",courseInfo:"课程介绍哈哈哈哈",courseType:"IT类",
-                courseImg:"/assets/img/2.jpg",teacherMajor:"BIG DATA,ITE",teacherName:"刘运平",
-                    comments:[{studentName:"Pursuing",comment:"hahaha",time:"2019-03-06 09:00:01"},
-                        {studentName:"Pursuing",comment:"hahaha",time:"2019-03-06 09:00:01"}]
+                dialogFormVisible:false,
+                courses:{
+                    courseId:"1",
+                    courseName:"SSM",
+                    courseTeacher:"LYP",
+                    courseType:"编程开发",
+                    courseStartTime:"2019-04-05 06:00:01",
+                    courseEndTime:"2019-04-05 06:40:01",
+                    courseInfo:"课程介绍",
+                    couresImg:"1.png",
+                    yuyueVisible:false,
+                    pinglunVisible:false,
+                    xiugaiVisible:false,
+                    shanchuVisible:false
                 },
-                times:["2019-01-01 06:01:01","2019-01-01 06:01:01","2019-01-01 06:01:01"]
+                // course:{courseName:"程序员lyp",courseInfo:"课程介绍哈哈哈哈",courseType:"IT类",
+                // courseImg:"/assets/img/2.jpg",teacherMajor:"BIG DATA,ITE",teacherName:"刘运平",
+                    comments:[{studentName:"Pursuing",comment:"hahaha",time:"2019-03-06 09:00:01",starValue:2},
+                        {studentName:"Pursuing2",comment:"hahaha",time:"2019-03-06 09:00:01",starValue:4.5}],
+
+                // times:["2019-01-01 06:01:01","2019-01-01 06:01:01","2019-01-01 06:01:01"]
+                teacherInfo:{
+                    name:"ffd",
+                    email:"123@qq.com",
+                    phone:"113123",
+                    major:"网络工程",
+                    degree:"学士",
+                    college:"广东工业大学",
+                    sex:"男",
+                },
+                timePicks:[],
+                times:["2019-06-01 01:03:04","2019-06-01 01:13:04","2019-06-01 01:23:04","2019-06-01 01:33:04","2019-06-01 01:53:04","2019-06-02 01:03:04"]
             }
         },
         methods:{
-            changeColors(index){
-                tag.push(index)
-                var color = document.getElementById(index).style.backgroundColor.toString()
-
-                if(color == "rgb(193, 134, 239)"){
-                    document.getElementById(index).style.backgroundColor="rgb(0,98,204)"
-
-                }else {
-                    document.getElementById(index).style.backgroundColor="rgb(193,134,239)"
-                }
-
-            },
-            ack(){
-                var sets = new Set(tag)
-                var timeChoose =[]
-                console.log(sets)
-                for(var i of sets){
-                    if(document.getElementById(i).style.backgroundColor.toString() == "rgb(0, 98, 204)"){
-                        timeChoose.push(this.times[i])
-                    }
-                }
-                console.log(timeChoose)
-                $('#myModal').modal('hide')
-                console.log(sets)
-                for(var i of sets){
-                    document.getElementById(i).style.backgroundColor="rgb(193,134,239)"
-                }
+            yuyue(courseName){
+                this.dialogFormVisible=true
             }
+            // changeColors(index){
+            //     tag.push(index)
+            //     var color = document.getElementById(index).style.backgroundColor.toString()
+            //
+            //     if(color == "rgb(193, 134, 239)"){
+            //         document.getElementById(index).style.backgroundColor="rgb(0,98,204)"
+            //
+            //     }else {
+            //         document.getElementById(index).style.backgroundColor="rgb(193,134,239)"
+            //     }
+            //
+            // },
+            // ack(){
+            //     var sets = new Set(tag)
+            //     var timeChoose =[]
+            //     console.log(sets)
+            //     for(var i of sets){
+            //         if(document.getElementById(i).style.backgroundColor.toString() == "rgb(0, 98, 204)"){
+            //             timeChoose.push(this.times[i])
+            //         }
+            //     }
+            //     console.log(timeChoose)
+            //     $('#myModal').modal('hide')
+            //     console.log(sets)
+            //     for(var i of sets){
+            //         document.getElementById(i).style.backgroundColor="rgb(193,134,239)"
+            //     }
+            // }
         },
         mounted(){
-            console.log(localStorage.getItem("itemId")+'hh')
-            // axios.get('/course/getInfo').then((response) => {
-            //     console.log(response)
-            //
-            // });
+            // console.log(localStorage.getItem("itemId")+'hh')
+            // // axios.get('/course/getInfo').then((response) => {
+            // //     console.log(response)
+            // //
+            // // });
         }
     })
 </script>
