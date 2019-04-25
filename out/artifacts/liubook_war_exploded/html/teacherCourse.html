@@ -121,7 +121,7 @@
             </div>
         </el-card>
             <div style="text-align: center;margin-top: 10px">
-                <el-button icon="el-icon-plus" circle @click="addCourse()" style="width: 50px;height: 50px;background-color: rgb(0,123,255);color:rgb(255,255,255)"></el-button>
+                <el-button icon="el-icon-plus" circle @click="addCourse(teacherEmail)" style="width: 50px;height: 50px;background-color: rgb(0,123,255);color:rgb(255,255,255)"></el-button>
             </div>
             <el-dialog title="增加课程" :visible.sync="addCoursesFormVisible" style="padding-top: 0px">
                 <el-tabs type="border-card">
@@ -557,7 +557,7 @@
                 //查数据库填充评论表
 
             },
-            addCourse(){
+            addCourse(teacherEmail){
                 //增加课程
                 this.addCoursesFormVisible=true
 

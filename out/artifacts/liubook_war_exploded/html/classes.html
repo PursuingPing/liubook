@@ -6,93 +6,280 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>课程分类</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="/assets/css/Navigation-with-Search.css">
+    <!--<link rel="stylesheet" href="/assets/css/common.css">-->
     <link rel="stylesheet" href="/assets/css/Features-Boxed.css">
     <link rel="stylesheet" href="/assets/css/Minimal-Menu--Button-3-bars.css">
-    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/Footer-Clean.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
+    <link rel="stylesheet" href="/assets/css/Lightbox-Gallery.css">
+    <!-- 引入样式 -->
     <script src="/assets/js/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="/assets/js/vue-router.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-</head>
-
-<body><meta charset="UTF-8">
-<title>课程分类</title>
-
-<link rel="stylesheet" href="/assets/css/common.css">
-
-
-<!-- 代码 开始 -->
-<div class="filter">
-	<div class="container">
-		<div id ="menu" class="box">
-		<dl>
-			<dt>课程类型</dt>
-			<dd>
-				<a href="#" rel="" name="mode" class="all on">全部</a>
-                <a href="#" :rel="menuitem" name="mode" class="sx_child" v-for="menuitem in menuitems">{{menuitem}}</a>
-			</dd>
-		</dl>
-		<dl>
-			<dt>上课时间</dt>
-			<dd>
-				<a href="#" rel="" name="stage" class="all on">全部</a>
-                <a href="#" :rel="time" name="stage" class="sx_child" v-for="time in times">{{time}}</a>
-			
-			</dd>
-		</dl>
-		<dl>
-			<dt>授课教师</dt>
-			<dd>
-				<a href="#" rel="" name="sector" class="all on">全部</a>
-                <a href="#" :rel="teacher" name="sector" class="sx_child" v-for="teacher in teachers">{{teacher}}</a>
-			
-			</dd>
-		</dl>
-		<!--<dl>-->
-			<!--<dt>热度评价</dt>-->
-			<!--<dd>-->
-				<!--<a href="#" rel="" name="board" class="all on">全部</a>-->
-                <!--<a href="#" :rel="star" name="board" class="sx_child" v-for="star in stars">{{star}}</a>-->
-
-			<!--</dd>-->
-		<!--</dl>-->
-		
-		</div>
-	</div>
-</div>
-
-<script src="/assets/js/jquery.min.js"></script>
-<script src="/assets/js/tagSelect.js"></script>
-
-<!-- 代码 结束 -->
-
-    <div  id="course" class="row container" style="margin:0 auto;background-color:rgba(255,255,255,0.6);">
-        <div class="col-2" style="height:251px;" v-for="row in rows">
-            <img :src="row.img" style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />
-            <div style="text-align:center;"><p @click="getInfo(row.id)" style="cursor:pointer">{{row.name}}</p></div>
-        </div>
-
-    </div>
-    <div class="col">
-        <div style="text-align:center;">
-            <div role="group" class="btn-group"><button class="btn btn-primary" type="button" style="margin-right:25px;">上一页</button></div><button class="btn btn-primary" type="button">下一页</button></div>
-    </div>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/js/tagSelect.js"></script>
+
+</head>
+
+<body>
+<header style="width:80%;margin-right:10%;margin-left:10%;">
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean-search"
+         style="background-color:rgba(10,70,187,0.01);">
+        <div class="container"><a class="navbar-brand" href="#" style="color:rgb(121,75,254);">LYP Class Booking</a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
+                    class="navbar-toggler-icon"></span></button>
+            <div
+                    class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav" style="height:40px;width:237px;">
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/html/classes.html"
+                                                                style="color:rgba(0,0,0,0.6);font-family:Microsoft YaHei;">课程</a>
+                    </li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/html/yuyue.html"
+                                                                style="color:rgba(0,0,0,0.6);font-family:Microsoft YaHei;">预约</a>
+                    </li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/html/studentInfo.html"
+                                                                style="color:rgba(0,0,0,0.6);font-family:Microsoft YaHei;">个人中心</a>
+                    </li>
+                </ul>
+                <form class="form-inline mr-auto" target="_self">
+                    <div class="form-group"><label for="search-field"></label><input class="form-control" type="search"
+                                                                                     name="search"
+                                                                                     placeholder="Class Or Tearcher"
+                                                                                     style="font-family:Microsoft YaHei;border-radius:60px;margin-left:305px;font-size:13px;">
+                        <i class="fa fa-search" style="margin-left:9px;font-size:22px;color:rgb(230,210,210);"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- 代码 开始 -->
+<div class="container" id="courses">
+    <el-card class="box-card" style="margin-top: 10px">
+        <el-row>
+            <el-col :span="2"><p style="margin-top: 8px">课程类别：</p></el-col>
+            <el-col :span="22">
+                <el-radio-group v-model="courseTypePick">
+                    <el-radio-button label="全部"></el-radio-button>
+                    <el-radio-button v-for="courseType in courseTypes" :label="courseType"></el-radio-button>
+
+                </el-radio-group>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="2"><p style="margin-top: 8px">上课时间：</p></el-col>
+            <el-col :span="22">
+                <el-radio-group v-model="courseTimePick">
+                    <el-radio-button label="全部"></el-radio-button>
+                    <el-radio-button v-for="courseTime in courseTimes" :label="courseTime"></el-radio-button>
+
+                </el-radio-group>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="2"><p style="margin-top: 8px">授课教师：</p></el-col>
+            <el-col :span="22">
+                <el-radio-group v-model="courseTeacherPick">
+                    <el-radio-button label="全部"></el-radio-button>
+                    <el-radio-button v-for="courseTeacher in courseTeachers" :label="courseTeacher"></el-radio-button>
+                </el-radio-group>
+            </el-col>
+        </el-row>
+    </el-card>
+
+    <el-card class="box-card">
+        <el-row :gutter="20">
+            <el-col :span="6" style="margin-bottom: 10px" v-for="course in coursesInfo">
+                <div style="cursor:pointer;">
+                <el-card class="box-card" shadow="hover" style="width: 200px;height: 220px" :body-style="{ padding: '5px' }" >
+                    <el-image  style="height: 190px;width: 250px" :src="course.courseImg" fit="fit">
+                    </el-image>
+                    <p style="margin-left:30%;margin-bottom: 0px">{{course.courseName}}</p>
+                </el-card>
+            </div>
+            </el-col>
+
+
+            <!--<el-col :span="6"><div style="margin-bottom: 10px"><el-card class="box-card" shadow="hover" style="width: 200px;height: 220px" :body-style="{ padding: '0px' }">-->
+                <!--<el-image  style="height: 190px;width: 250px" :src="course.courseImg" fit="fit">-->
+                <!--</el-image>-->
+                <!--<p style="margin-left:30%;margin-bottom: 0px">{{course.courseName}}</p>-->
+            <!--</el-card></div></el-col>-->
+            <!--<el-col :span="6"><div style="margin-bottom: 10px"> <el-card class="box-card" shadow="hover" style="width: 200px;height: 220px" :body-style="{ padding: '0px' }">-->
+                <!--<el-image  style="height: 190px;width: 250px" :src="course.courseImg" fit="fit">-->
+                <!--</el-image>-->
+                <!--<p style="margin-left:30%;margin-bottom: 0px">{{course.courseName}}</p>-->
+            <!--</el-card></div></el-col>-->
+            <!--<el-col :span="6"><div style="margin-bottom: 10px"> <el-card class="box-card" shadow="hover" style="width: 200px;height: 220px" :body-style="{ padding: '0px' }">-->
+                <!--<el-image  style="height: 190px;width: 250px" :src="course.courseImg" fit="fit">-->
+                <!--</el-image>-->
+                <!--<p style="margin-left:30%;margin-bottom: 0px">{{course.courseName}}</p>-->
+            <!--</el-card></div></el-col>-->
+
+            <!--<el-col :span="6"><div style="cursor:pointer">-->
+                <!--<el-card class="box-card" shadow="hover" style="width: 200px;height: 220px" :body-style="{ padding: '0px' }">-->
+                    <!--<el-image  style="height: 190px;width: 250px" :src="course.courseImg" fit="fit">-->
+                    <!--</el-image>-->
+                    <!--<p style="margin-left:30%;margin-bottom: 0px">{{course.courseName}}</p>-->
+                <!--</el-card>-->
+            <!--</div></el-col>-->
+            <!--<el-col :span="6"><div><el-card class="box-card" shadow="hover" style="width: 200px;height: 220px" :body-style="{ padding: '0px' }">-->
+                <!--<el-image  style="height: 190px;width: 250px" :src="course.courseImg" fit="fit">-->
+                <!--</el-image>-->
+                <!--<p style="margin-left:30%;margin-bottom: 0px">{{course.courseName}}</p>-->
+            <!--</el-card></div></el-col>-->
+            <!--<el-col :span="6"><div > <el-card class="box-card" shadow="hover" style="width: 200px;height: 220px" :body-style="{ padding: '0px' }">-->
+                <!--<el-image  style="height: 190px;width: 250px" :src="course.courseImg" fit="fit">-->
+                <!--</el-image>-->
+                <!--<p style="margin-left:30%;margin-bottom: 0px">{{course.courseName}}</p>-->
+            <!--</el-card></div></el-col>-->
+            <!--<el-col :span="6"><div> <el-card class="box-card" shadow="hover" style="width: 200px;height: 220px" :body-style="{ padding: '0px' }">-->
+                <!--<el-image  style="height: 190px;width: 250px" :src="course.courseImg" fit="fit">-->
+                <!--</el-image>-->
+                <!--<p style="margin-left:30%;margin-bottom: 0px">{{course.courseName}}</p>-->
+            <!--</el-card></div></el-col>-->
+        </el-row>
+
+
+    </el-card>
+</div>
+<!--<div class="filter">-->
+<!--<div class="container">-->
+<!--<div id ="menu" class="box">-->
+<!--<dl>-->
+<!--<dt>课程类型</dt>-->
+<!--<dd>-->
+<!--<a href="#" rel="" name="mode" class="all on">全部</a>-->
+<!--<a href="#" :rel="menuitem" name="mode" class="sx_child" v-for="menuitem in menuitems">{{menuitem}}</a>-->
+<!--</dd>-->
+<!--</dl>-->
+<!--<dl>-->
+<!--<dt>上课时间</dt>-->
+<!--<dd>-->
+<!--<a href="#" rel="" name="stage" class="all on">全部</a>-->
+<!--<a href="#" :rel="time" name="stage" class="sx_child" v-for="time in times">{{time}}</a>-->
+<!---->
+<!--</dd>-->
+<!--</dl>-->
+<!--<dl>-->
+<!--<dt>授课教师</dt>-->
+<!--<dd>-->
+<!--<a href="#" rel="" name="sector" class="all on">全部</a>-->
+<!--<a href="#" :rel="teacher" name="sector" class="sx_child" v-for="teacher in teachers">{{teacher}}</a>-->
+<!---->
+<!--</dd>-->
+<!--</dl>-->
+<!--&lt;!&ndash;<dl>&ndash;&gt;-->
+<!--&lt;!&ndash;<dt>热度评价</dt>&ndash;&gt;-->
+<!--&lt;!&ndash;<dd>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" rel="" name="board" class="all on">全部</a>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" :rel="star" name="board" class="sx_child" v-for="star in stars">{{star}}</a>&ndash;&gt;-->
+
+<!--&lt;!&ndash;</dd>&ndash;&gt;-->
+<!--&lt;!&ndash;</dl>&ndash;&gt;-->
+<!---->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!-- 代码 结束 -->
+
+<!--<div  id="course" class="row container" style="margin:0 auto;background-color:rgba(255,255,255,0.6);">-->
+<!--<div class="col-2" style="height:251px;" v-for="row in rows">-->
+<!--<img :src="row.img" style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
+<!--<div style="text-align:center;"><p @click="getInfo(row.id)" style="cursor:pointer">{{row.name}}</p></div>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--<div class="col">-->
+<!--<div style="text-align:center;">-->
+<!--<div role="group" class="btn-group"><button class="btn btn-primary" type="button" style="margin-right:25px;">上一页</button></div><button class="btn btn-primary" type="button">下一页</button></div>-->
+<!--</div>-->
+
+<div style="height: 197px;"></div>
+<div class="footer-clean" style="width: 100%;position: fixed;bottom: 0">
+    <footer>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Web design</a></li>
+                        <li><a href="#">Development</a></li>
+                        <li><a href="#">Hosting</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="#">Company</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Legacy</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>Careers</h3>
+                    <ul>
+                        <li><a href="#">Job openings</a></li>
+                        <li><a href="#">Employee success</a></li>
+                        <li><a href="#">Benefits</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i
+                        class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a
+                        href="#"><i class="icon ion-social-instagram"></i></a>
+                    <p class="copyright"
+                       style="font-family:Microsoft YaHei;">刘运平© 2019</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
 <script>
-    var menu = new Vue({
-        el:'#menu',
-        data(){
+    var courses = new Vue({
+        el: '#courses',
+        data() {
             return {
-                menuitems:[],
-                times:["9:00-12:00","14:00-17:00"],
-                teachers:["liuyunping"],
+                courseTypePick: "全部",
+                courseTimePick: "全部",
+                courseTeacherPick: "全部",
+                courseTypes: ["编程开发", "语言发到1", "语言发到2", "语言发到3", "语言发到4", "语言发到5", "语言发到6"],
+                courseTeachers: ["lyp", "刘运平"],
+                courseTimes: ["9:00-12:00", "14:00-17:00"],
+
+                coursesInfo:[{
+                    courseId:"",
+                    courseName:"a基于java的",
+                    courseImg:"/assets/img/61.jpg"
+                },{
+                    courseId:"",
+                    courseName:"a基于java的",
+                    courseImg:"/assets/img/2.jpg"
+                },{
+                    courseId:"",
+                    courseName:"a基",
+                    courseImg:"/assets/img/61.jpg"
+                },{
+                    courseId:"",
+                    courseName:"a基于的",
+                    courseImg:"/assets/img/1.jpg"
+                },{
+                    courseId:"",
+                    courseName:"基于k的",
+                    courseImg:"/assets/img/2.jpg"
+                },]
             }
         },
-        methods:{
-        },
-        mounted(){
+        methods: {},
+        mounted() {
             axios.get('/course/getTypes').then((response) => {
                 console.log(response)
                 this.menuitems = response.data.data.type
@@ -104,30 +291,30 @@
 
         }
     })
-    $(function(){
-        new SelectTag({
-            child : ".sx_child", //所有筛选范围内的子类
-            over : 'on', //选中状态样式名称
-            all : ".all"
-        });
-    })
-
-    var course = new Vue({
-        el:'#course',
-        data(){
-            return {
-                rows:[{id:"1",name:"kecheng1",img:"/assets/img/1.jpg"},
-                    {id:"2",name:"kecheng2",img:"/assets/img/2.jpg"}
-                ]
-            }
-        },
-        methods:{
-            getInfo(data){
-                console.log(data)
-                location.replace('course.html?courseId='+data)
-            }
-        }
-    })
+    // $(function () {
+    //     new SelectTag({
+    //         child: ".sx_child", //所有筛选范围内的子类
+    //         over: 'on', //选中状态样式名称
+    //         all: ".all"
+    //     });
+    // })
+    //
+    // var course = new Vue({
+    //     el: '#course',
+    //     data() {
+    //         return {
+    //             rows: [{id: "1", name: "kecheng1", img: "/assets/img/1.jpg"},
+    //                 {id: "2", name: "kecheng2", img: "/assets/img/2.jpg"}
+    //             ]
+    //         }
+    //     },
+    //     methods: {
+    //         getInfo(data) {
+    //             console.log(data)
+    //             location.replace('course.html?courseId=' + data)
+    //         }
+    //     }
+    // })
 </script>
 </body>
 
