@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 public class Teacher implements Serializable {
-    private Integer id;
+    private Integer teacherId;
     private String teacherEmail;
     private String teacherName;
     private String teacherSex;

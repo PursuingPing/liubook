@@ -1,4 +1,5 @@
 package com.classbooking.web.domain;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,13 +10,11 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Course implements Serializable {
-    private Integer classId;
-    private String className;
-    private String classStartTime;
-    private String classEndTime;
-    private String classInfo;
+public class Book implements Serializable {
+
+    private Integer bookId;
+    private String studentEmail;
     private String teacherEmail;
-    private String classType;
-    private String classImg;
+    private Integer classId;
+    private String comments;
 }
