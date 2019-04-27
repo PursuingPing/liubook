@@ -23,9 +23,22 @@
     <mvc:interceptors>
     	<mvc:interceptor>
     		<!-- 拦截所有请求 -->
-    		<mvc:mapping path="/*"/>
+    		<mvc:mapping path="/**"/>
     		<!-- 自定义判断用户权限的拦截类 -->  
-    	 	<bean class="com.classbooking.web.interceptor.AuthorizedInterceptor"/>
+    	 	<bean class="com.classbooking.web.interceptor.AuthorizedInterceptor">
+                <property name="excludedUrls">
+                    <list>
+                        <value>/user/login</value>
+                        <value>/user/logout</value>
+                        <value>/user/register</value>
+                        <value>*.js</value>
+                        <value>*.css</value>
+                        <value>/html/**</value>
+                        <value>/assets/**</value>
+                    </list>
+                </property>
+            </bean>
+
     	</mvc:interceptor>
     </mvc:interceptors>
     

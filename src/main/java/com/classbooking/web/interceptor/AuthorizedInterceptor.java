@@ -2,10 +2,14 @@ package com.classbooking.web.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.druid.util.StringUtils;
 import com.classbooking.web.domain.User;
 import com.classbooking.web.util.Constants;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * 判断用户权限的Spring MVC的拦截器
@@ -13,7 +17,17 @@ import org.springframework.web.servlet.ModelAndView;
 public class AuthorizedInterceptor  implements HandlerInterceptor {
 
     /** 定义不需要拦截的请求 */
-    private static final String[] IGNORE_URI = {"/loginForm", "/login","/404.html"};
+//    private static final String[] IGNORE_URI = {"/login.html", "/home.html","/404.html","*.js","*.css"};
+
+    private List<String> excludedUrls;
+
+
+    public List<String> getExceptUrls() {
+        return excludedUrls;
+    }
+    public void setExcludedUrls(List<String> excludedUrls){
+        this.excludedUrls= excludedUrls;
+    }
 
     /**
      * 该方法需要preHandle方法的返回值为true时才会执行。
@@ -45,32 +59,40 @@ public class AuthorizedInterceptor  implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
         /** 默认用户没有登录 */
-        boolean flag = false;
         /** 获得请求的ServletPath */
         String servletPath = request.getServletPath();
         /**  判断请求是否需要拦截 */
-        for (String s : IGNORE_URI) {
-            if (servletPath.contains(s)) {
-                flag = true;
-                break;
+        String requestUri = request.getRequestURI();
+        if(requestUri.startsWith(request.getContextPath())){
+            requestUri = requestUri.substring(request.getContextPath().length(), requestUri.length());
+        }
+        //系统根目录
+        if (StringUtils.equals("/",requestUri)) {
+            return true;
+        }
+        //放行exceptUrls中配置的url
+        for (String url:excludedUrls) {
+            if (url.endsWith("/**")) {
+                if (requestUri.startsWith(url.substring(0, url.length() - 3))) {
+                    return true;
+                }
+            } else if (requestUri.startsWith(url)) {
+                return true;
             }
         }
         /** 拦截请求 */
-        if (!flag){
             /** 1.获取session中的用户  */
             User user = (User) request.getSession().getAttribute("user");
             /** 2.判断用户是否已经登录 */
             if(user == null){
-                System.out.println("拦截成功");
+                System.out.println("拦截成功"+requestUri);
                 /** 如果用户没有登录，跳转到登录页面 */
-                request.setAttribute("message", "请先登录再访问网站!");
-                request.getRequestDispatcher(Constants.LOGIN).forward(request, response);
-                return flag;
+//                request.setAttribute("message", "请先登录再访问网站!");
+//                request.getRequestDispatcher(Constants.LOGIN).forward(request, response);
+                return false;
             }else{
-                flag = true;
+                 return true;
             }
-        }
-        return flag;
 
     }
 
