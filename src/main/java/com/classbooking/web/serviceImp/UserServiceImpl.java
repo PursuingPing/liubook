@@ -4,8 +4,12 @@ import com.classbooking.web.dao.UserDao;
 import com.classbooking.web.domain.LYPResult;
 import com.classbooking.web.domain.User;
 import com.classbooking.web.service.UserService;
+import com.classbooking.web.util.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.WebUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -13,18 +17,28 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
     @Override
-    public LYPResult login(String email, String password) {
+    public User login(String email, String password , HttpServletRequest request) {
         User user;
-        user = userDao.selectByLoginnameAndPassword(email, password);
-        if(user == null){
-            return new LYPResult().setSuccess(false);
-        }
-        return new LYPResult().setData(user);
+        user = userDao.login(email, password);
+        WebUtils.setSessionAttribute(request,"user",user);
+        return user;
     }
 
     @Override
-    public LYPResult signUp(String email, String passowrd) {
-        return null;
+    public int register(User user) {
+        int ack = userDao.register(user);
+        new Thread(new MailUtil(user.getEmail(),user.getCode())).start();
+        return ack;
+    }
+
+    @Override
+    public User findByCode(String code) {
+        return userDao.findByCode(code);
+    }
+
+    @Override
+    public int update(User user) {
+        return userDao.updateUser(user);
     }
 
 }

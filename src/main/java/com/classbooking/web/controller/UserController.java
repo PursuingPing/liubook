@@ -1,12 +1,17 @@
 package com.classbooking.web.controller;
 
 import com.classbooking.web.domain.LYPResult;
+import com.classbooking.web.domain.User;
 import com.classbooking.web.service.UserService;
+import com.classbooking.web.util.CodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("user")
@@ -15,16 +20,42 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private HttpServletRequest request;
+
     @RequestMapping(value="login",method= RequestMethod.POST)
     @ResponseBody
-    public LYPResult login(String email,String password){
-        return userService.login(email,password);
+    public LYPResult login(String email, String password){
+        User user = userService.login(email,password,request);
+        return user!=null ? new LYPResult().setData(user.getEmail()) : new LYPResult().setMessage("登录失败!请检查邮箱、密码是否填错，或账号未激活");
     }
 
     @RequestMapping(value = "signUp",method = RequestMethod.POST)
     @ResponseBody
     public LYPResult signUp(String email,String password){
-        return null;
+        User user = new User();
+        user.setState(0);
+        user.setEmail(email);
+        user.setPassword(password);
+        String code = CodeUtil.generateUniqueCode();
+        user.setCode(code);
+        int ack = userService.register(user);
+        return ack==1 ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("注册失败");
     }
 
+    @GetMapping(value = "active")
+    @ResponseBody
+    public LYPResult active(String code){
+
+        User user = userService.findByCode(code);
+        if(user!=null){
+            user.setState(1);
+            user.setCode(null);
+            int ack =userService.update(user);
+            return ack==1 ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("激活失败");
+        }else{
+            return new LYPResult().setMessage("激活失败");
+        }
+
+    }
 }

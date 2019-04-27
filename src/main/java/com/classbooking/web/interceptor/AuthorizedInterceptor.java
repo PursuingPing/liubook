@@ -58,9 +58,10 @@ public class AuthorizedInterceptor  implements HandlerInterceptor {
         /** 拦截请求 */
         if (!flag){
             /** 1.获取session中的用户  */
-            User user = (User) request.getSession().getAttribute(Constants.USER_SESSION);
+            User user = (User) request.getSession().getAttribute("user");
             /** 2.判断用户是否已经登录 */
             if(user == null){
+                System.out.println("拦截成功");
                 /** 如果用户没有登录，跳转到登录页面 */
                 request.setAttribute("message", "请先登录再访问网站!");
                 request.getRequestDispatcher(Constants.LOGIN).forward(request, response);

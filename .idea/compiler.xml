@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
-      <module name="liubook" target="1.5" />
+      <module name="liubook" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
