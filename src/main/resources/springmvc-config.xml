@@ -35,6 +35,7 @@
                         <value>*.css</value>
                         <value>/html/**</value>
                         <value>/assets/**</value>
+                        <value>/unpkg.com/**</value>
                     </list>
                 </property>
             </bean>
@@ -59,5 +60,22 @@
         	<value>UTF-8</value>
         </property>
     </bean>
-    
+
+    <bean id="stringConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/plain;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="stringConverter"/>
+                <ref bean="jsonConverter" />
+            </list>
+        </property>
+    </bean>
 </beans>

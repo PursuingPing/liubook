@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
 </head>
 <body style="background:url(/assets/img/star-sky.jpg); background-position-x: initial;background-position-y: initial;
     background-size: cover;
@@ -80,7 +81,18 @@
                 console.log(tab, event);
             },
             login(){
-                
+                var postdata ={email : this.form.loginEmail,
+                    password : this.form.loginPwd
+                };
+                console.log(postdata)
+             axios.post('/user/login',
+                 Qs.stringify({
+                     email:this.form.loginEmail,
+                     password:this.form.loginPwd
+                 })
+                    ).then(function (res) {
+                    console.log(res)
+                })
             },
             signup(){
 

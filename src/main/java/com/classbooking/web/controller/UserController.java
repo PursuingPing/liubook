@@ -32,6 +32,7 @@ public class UserController {
     @RequestMapping(value="login",method= RequestMethod.POST)
     @ResponseBody
     public String login(String email, String password){
+        System.out.println(email+"  "+password);
         User user = userService.login(email,password,request);
         Dto dto = new Dto();
         if(user!=null){

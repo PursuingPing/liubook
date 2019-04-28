@@ -91,6 +91,7 @@ public class AuthorizedInterceptor  implements HandlerInterceptor {
             /** 1.获取session中的用户  */
             String tokenFormWeb = request.getHeader("Authorization");
             if( tokenFormWeb==null || tokenFormWeb==""){
+                System.out.println("拦截成功"+requestUri);
                 return false;
             }
             String user = redisUtil.get(tokenFormWeb);
