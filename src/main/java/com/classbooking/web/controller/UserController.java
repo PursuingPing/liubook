@@ -1,8 +1,11 @@
 package com.classbooking.web.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.classbooking.web.domain.Dto;
 import com.classbooking.web.domain.LYPResult;
 import com.classbooking.web.domain.User;
 import com.classbooking.web.service.UserService;
+import com.classbooking.web.serviceImp.TokenServiceImpl;
 import com.classbooking.web.util.CodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,11 +26,30 @@ public class UserController {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private TokenServiceImpl tokenService;
+
     @RequestMapping(value="login",method= RequestMethod.POST)
     @ResponseBody
-    public LYPResult login(String email, String password){
+    public String login(String email, String password){
         User user = userService.login(email,password,request);
-        return user!=null ? new LYPResult().setData(user.getEmail()) : new LYPResult().setMessage("登录失败!请检查邮箱、密码是否填错，或账号未激活");
+        Dto dto = new Dto();
+        if(user!=null){
+            String userAgent = request.getHeader("user-agent");
+            String token = tokenService.generateToken(userAgent,email);
+            user.setPassword("******");
+            tokenService.saveToken(token,user);
+
+            dto.setEmail(email);
+            dto.setIsLogin("true");
+            dto.setTokenCreatedTime(System.currentTimeMillis());
+            dto.setTokenExpiryTime(System.currentTimeMillis() + 2*60*60*1000);
+            dto.setToken(token);
+        }else{
+            dto.setIsLogin("false");
+        }
+        return JSONObject.toJSONString(dto);
+        //return user!=null ? new LYPResult().setData(user.getEmail()) : new LYPResult().setMessage("登录失败!请检查邮箱、密码是否填错，或账号未激活");
     }
 
     @RequestMapping(value = "signUp",method = RequestMethod.POST)

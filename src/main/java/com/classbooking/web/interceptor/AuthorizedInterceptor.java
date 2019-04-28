@@ -4,12 +4,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.druid.util.StringUtils;
+import com.alibaba.fastjson.JSONObject;
 import com.classbooking.web.domain.User;
 import com.classbooking.web.util.Constants;
+import com.classbooking.web.util.RedisUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 判断用户权限的Spring MVC的拦截器
@@ -21,6 +26,8 @@ public class AuthorizedInterceptor  implements HandlerInterceptor {
 
     private List<String> excludedUrls;
 
+    @Autowired
+    private RedisUtil redisUtil;
 
     public List<String> getExceptUrls() {
         return excludedUrls;
@@ -82,13 +89,23 @@ public class AuthorizedInterceptor  implements HandlerInterceptor {
         }
         /** 拦截请求 */
             /** 1.获取session中的用户  */
-            User user = (User) request.getSession().getAttribute("user");
+            String tokenFormWeb = request.getHeader("Authorization");
+            if( tokenFormWeb==null || tokenFormWeb==""){
+                return false;
+            }
+            String user = redisUtil.get(tokenFormWeb);
+            //User user = (User) request.getSession().getAttribute("user");
             /** 2.判断用户是否已经登录 */
-            if(user == null){
+            if(user==null || user==""){
                 System.out.println("拦截成功"+requestUri);
                 /** 如果用户没有登录，跳转到登录页面 */
 //                request.setAttribute("message", "请先登录再访问网站!");
 //                request.getRequestDispatcher(Constants.LOGIN).forward(request, response);
+                Map<String ,Object> result = new HashMap<>();
+                result.put("sucess",false);
+                result.put("code",1000);
+                result.put("message","用户未登录");
+                response.getWriter().print(new JSONObject(result));
                 return false;
             }else{
                  return true;

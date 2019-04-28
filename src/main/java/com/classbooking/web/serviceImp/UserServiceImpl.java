@@ -1,6 +1,7 @@
 package com.classbooking.web.serviceImp;
 
 import com.classbooking.web.dao.UserDao;
+import com.classbooking.web.domain.Dto;
 import com.classbooking.web.domain.LYPResult;
 import com.classbooking.web.domain.User;
 import com.classbooking.web.service.UserService;
