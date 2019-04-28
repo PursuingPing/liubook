@@ -55,12 +55,18 @@ public class MailUtil implements Runnable {
             // 2.2设置接收人
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             // 2.3设置邮件主题
-            message.setSubject("你的男神给你发送了一封账号激活邮件");
+            message.setSubject("LYP Class Booking System给你发送了一封账号激活邮件");
             // 2.4设置邮件内容
             String content =
-                    "<html><head></head><body><h1>这是一封激活邮件,激活请点击以下链接</h1><h3><a href='http://localhost:8080/user/active?code="
-                            + code + "'>http://localhost:8080/user/active?code=" + code
-                            + "</href></h3></body></html>";
+                    "<html><head></head><body>" +
+                            "<h1>这是一封激活邮件,激活请将以下验证码回填</h1>" +
+                            "<h3>" +
+                            "<p>" +
+                             code
+                            + "</p>" +
+                            "</h3>" +
+                            "</body>" +
+                            "</html>";
             message.setContent(content, "text/html;charset=UTF-8");
 
             // 3.发送邮件

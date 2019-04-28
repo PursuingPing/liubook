@@ -9,10 +9,7 @@ import com.classbooking.web.serviceImp.TokenServiceImpl;
 import com.classbooking.web.util.CodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,7 +29,6 @@ public class UserController {
     @RequestMapping(value="login",method= RequestMethod.POST)
     @ResponseBody
     public String login(String email, String password){
-        System.out.println(email+"  "+password);
         User user = userService.login(email,password,request);
         Dto dto = new Dto();
         if(user!=null){
@@ -56,6 +52,12 @@ public class UserController {
     @RequestMapping(value = "signUp",method = RequestMethod.POST)
     @ResponseBody
     public LYPResult signUp(String email,String password){
+        //检查邮箱是否已经注册过
+        String emailInDb = userService.findByEmail(email);
+        if(emailInDb != null && !emailInDb.equals("")){
+            //已经注册过
+            return new LYPResult().setMessage("该邮箱已注册");
+        }
         User user = new User();
         user.setState(0);
         user.setEmail(email);
@@ -66,7 +68,7 @@ public class UserController {
         return ack==1 ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("注册失败");
     }
 
-    @GetMapping(value = "active")
+    @PostMapping(value = "active")
     @ResponseBody
     public LYPResult active(String code){
 

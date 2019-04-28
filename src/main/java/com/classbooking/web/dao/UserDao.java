@@ -23,4 +23,7 @@ public interface UserDao {
 
     @Update("update login_info set email=#{email}, password=#{password},state=#{state},code=#{code} where id=#{id}")
     int updateUser(User user);
+
+    @Select("select email from login_info where email=#{email}")
+    String findByEmail(@Param("email") String email);
 }

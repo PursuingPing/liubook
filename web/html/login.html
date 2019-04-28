@@ -28,8 +28,8 @@
                     <el-form-item label="邮箱:" style="margin-left: 20%">
                         <el-input v-model="form.loginEmail" placeholder="Email" style="margin-right:200px;width: 50%"></el-input>
                     </el-form-item>
-                    <el-form-item label="密码:" style="margin-left: 20%">
-                        <el-input v-model="form.loginPwd" placeholder="Password" style="margin-right:200px;width: 50%"></el-input>
+                    <el-form-item label="密码:"  style="margin-left: 20%">
+                        <el-input v-model="form.loginPwd" placeholder="Password" show-password style="margin-right:200px;width: 50%"></el-input>
                     </el-form-item>
                     <el-form-item  style="margin-right:15%">
                         <el-button type="primary" @click="login">登录</el-button>
@@ -41,8 +41,8 @@
                     <el-form-item label="邮箱:" style="margin-left: 20%">
                         <el-input v-model="form.signEmail" placeholder="Email" style="margin-right:200px;width: 50%"></el-input>
                     </el-form-item>
-                    <el-form-item label="密码:" style="margin-left: 20%">
-                        <el-input v-model="form.sign" placeholder="Password" style="margin-right:200px;width: 50%"></el-input>
+                    <el-form-item label="密码:"  style="margin-left: 20%">
+                        <el-input v-model="form.signPwd" placeholder="Password" show-password style="margin-right:200px;width: 50%"></el-input>
                     </el-form-item>
                     <el-form-item label="验证码:" style="margin-left: 23%">
                         <el-input v-model="form.code" placeholder="code" style="margin-right:200px;width: 55%"></el-input>
@@ -60,6 +60,8 @@
 
 </div>
 <script>
+    var regEmail=/^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/;
+    var regPwd=/^[a-zA-Z]\w{6,12}$/
     var logAndSign = new Vue({
         el:"#logAndSign",
         data(){
@@ -78,28 +80,102 @@
         },
         methods:{
             handleClick(tab, event) {
-                console.log(tab, event);
+                this.form.loginPwd=""
+                this.form.signPwd=""
+                this.form.signEmail=""
+                this.form.code=""
+                this.sendShow=true
+                this.signShow=false
             },
             login(){
-                var postdata ={email : this.form.loginEmail,
-                    password : this.form.loginPwd
-                };
-                console.log(postdata)
+                if(typeof this.form.loginEmail == "undefined" || this.form.loginEmail == null || this.form.loginEmail == "" ||
+                    !regEmail.test(this.form.loginEmail)){
+                    this.$message.error("邮箱为空或者格式不对")
+                    return
+                }
+                if(typeof this.form.loginPwd == "undefined" || this.form.loginPwd == null || this.form.loginPwd == ""  ){
+                    this.$message.error("请输入密码")
+                    return
+                }
+                 var self = this
              axios.post('/user/login',
                  Qs.stringify({
                      email:this.form.loginEmail,
                      password:this.form.loginPwd
                  })
+
                     ).then(function (res) {
-                    console.log(res)
-                })
+                        console.log(res.data.isLogin)
+                        if(res.data.isLogin =='true'){
+                            location.replace('html/home.html?user=' + res.data.email)
+                        }else{
+                            self.$message.error('错了哦，检查邮箱及密码ヽ(ー_ー)ノ');
+                        }
+                    }).catch(function (error) {
+                          console.log(error)
+                    })
+                    
             },
             signup(){
+                if(typeof this.form.code == "undefined" || this.form.code == null || this.form.code == ""  ){
+                    this.$message.error("请填写验证码")
+                    return
+                }
+                var self = this
+                axios.post('/user/active',
+                    Qs.stringify({
+                        code: this.form.code,
+                    })
+                ).then(function (res) {
+                    if(res.data.success ==true){
+                        self.$message({
+                            message:"校验通过，快去登录吧(✪ω✪)",
+                            type: 'success'
+                        })
+                        self.signShow=false
+                        self.sendShow=true
+                    }else{
+                        self.$message.error(res.data.message)
 
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                })
             },
             send(){
-                this.sendShow=false
-                this.signShow=true
+                if(typeof this.form.signEmail == "undefined" || this.form.signEmail == null || this.form.signEmail == "" ||
+                !regEmail.test(this.form.signEmail)){
+                    this.$message.error("邮箱为空或者格式不对")
+                    return
+                }
+                if(typeof this.form.signPwd == "undefined" || this.form.signPwd == null || this.form.signPwd == ""  ){
+                    this.$message.error("请设置密码")
+                    return
+                }
+                var self = this
+                axios.post('/user/signUp',
+                    Qs.stringify({
+                        email: this.form.signEmail,
+                        password:this.form.signPwd
+                    })
+                ).then(function (res) {
+                    console.log(res)
+                    console.log(res.data)
+                    if(res.data.success ==true){
+                        self.$message({
+                            message:"验证码已发送至邮箱，请注意查收(^_−)☆",
+                            type: 'success'
+                        })
+                        self.signShow=true
+                        self.sendShow=false
+                    }else{
+                        self.$message.error(res.data.message)
+                        self.signShow=false
+                        self.sendShow=true
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                })
             },
         }
     })

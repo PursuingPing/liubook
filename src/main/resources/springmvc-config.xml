@@ -29,13 +29,14 @@
                 <property name="excludedUrls">
                     <list>
                         <value>/user/login</value>
-                        <value>/user/logout</value>
-                        <value>/user/register</value>
+                        <value>/user/active</value>
+                        <value>/user/signUp</value>
                         <value>*.js</value>
                         <value>*.css</value>
                         <value>/html/**</value>
                         <value>/assets/**</value>
                         <value>/unpkg.com/**</value>
+                        <value>/cdn*/**</value>
                     </list>
                 </property>
             </bean>

@@ -54,4 +54,9 @@ public class UserDaoTest {
             System.out.println(CodeUtil.generateUniqueCode());
         }
     }
+
+    @Test
+    public void testFindByEmail(){
+        System.out.println(userDao.findByEmail("1140131901@qq.com"));
+    }
 }
