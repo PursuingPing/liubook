@@ -95,7 +95,7 @@ public class AuthorizedInterceptor  implements HandlerInterceptor {
                 Map<String ,Object> result = new HashMap<>();
                 result.put("sucess",false);
                 result.put("code",1000);
-                result.put("message","用户未登录");
+                result.put("message","Wihout Auth please GO TO LOG IN firstly");
                 response.getWriter().print(new JSONObject(result));
                 return false;
             }
@@ -109,8 +109,8 @@ public class AuthorizedInterceptor  implements HandlerInterceptor {
 //                request.getRequestDispatcher(Constants.LOGIN).forward(request, response);
                 Map<String ,Object> result = new HashMap<>();
                 result.put("sucess",false);
-                result.put("code",1000);
-                result.put("message","用户未登录");
+                result.put("code",1001);
+                result.put("message","Wihout Auth please GO TO LOG IN firstly");
                 response.getWriter().print(new JSONObject(result));
                 return false;
             }else{
