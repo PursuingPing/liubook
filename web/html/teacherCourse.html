@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
 
 </head>
 <body>
@@ -50,9 +51,10 @@
                                         <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{course.courseName}} <br>
                                         </p>
                                         <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{course.courseType}}</p>
+                                        <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">人数限制:</a> {{course.courseNums}}</p>
                                         <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">开始时间:</a> {{course.courseStartTime}} </p>
                                         <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">结束时间:</a> {{course.courseEndTime}}</p>
-                                        <div style="margin-top:30px;margin-left:75%;width:200px;">
+                                        <div style="margin-top:20px;margin-left:75%;width:200px;">
                                             <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="chakanyuyue(course)">预约情况</button>
                                             <el-dialog title ="预约情况" :visible.sync="course.yuyueVisible">
                                                 <el-table
@@ -121,7 +123,7 @@
             </div>
         </el-card>
             <div style="text-align: center;margin-top: 10px">
-                <el-button icon="el-icon-plus" circle @click="addCourse(teacherEmail)" style="width: 50px;height: 50px;background-color: rgb(0,123,255);color:rgb(255,255,255)"></el-button>
+                <el-button icon="el-icon-plus" circle @click="addCoursesFormVisible = true" style="width: 50px;height: 50px;background-color: rgb(0,123,255);color:rgb(255,255,255)"></el-button>
             </div>
             <el-dialog title="增加课程" :visible.sync="addCoursesFormVisible" style="padding-top: 0px">
                 <el-tabs type="border-card">
@@ -141,6 +143,9 @@
                             </el-form-item>
                             <el-form-item label="课程名" :label-width="formLabelWidth">
                                 <el-input v-model="addForm.courseName"style="width: 200px"  autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="课程人数" :label-width="formLabelWidth">
+                                <el-input v-model="addForm.courseNums"style="width: 200px"  autocomplete="off"></el-input>
                             </el-form-item>
                             <el-form-item label="课程类别" :label-width="formLabelWidth">
                                 <!--<el-input v-model="addForm.courseType" style="width: 200px"  autocomplete="off"></el-input>-->
@@ -204,6 +209,17 @@
                                     </el-option>
                                 </el-select>
                             </el-form-item>
+                            <el-form-item label="生效时间" :label-width="formLabelWidth">
+                                <el-date-picker
+                                        value-format="yyyy-MM-dd"
+                                        v-model="addForm.range"
+                                        type="daterange"
+                                        range-separator="-"
+                                        start-placeholder="开始日期"
+                                        end-placeholder="结束日期">
+                                </el-date-picker>
+
+                            </el-form-item>
                             <el-form-item label="每周" :label-width="formLabelWidth">
                                 <el-select  multiple v-model="addForm.unit" placeholder="请选择">
                                     <el-option
@@ -240,7 +256,7 @@
                 </el-tabs>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="addCoursesFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="addCoursesFormVisible = false">确 定</el-button>
+                    <el-button type="primary" @click="addCourse(teacher.email)">确 定</el-button>
                 </div>
             </el-dialog>
     </el-tab-pane>
@@ -258,9 +274,10 @@
                                             <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{course.courseName}} <br>
                                             </p>
                                             <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{course.courseType}}</p>
+                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">人数限制:</a> {{course.courseNums}}</p>
                                             <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">开始时间:</a> {{course.courseStartTime}} </p>
                                             <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">结束时间:</a> {{course.courseEndTime}}</p>
-                                            <div style="margin-top:30px;margin-left:75%;width:200px;">
+                                            <div style="margin-top:20px;margin-left:75%;width:200px;">
                                                 <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="xiugaiCourse(course)">修改</button>
                                                 <el-dialog title ="修改课程" :visible.sync="course.xiugaiVisible">
                                                     <el-form :model="course">
@@ -278,6 +295,9 @@
                                                         </el-form-item>
                                                         <el-form-item label="课程名" :label-width="formLabelWidth">
                                                             <el-input v-model="course.courseName"style="width: 200px"  autocomplete="off"></el-input>
+                                                        </el-form-item>
+                                                        <el-form-item label="课程人数" :label-width="formLabelWidth">
+                                                            <el-input v-model="addForm.courseNums"style="width: 200px"  autocomplete="off"></el-input>
                                                         </el-form-item>
                                                         <el-form-item label="课程类别" :label-width="formLabelWidth">
                                                             <el-select v-model="course.courseType" placeholder="请选择">
@@ -341,41 +361,15 @@
     </el-tabs>
 
 </div>
-<div style="height: 197px;"></div>
-<div class="footer-clean" style="width: 100%;position: fixed;bottom: 0">
+<div style="height: 100px;"></div>
+<div class="footer-clean" style="width: 100%;height:100px;position: fixed;bottom: 0">
     <footer>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Services</h3>
-                    <ul>
-                        <li><a href="#">Web design</a></li>
-                        <li><a href="#">Development</a></li>
-                        <li><a href="#">Hosting</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>About</h3>
-                    <ul>
-                        <li><a href="#">Company</a></li>
-                        <li><a href="#">Team</a></li>
-                        <li><a href="#">Legacy</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Careers</h3>
-                    <ul>
-                        <li><a href="#">Job openings</a></li>
-                        <li><a href="#">Employee success</a></li>
-                        <li><a href="#">Benefits</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a>
+        <div class="container" style="text-align: center">
+                <div>
                     <p class="copyright"
-                       style="font-family:Microsoft YaHei;">刘运平© 2019</p>
+                       style="font-family:Microsoft YaHei;">版权所有：刘运平© 2019</p>
                 </div>
             </div>
-        </div>
     </footer>
 </div>
 <script src="/assets/js/jquery.min.js"></script>
@@ -406,6 +400,21 @@
     }
 </style>
 <script>
+    isEmpty = function (obj) {
+        //检验null和undefined
+        if (!obj && obj !== 0 && obj !== '') {
+            return true;
+        }
+        //检验数组
+        if (Array.prototype.isPrototypeOf(obj) && obj.length === 0) {
+            return true;
+        }
+        //检验对象
+        if (Object.prototype.isPrototypeOf(obj) && Object.keys(obj).length === 0) {
+            return true;
+        }
+        return false;
+    }
     var course = new Vue({
         el:'#course',
         data(){
@@ -423,6 +432,7 @@
                     courseEndTime:"2019-04-05 06:40:01",
                     courseInfo:"课程介绍",
                     couresImg:"1.png",
+                    courseNums:3,
                     yuyueVisible:false,
                     pinglunVisible:false,
                     xiugaiVisible:false,
@@ -436,6 +446,7 @@
                     courseEndTime:"2019-04-05 06:42:01",
                     courseInfo:"课程介绍2",
                     couresImg:"2.png",
+                    courseNums:3,
                     yuyueVisible:false,
                     pinglunVisible:false,
                     xiugaiVisible:false,
@@ -475,27 +486,29 @@
                     courseEndTime:"2019-04-05 06:40:01",
                     courseInfo:"课程介绍",
                     courseImg:"",
+                    courseNums:5,
+                    range:[],
                     unit: [],
-                    times:[new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
+                    times:[new Date(2016, 9, 10, 0, 0), new Date(2016, 9, 10, 0, 0)],
                 },
                 teacher:{
                     name:"LYP",
-                    email:"1140131901@qq.com"
+                    email:"123@qq.com"
                 },
                 options: [{
-                    value: '1',
+                    value: 'MONDAY',
                     label: '周一'
                 }, {
-                    value: '2',
+                    value: 'TUESDAY',
                     label: '周二'
                 }, {
-                    value: '3',
+                    value: 'WEDNESDAY',
                     label: '周三'
                 }, {
-                    value: '4',
+                    value: 'THURSDAY',
                     label: '周四'
                 }, {
-                    value: '5',
+                    value: 'FRIDAY',
                     label: '周五'
                 }],
                 courseTypes: [{
@@ -557,10 +570,102 @@
                 //查数据库填充评论表
 
             },
-            addCourse(teacherEmail){
+            addCourse(tEmail){
                 //增加课程
-                this.addCoursesFormVisible=true
-
+                var self = this
+                self.addCoursesFormVisible=true
+                if(isEmpty(this.addForm.unit)){
+                    //一次性课程
+                    axios.post('/course/addCourse',
+                        Qs.stringify({
+                            className :this.addForm.courseName,
+                            classStartTime:this.addForm.courseStartTime,
+                            classEndTime: this.addForm.courseEndTime,
+                            classInfo : this.addForm.courseInfo,
+                            teacherEmail :tEmail,
+                            classType:this.addForm.courseType,
+                            classImg: this.addForm.courseImg,
+                            calssNums:this.addForm.courseNums
+                        })
+                    ).then(function (res) {
+                        console.log(res)
+                        console.log(res.data)
+                        if(res.data.success ==true){
+                            self.$message({
+                                message:"课程添加成功(^_−)☆",
+                                type: 'success'
+                            })
+                            self.addCoursesFormVisible=false
+                        }else{
+                            self.$message.error(res.data.message)
+                        }
+                    }).catch(function (error) {
+                        console.log(error)
+                    })
+                }else{
+                    //周期性课程
+                    // var rangs = {"range":this.addForm.range}
+                //     axios.post('/course/addCycleCourse',
+                //         {
+                //             className:this.addForm.courseName,
+                //             range:rangs,
+                //             times:this.addForm.times,
+                //             units:this.addForm.unit,
+                //             classInfo:this.addForm.courseInfo,
+                //             teacherEmail:tEmail,
+                //             classType:this.addForm.courseType,
+                //             classImg:this.addForm.courseImg,
+                //             calssNums:this.addForm.courseNums
+                //         },{
+                //         headers:{'Content-Type':'application/x-www-form-urlencoded'}
+                //     }
+                //     ).then(function (res) {
+                //         console.log(res)
+                //         console.log(res.data)
+                //         if(res.data.success ==true){
+                //             self.$message({
+                //                 message:"周期性课程添加成功(^_−)☆",
+                //                 type: 'success'
+                //             })
+                //             self.addCoursesFormVisible=false
+                //         }else{
+                //             self.$message.error(res.data.message)
+                //         }
+                //     }).catch(function (error) {
+                //         console.log(error)
+                //     })
+                    $.ajax({
+                        url:"/course/addCycleCourse",
+                        data:{
+                            className: this.addForm.courseName,
+                            range: this.addForm.range,
+                            times: this.addForm.times,
+                            units: this.addForm.unit,
+                            classInfo: this.addForm.courseInfo,
+                            teacherEmail: tEmail,
+                            classType: this.addForm.courseType,
+                            classImg: this.addForm.courseImg,
+                            calssNums: this.addForm.courseNums
+                        },
+                        type:"post",
+                        traditional:true,
+                        success:function (res) {
+                            console.log(res)
+                            if (res.success == true) {
+                                self.$message({
+                                    message: "周期性课程添加成功(^_−)☆",
+                                    type: 'success'
+                                })
+                                self.addCoursesFormVisible = false
+                            } else {
+                                self.$message.error(res.data.message)
+                            }
+                        },
+                        error:function (error) {
+                            console.log(error)
+                        }
+                    })
+                 }
             },
             xiugaiCourse(course){
                 //修改课程

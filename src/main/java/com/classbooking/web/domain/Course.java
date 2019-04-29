@@ -19,4 +19,19 @@ public class Course implements Serializable {
     private String classType;
     private String classImg;
     private Integer classNums;
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "classId=" + classId +
+                ", className='" + className + '\'' +
+                ", classStartTime='" + classStartTime + '\'' +
+                ", classEndTime='" + classEndTime + '\'' +
+                ", classInfo='" + classInfo + '\'' +
+                ", teacherEmail='" + teacherEmail + '\'' +
+                ", classType='" + classType + '\'' +
+                ", classImg='" + classImg + '\'' +
+                ", classNums=" + classNums +
+                '}';
+    }
 }

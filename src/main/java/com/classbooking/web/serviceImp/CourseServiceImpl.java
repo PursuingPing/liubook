@@ -4,6 +4,7 @@ import com.classbooking.web.dao.CourseDao;
 import com.classbooking.web.dao.TeacherDao;
 import com.classbooking.web.domain.Course;
 import com.classbooking.web.service.CourseService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private TeacherDao teacherDao;
+
+    private static Logger LOG = Logger.getLogger(CourseServiceImpl.class);
+
     @Override
     public List<Course> getAllCourse() {
-        return courseDao.selectAllClass();
+        return courseDao.getAllCourses();
     }
 
     @Override
@@ -29,6 +33,13 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<String> getAllTeachersName() {
         return teacherDao.getAllTeachersName();
+    }
+
+    @Override
+    public boolean addCourse(Course course) {
+        int r = courseDao.addCourse(course);
+        LOG.info("增加成功");
+        return r == 1;
     }
 
 }

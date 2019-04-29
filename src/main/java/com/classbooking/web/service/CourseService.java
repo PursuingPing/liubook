@@ -10,4 +10,6 @@ public interface CourseService {
     List<String> getTypes();
 
     List<String> getAllTeachersName();
+
+    boolean addCourse(Course course);
 }
