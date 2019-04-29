@@ -69,5 +69,6 @@ public interface CourseDao {
     })
     Course getCourseById(@Param("classId") int classId);
 
-
+    @Delete("delete from class_info where class_id=#{classId}")
+    int deleteCourseById(@Param("classId") int classId);
 }

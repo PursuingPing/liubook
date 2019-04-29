@@ -97,4 +97,9 @@ public class CourseDaoTest{
         courseDao.updateCourse(course);
         testGetCourseById();
     }
+
+    @Test
+    public void testDeleteCourseById(){
+        System.out.println(courseDao.deleteCourseById(25));
+    }
 }

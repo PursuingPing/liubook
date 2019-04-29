@@ -38,7 +38,66 @@
 <div class="container" id="course">
     <el-tabs value="first" type="border-card">
         <el-tab-pane label="课程列表" name="first">
-            <el-card class="box-card" shadow="hover" v-for="course in courses" style="margin-top: 5px">
+            <el-dialog title ="预约情况" :visible.sync="yuyueVisible">
+                <el-table
+                        :data="yuyueData"
+                        style="width: 100%">
+                    <el-table-column
+                            fixed="left"
+                            prop="studentName"
+                            label="姓名"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="yuyueTime"
+                            label="时间"
+                            width="180">
+                    </el-table-column>
+                    <el-table-column
+                            prop="studentEmail"
+                            label="Email">
+                    </el-table-column>
+                </el-table>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="yuyueVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="yuyueVisible = false">确 定</el-button>
+                </div>
+            </el-dialog>
+
+            <el-dialog title ="评价" :visible.sync="pinglunVisible">
+                <el-table
+                        :data="pinglunData"
+                        style="width: 100%">
+                    <el-table-column
+                            fixed="left"
+                            prop="name"
+                            label="姓名"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="date"
+                            label="时间"
+                            width="180">
+                    </el-table-column>
+
+                    <el-table-column
+                            prop="stars"
+                            label="评论星级"
+                            width="80px">
+                    </el-table-column>
+                    <el-table-column
+                            prop="comments"
+                            label="评论">
+                    </el-table-column>
+                </el-table>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="pinglunVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="pinglunVisible = false">确 定</el-button>
+                </div>
+            </el-dialog>
+
+
+            <el-card class="box-card" shadow="hover" v-for="c in courses" style="margin-top: 5px">
             <div  style="margin-bottom:10px;">
                 <div class="media">
                     <div></div>
@@ -48,71 +107,71 @@
                             <div class="media-body" style="overflow:visible;">
                                 <div class="row" style="margin-left:16px;">
                                     <div class="col-md-12">
-                                        <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{course.courseName}} <br>
+                                        <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{c.className}} <br>
                                         </p>
-                                        <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{course.courseType}}</p>
-                                        <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">人数限制:</a> {{course.courseNums}}</p>
-                                        <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">开始时间:</a> {{course.courseStartTime}} </p>
-                                        <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">结束时间:</a> {{course.courseEndTime}}</p>
+                                        <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{c.classType}}</p>
+                                        <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">人数限制:</a> {{c.classNums}}</p>
+                                        <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">开始时间:</a> {{c.classStartTime}} </p>
+                                        <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">结束时间:</a> {{c.classEndTime}}</p>
                                         <div style="margin-top:20px;margin-left:75%;width:200px;">
-                                            <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="chakanyuyue(course)">预约情况</button>
-                                            <el-dialog title ="预约情况" :visible.sync="course.yuyueVisible">
-                                                <el-table
-                                                        :data="yuyueData"
-                                                        style="width: 100%">
-                                                    <el-table-column
-                                                            fixed="left"
-                                                            prop="studentName"
-                                                            label="姓名"
-                                                            width="100">
-                                                    </el-table-column>
-                                                    <el-table-column
-                                                            prop="yuyueTime"
-                                                            label="时间"
-                                                            width="180">
-                                                    </el-table-column>
-                                                    <el-table-column
-                                                            prop="studentEmail"
-                                                            label="Email">
-                                                    </el-table-column>
-                                                </el-table>
-                                                <div slot="footer" class="dialog-footer">
-                                                    <el-button @click="course.yuyueVisible = false">取 消</el-button>
-                                                    <el-button type="primary" @click="course.yuyueVisible = false">确 定</el-button>
-                                                </div>
-                                            </el-dialog>
-                                            <button class="btn btn-primary" type="button" @click = "chakanpinglun(course)" style="font-family:Microsoft YaHei;">查看评论</button>
-                                            <el-dialog title ="评价" :visible.sync="course.pinglunVisible">
-                                                <el-table
-                                                        :data="pinglunData"
-                                                        style="width: 100%">
-                                                    <el-table-column
-                                                            fixed="left"
-                                                            prop="name"
-                                                            label="姓名"
-                                                            width="100">
-                                                    </el-table-column>
-                                                    <el-table-column
-                                                            prop="date"
-                                                            label="时间"
-                                                            width="180">
-                                                    </el-table-column>
+                                            <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="chakanyuyue(c)">预约情况</button>
+                                            <!--<el-dialog title ="预约情况" :visible.sync="course.yuyueVisible">-->
+                                                <!--<el-table-->
+                                                        <!--:data="yuyueData"-->
+                                                        <!--style="width: 100%">-->
+                                                    <!--<el-table-column-->
+                                                            <!--fixed="left"-->
+                                                            <!--prop="studentName"-->
+                                                            <!--label="姓名"-->
+                                                            <!--width="100">-->
+                                                    <!--</el-table-column>-->
+                                                    <!--<el-table-column-->
+                                                            <!--prop="yuyueTime"-->
+                                                            <!--label="时间"-->
+                                                            <!--width="180">-->
+                                                    <!--</el-table-column>-->
+                                                    <!--<el-table-column-->
+                                                            <!--prop="studentEmail"-->
+                                                            <!--label="Email">-->
+                                                    <!--</el-table-column>-->
+                                                <!--</el-table>-->
+                                                <!--<div slot="footer" class="dialog-footer">-->
+                                                    <!--<el-button @click="course.yuyueVisible = false">取 消</el-button>-->
+                                                    <!--<el-button type="primary" @click="course.yuyueVisible = false">确 定</el-button>-->
+                                                <!--</div>-->
+                                            <!--</el-dialog>-->
+                                            <button class="btn btn-primary" type="button" @click = "chakanpinglun(c)" style="font-family:Microsoft YaHei;">查看评论</button>
+                                            <!--<el-dialog title ="评价" :visible.sync="course.pinglunVisible">-->
+                                                <!--<el-table-->
+                                                        <!--:data="pinglunData"-->
+                                                        <!--style="width: 100%">-->
+                                                    <!--<el-table-column-->
+                                                            <!--fixed="left"-->
+                                                            <!--prop="name"-->
+                                                            <!--label="姓名"-->
+                                                            <!--width="100">-->
+                                                    <!--</el-table-column>-->
+                                                    <!--<el-table-column-->
+                                                            <!--prop="date"-->
+                                                            <!--label="时间"-->
+                                                            <!--width="180">-->
+                                                    <!--</el-table-column>-->
 
-                                                    <el-table-column
-                                                            prop="stars"
-                                                            label="评论星级"
-                                                            width="80px">
-                                                    </el-table-column>
-                                                    <el-table-column
-                                                            prop="comments"
-                                                            label="评论">
-                                                    </el-table-column>
-                                                </el-table>
-                                                <div slot="footer" class="dialog-footer">
-                                                    <el-button @click="course.pinglunVisible = false">取 消</el-button>
-                                                    <el-button type="primary" @click="course.pinglunVisible = false">确 定</el-button>
-                                                </div>
-                                            </el-dialog>
+                                                    <!--<el-table-column-->
+                                                            <!--prop="stars"-->
+                                                            <!--label="评论星级"-->
+                                                            <!--width="80px">-->
+                                                    <!--</el-table-column>-->
+                                                    <!--<el-table-column-->
+                                                            <!--prop="comments"-->
+                                                            <!--label="评论">-->
+                                                    <!--</el-table-column>-->
+                                                <!--</el-table>-->
+                                                <!--<div slot="footer" class="dialog-footer">-->
+                                                    <!--<el-button @click="course.pinglunVisible = false">取 消</el-button>-->
+                                                    <!--<el-button type="primary" @click="course.pinglunVisible = false">确 定</el-button>-->
+                                                <!--</div>-->
+                                            <!--</el-dialog>-->
                                         </div>
                                     </div>
                                 </div>
@@ -261,7 +320,65 @@
             </el-dialog>
     </el-tab-pane>
         <el-tab-pane label="修改与删除" name="second">
-            <el-card class="box-card" shadow="hover" v-for="course in courses" style="margin-top: 5px">
+            <el-dialog title ="修改课程" :visible.sync="xiugaiVisible">
+                <el-form :model="course">
+                    <el-form-item label="课程图片" :label-width="formLabelWidth">
+                        <el-upload
+                                class="avatar-uploader"
+                                action="http://localhost:8080/assets/img"
+                                :show-file-list="false"
+                                :on-success="handleAvatarSuccess"
+                                :before-upload="beforeAvatarUpload">
+                            <img v-if="course.classImg" :src="course.classImg" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+
+                    </el-form-item>
+                    <el-form-item label="课程名" :label-width="formLabelWidth">
+                        <el-input v-model="course.className"style="width: 200px"  autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="课程人数" :label-width="formLabelWidth">
+                        <el-input v-model="course.classNums"style="width: 200px"  autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="课程类别" :label-width="formLabelWidth">
+                        <el-select v-model="course.classType" placeholder="请选择">
+                            <el-option
+                                    v-for="item in courseTypes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                        <!--<el-input v-model="xiugaiForm.courseType" style="width: 200px"  autocomplete="off"></el-input>-->
+                    </el-form-item>
+                    <el-form-item label="开始时间" :label-width="formLabelWidth">
+                        <!--<el-input v-model="addForm.courseStartTime" style="width: 200px"  autocomplete="off"></el-input>-->
+                        <el-date-picker
+                                value-format="yyyy-MM-dd HH:mm:ss"
+                                v-model="course.classStartTime"
+                                type="datetime"
+                                placeholder="选择开始日期时间">
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="结束时间" :label-width="formLabelWidth">
+                        <el-date-picker
+                                value-format="yyyy-MM-dd HH:mm:ss"
+                                v-model="course.classEndTime"
+                                type="datetime"
+                                placeholder="选择结束日期时间">
+                        </el-date-picker>
+                        <!--<el-input v-model="addForm.courseEndTime" style="width: 200px"  autocomplete="off"></el-input>-->
+                    </el-form-item>
+                    <el-form-item label="课程介绍" :label-width="formLabelWidth">
+                        <el-input type="textarea"  v-model="course.classInfo" style="width: 300px;height:80px "  autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="xiugaiVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="xiugaiVisible = false">确 定</el-button>
+                </div>
+            </el-dialog>
+            <el-card class="box-card" shadow="hover" v-for="c in courses" style="margin-top: 5px">
                 <div  style="margin-bottom:10px;">
                     <div class="media">
                         <div></div>
@@ -271,73 +388,73 @@
                                 <div class="media-body" style="overflow:visible;">
                                     <div class="row" style="margin-left:16px;">
                                         <div class="col-md-12">
-                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{course.courseName}} <br>
+                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{c.className}} <br>
                                             </p>
-                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{course.courseType}}</p>
-                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">人数限制:</a> {{course.courseNums}}</p>
-                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">开始时间:</a> {{course.courseStartTime}} </p>
-                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">结束时间:</a> {{course.courseEndTime}}</p>
+                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{c.classType}}</p>
+                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">人数限制:</a> {{c.classNums}}</p>
+                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">开始时间:</a> {{c.classStartTime}} </p>
+                                            <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">结束时间:</a> {{c.classEndTime}}</p>
                                             <div style="margin-top:20px;margin-left:75%;width:200px;">
-                                                <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="xiugaiCourse(course)">修改</button>
-                                                <el-dialog title ="修改课程" :visible.sync="course.xiugaiVisible">
-                                                    <el-form :model="course">
-                                                        <el-form-item label="课程图片" :label-width="formLabelWidth">
-                                                            <el-upload
-                                                                    class="avatar-uploader"
-                                                                    action="http://localhost:8080/assets/img"
-                                                                    :show-file-list="false"
-                                                                    :on-success="handleAvatarSuccess"
-                                                                    :before-upload="beforeAvatarUpload">
-                                                                <img v-if="course.courseImg" :src="course.courseImg" class="avatar">
-                                                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                                                            </el-upload>
+                                                <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="xiugaiCourse(c)">修改</button>
+                                                <!--<el-dialog title ="修改课程" :visible.sync="course.xiugaiVisible">-->
+                                                    <!--<el-form :model="course">-->
+                                                        <!--<el-form-item label="课程图片" :label-width="formLabelWidth">-->
+                                                            <!--<el-upload-->
+                                                                    <!--class="avatar-uploader"-->
+                                                                    <!--action="http://localhost:8080/assets/img"-->
+                                                                    <!--:show-file-list="false"-->
+                                                                    <!--:on-success="handleAvatarSuccess"-->
+                                                                    <!--:before-upload="beforeAvatarUpload">-->
+                                                                <!--<img v-if="course.courseImg" :src="course.courseImg" class="avatar">-->
+                                                                <!--<i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
+                                                            <!--</el-upload>-->
 
-                                                        </el-form-item>
-                                                        <el-form-item label="课程名" :label-width="formLabelWidth">
-                                                            <el-input v-model="course.courseName"style="width: 200px"  autocomplete="off"></el-input>
-                                                        </el-form-item>
-                                                        <el-form-item label="课程人数" :label-width="formLabelWidth">
-                                                            <el-input v-model="addForm.courseNums"style="width: 200px"  autocomplete="off"></el-input>
-                                                        </el-form-item>
-                                                        <el-form-item label="课程类别" :label-width="formLabelWidth">
-                                                            <el-select v-model="course.courseType" placeholder="请选择">
-                                                                <el-option
-                                                                        v-for="item in courseTypes"
-                                                                        :key="item.value"
-                                                                        :label="item.label"
-                                                                        :value="item.value">
-                                                                </el-option>
-                                                            </el-select>
-                                                            <!--<el-input v-model="xiugaiForm.courseType" style="width: 200px"  autocomplete="off"></el-input>-->
-                                                        </el-form-item>
-                                                        <el-form-item label="开始时间" :label-width="formLabelWidth">
-                                                            <!--<el-input v-model="addForm.courseStartTime" style="width: 200px"  autocomplete="off"></el-input>-->
-                                                            <el-date-picker
-                                                                    value-format="yyyy-MM-dd HH:mm:ss"
-                                                                    v-model="course.courseStartTime"
-                                                                    type="datetime"
-                                                                    placeholder="选择开始日期时间">
-                                                            </el-date-picker>
-                                                        </el-form-item>
-                                                        <el-form-item label="结束时间" :label-width="formLabelWidth">
-                                                            <el-date-picker
-                                                                    value-format="yyyy-MM-dd HH:mm:ss"
-                                                                    v-model="course.courseEndTime"
-                                                                    type="datetime"
-                                                                    placeholder="选择结束日期时间">
-                                                            </el-date-picker>
-                                                            <!--<el-input v-model="addForm.courseEndTime" style="width: 200px"  autocomplete="off"></el-input>-->
-                                                        </el-form-item>
-                                                        <el-form-item label="课程介绍" :label-width="formLabelWidth">
-                                                            <el-input type="textarea"  v-model="course.courseInfo" style="width: 300px;height:80px "  autocomplete="off"></el-input>
-                                                        </el-form-item>
-                                                    </el-form>
-                                                    <div slot="footer" class="dialog-footer">
-                                                        <el-button @click="course.xiugaiVisible = false">取 消</el-button>
-                                                        <el-button type="primary" @click="course.xiugaiVisible = false">确 定</el-button>
-                                                    </div>
-                                                </el-dialog>
-                                                <button class="btn btn-primary" type="button" @click = "shanchuCourse(course)" style="font-family:Microsoft YaHei;">删除</button>
+                                                        <!--</el-form-item>-->
+                                                        <!--<el-form-item label="课程名" :label-width="formLabelWidth">-->
+                                                            <!--<el-input v-model="course.courseName"style="width: 200px"  autocomplete="off"></el-input>-->
+                                                        <!--</el-form-item>-->
+                                                        <!--<el-form-item label="课程人数" :label-width="formLabelWidth">-->
+                                                            <!--<el-input v-model="addForm.courseNums"style="width: 200px"  autocomplete="off"></el-input>-->
+                                                        <!--</el-form-item>-->
+                                                        <!--<el-form-item label="课程类别" :label-width="formLabelWidth">-->
+                                                            <!--<el-select v-model="course.courseType" placeholder="请选择">-->
+                                                                <!--<el-option-->
+                                                                        <!--v-for="item in courseTypes"-->
+                                                                        <!--:key="item.value"-->
+                                                                        <!--:label="item.label"-->
+                                                                        <!--:value="item.value">-->
+                                                                <!--</el-option>-->
+                                                            <!--</el-select>-->
+                                                            <!--&lt;!&ndash;<el-input v-model="xiugaiForm.courseType" style="width: 200px"  autocomplete="off"></el-input>&ndash;&gt;-->
+                                                        <!--</el-form-item>-->
+                                                        <!--<el-form-item label="开始时间" :label-width="formLabelWidth">-->
+                                                            <!--&lt;!&ndash;<el-input v-model="addForm.courseStartTime" style="width: 200px"  autocomplete="off"></el-input>&ndash;&gt;-->
+                                                            <!--<el-date-picker-->
+                                                                    <!--value-format="yyyy-MM-dd HH:mm:ss"-->
+                                                                    <!--v-model="course.courseStartTime"-->
+                                                                    <!--type="datetime"-->
+                                                                    <!--placeholder="选择开始日期时间">-->
+                                                            <!--</el-date-picker>-->
+                                                        <!--</el-form-item>-->
+                                                        <!--<el-form-item label="结束时间" :label-width="formLabelWidth">-->
+                                                            <!--<el-date-picker-->
+                                                                    <!--value-format="yyyy-MM-dd HH:mm:ss"-->
+                                                                    <!--v-model="course.courseEndTime"-->
+                                                                    <!--type="datetime"-->
+                                                                    <!--placeholder="选择结束日期时间">-->
+                                                            <!--</el-date-picker>-->
+                                                            <!--&lt;!&ndash;<el-input v-model="addForm.courseEndTime" style="width: 200px"  autocomplete="off"></el-input>&ndash;&gt;-->
+                                                        <!--</el-form-item>-->
+                                                        <!--<el-form-item label="课程介绍" :label-width="formLabelWidth">-->
+                                                            <!--<el-input type="textarea"  v-model="course.courseInfo" style="width: 300px;height:80px "  autocomplete="off"></el-input>-->
+                                                        <!--</el-form-item>-->
+                                                    <!--</el-form>-->
+                                                    <!--<div slot="footer" class="dialog-footer">-->
+                                                        <!--<el-button @click="course.xiugaiVisible = false">取 消</el-button>-->
+                                                        <!--<el-button type="primary" @click="course.xiugaiVisible = false">确 定</el-button>-->
+                                                    <!--</div>-->
+                                                <!--</el-dialog>-->
+                                                <button class="btn btn-primary" type="button" @click = "shanchuCourse(c)" style="font-family:Microsoft YaHei;">删除</button>
                                                 <!--<el-dialog title ="评价" :visible.sync="course.shanchuVisible">-->
 
                                                     <!--<div slot="footer" class="dialog-footer">-->
@@ -423,34 +540,38 @@
                 inputWidth:'60px',
                 formLabelWidth:'38%',
                 addCoursesFormVisible: false,
+                yuyueVisible:false,
+                pinglunVisible:false,
+                xiugaiVisible:false,
+                shanchuVisible:false,
+                course:{
+                    classId:"1",
+                    className:"SSM",
+                    classType:"编程开发",
+                    classStartTime:"2019-04-05 06:00:01",
+                    classEndTime:"2019-04-05 06:40:01",
+                    classInfo:"课程介绍",
+                    classImg:"../assets/img/1.png",
+                    classNums:3,
+                },
                 courses:[{
                     courseId:"1",
                     courseName:"SSM",
-                    courseTeacher:"LYP",
                     courseType:"编程开发",
                     courseStartTime:"2019-04-05 06:00:01",
                     courseEndTime:"2019-04-05 06:40:01",
                     courseInfo:"课程介绍",
-                    couresImg:"1.png",
+                    courseImg:"1.png",
                     courseNums:3,
-                    yuyueVisible:false,
-                    pinglunVisible:false,
-                    xiugaiVisible:false,
-                    shanchuVisible:false
                 },{
                     courseId:"2",
                     courseName:"SSM2",
-                    courseTeacher:"LYP2",
                     courseType:"编程开发2",
                     courseStartTime:"2019-04-05 02:00:01",
                     courseEndTime:"2019-04-05 06:42:01",
                     courseInfo:"课程介绍2",
-                    couresImg:"2.png",
+                    courseImg:"2.png",
                     courseNums:3,
-                    yuyueVisible:false,
-                    pinglunVisible:false,
-                    xiugaiVisible:false,
-                    shanchuVisible:false
                 }],
                 pinglunData: [{
                     date: '2016-05-02 03:01:00',
@@ -480,7 +601,6 @@
                 }],
                 addForm:{
                     courseName:"SSM",
-                    courseTeacher:"LYP",
                     courseType:"",
                     courseStartTime:"2019-04-05 06:00:01",
                     courseEndTime:"2019-04-05 06:40:01",
@@ -535,13 +655,13 @@
                     courseEndTime:"",
                     courseInfo:"课程",
                     courseImg:"",
-                }
+                },
             }
         },
         methods:{
 
             handleAvatarSuccess(res, file) {
-                this.imageUrl = URL.createObjectURL(file.raw);
+                this.addForm.courseImg = URL.createObjectURL(file.raw);
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
@@ -557,7 +677,7 @@
             },
 
             chakanyuyue(course){
-               course.yuyueVisible=true
+               this.yuyueVisible=true
                 //查数据库填充预约表
                 // this.form.email="1140131901@qq.com"
                 // this.form.name="hhaha"
@@ -566,7 +686,7 @@
                 // this.form.major="哈哈哈哈哈哈"
             },
             chakanpinglun(course){
-                course.pinglunVisible=true
+                this.pinglunVisible=true
                 //查数据库填充评论表
 
             },
@@ -604,36 +724,6 @@
                     })
                 }else{
                     //周期性课程
-                    // var rangs = {"range":this.addForm.range}
-                //     axios.post('/course/addCycleCourse',
-                //         {
-                //             className:this.addForm.courseName,
-                //             range:rangs,
-                //             times:this.addForm.times,
-                //             units:this.addForm.unit,
-                //             classInfo:this.addForm.courseInfo,
-                //             teacherEmail:tEmail,
-                //             classType:this.addForm.courseType,
-                //             classImg:this.addForm.courseImg,
-                //             calssNums:this.addForm.courseNums
-                //         },{
-                //         headers:{'Content-Type':'application/x-www-form-urlencoded'}
-                //     }
-                //     ).then(function (res) {
-                //         console.log(res)
-                //         console.log(res.data)
-                //         if(res.data.success ==true){
-                //             self.$message({
-                //                 message:"周期性课程添加成功(^_−)☆",
-                //                 type: 'success'
-                //             })
-                //             self.addCoursesFormVisible=false
-                //         }else{
-                //             self.$message.error(res.data.message)
-                //         }
-                //     }).catch(function (error) {
-                //         console.log(error)
-                //     })
                     $.ajax({
                         url:"/course/addCycleCourse",
                         data:{
@@ -667,9 +757,16 @@
                     })
                  }
             },
-            xiugaiCourse(course){
+            xiugaiCourse(c){
                 //修改课程
-                course.xiugaiVisible=true
+                this.xiugaiVisible=true
+                this.course.classType = c.classType
+                this.course.className = c.className
+                this.course.classNums = c.classNums
+                this.course.classStartTime = c.classStartTime
+                this.course.classEndTime = c.classEndTime
+                this.course.classImg = c.classImg
+                this.course.classInfo = c.classInfo
             },
             shanchuCourse(course){
                 //删除课程
@@ -692,8 +789,33 @@
             }
         },
         mounted(){
+            var self = this
             //查数据库填充课程列表
-
+            $.ajax({
+                url:"/course/getAll",
+                type:"get",
+                traditional:true,
+                success:function (res) {
+                    console.log(res)
+                    if (res.success == true) {
+                        console.log(self.courses)
+                        localStorage.setItem("course",res.data)
+                        for(let i=0;i<res.data.length;i++){
+                             self.$set(self.courses,i,res.data[i]);
+                        }
+                        //self.courses = res.data
+                        self.$message({
+                            message: "课程列表获取成功，啊哈",
+                            type: 'success'
+                        })
+                    } else {
+                        self.$message.error(res.data.message)
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
         }
     })
 </script>
