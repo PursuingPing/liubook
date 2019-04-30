@@ -217,7 +217,7 @@
                                     <el-option
                                             v-for="item in courseTypes"
                                             :key="item.value"
-                                            :label="item.label"
+                                            :label="item.value"
                                             :value="item.value">
                                     </el-option>
                                 </el-select>
@@ -268,7 +268,7 @@
                                     <el-option
                                             v-for="item in courseTypes"
                                             :key="item.value"
-                                            :label="item.label"
+                                            :label="item.value"
                                             :value="item.value">
                                     </el-option>
                                 </el-select>
@@ -350,7 +350,7 @@
                             <el-option
                                     v-for="item in courseTypes"
                                     :key="item.value"
-                                    :label="item.label"
+                                    :label="item.value"
                                     :value="item.value">
                             </el-option>
                         </el-select>
@@ -606,11 +606,11 @@
                     studentEmail:"123@qq.com"
                 }],
                 addForm:{
-                    courseName:"SSM",
+                    courseName:"",
                     courseType:"",
-                    courseStartTime:"2019-04-05 06:00:01",
-                    courseEndTime:"2019-04-05 06:40:01",
-                    courseInfo:"课程介绍",
+                    courseStartTime:"",
+                    courseEndTime:"",
+                    courseInfo:"",
                     courseImg:"",
                     courseNums:5,
                     range:[],
@@ -619,7 +619,7 @@
                 },
                 teacher:{
                     name:"LYP",
-                    email:"123@qq.com"
+                    email:localStorage.getItem("teacherEmail")
                 },
                 options: [{
                     value: 'MONDAY',
@@ -639,19 +639,19 @@
                 }],
                 courseTypes: [{
                     value: '编程开发',
-                    label: '编程开发'
+                    label: '编程开'
                 }, {
                     value: '编程开发2',
-                    label: '编程开发2'
+                    label: '编程开'
                 }, {
                     value: '编程开发3',
-                    label: '编程开发3'
+                    label: '编程3'
                 }, {
                     value: '编程开发4',
-                    label: '编程开发4'
+                    label: '编开发4'
                 }, {
                     value: '编程开发5',
-                    label: '编程开发5'
+                    label: '编发5'
                 }],
                 xiugaiForm:{
                     courseName:"",
@@ -928,10 +928,34 @@
                         console.log(error)
                     }
                 })
+            },
+            getCourseTypes(){
+                var self = this
+                $.ajax({
+                    url:"/course/getCourseTypes",
+                    type:"get",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.courseTypes =[]
+                            for(let i=0;i<res.data.length;i++){
+                                self.$set(self.courseTypes,i,res.data[i]);
+                            }
+
+                        } else {
+                            self.$message.error(res.data.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
             }
         },
         mounted(){
             this.load();
+            this.getCourseTypes();
         }
     })
 </script>

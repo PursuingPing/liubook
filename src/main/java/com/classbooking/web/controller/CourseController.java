@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("course")
@@ -39,6 +41,19 @@ public class CourseController {
         menuMap.put("type",courseService.getTypes());
         menuMap.put("teacher",courseService.getAllTeachersName());
         return new LYPResult().setData(menuMap);
+    }
+
+    @RequestMapping(value="getCourseTypes",method = RequestMethod.GET)
+    @ResponseBody
+    public LYPResult getCourseTypes(){
+        List<Map<String,String>> list = new ArrayList<>();
+        List<String> types = courseService.getTypes();
+        types.stream().forEach(type->{
+            Map<String,String> map = new HashMap<>();
+            map.put("value",type);
+            list.add(map);
+        });
+        return new LYPResult().setData(list);
     }
 
     @PostMapping(value="addCourse")
