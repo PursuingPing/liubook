@@ -42,4 +42,18 @@ public class CourseServiceImpl implements CourseService {
         return r == 1;
     }
 
+    @Override
+    public boolean modifyCourse(Course course) {
+        int r = courseDao.updateCourse(course);
+        LOG.info("修改课程成功");
+        return r == 1;
+    }
+
+    @Override
+    public boolean deleteCourse(Integer classId) {
+        int r = courseDao.deleteCourseById(classId);
+        LOG.info("删除课程成功");
+        return r == 1;
+    }
+
 }

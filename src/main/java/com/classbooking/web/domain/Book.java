@@ -17,4 +17,5 @@ public class Book implements Serializable {
     private String teacherEmail;
     private Integer classId;
     private String comments;
+    private String bookTime;
 }

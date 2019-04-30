@@ -49,8 +49,8 @@
                             width="100">
                     </el-table-column>
                     <el-table-column
-                            prop="yuyueTime"
-                            label="时间"
+                            prop="bookTime"
+                            label="预约时间"
                             width="180">
                     </el-table-column>
                     <el-table-column
@@ -58,10 +58,10 @@
                             label="Email">
                     </el-table-column>
                 </el-table>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="yuyueVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="yuyueVisible = false">确 定</el-button>
-                </div>
+                <!--<div slot="footer" class="dialog-footer">-->
+                    <!--<el-button @click="yuyueVisible = false">取 消</el-button>-->
+                    <!--<el-button type="primary" @click="yuyueVisible = false">确 定</el-button>-->
+                <!--</div>-->
             </el-dialog>
 
             <el-dialog title ="评价" :visible.sync="pinglunVisible">
@@ -70,18 +70,23 @@
                         style="width: 100%">
                     <el-table-column
                             fixed="left"
-                            prop="name"
+                            prop="studentName"
                             label="姓名"
-                            width="100">
+                            width="100px">
                     </el-table-column>
                     <el-table-column
-                            prop="date"
+                            prop="studentEmail"
+                            label="邮箱"
+                            width="150px">
+                    </el-table-column>
+                    <el-table-column
+                            prop="commentTime"
                             label="时间"
-                            width="180">
+                            width="180px">
                     </el-table-column>
 
                     <el-table-column
-                            prop="stars"
+                            prop="commentStar"
                             label="评论星级"
                             width="80px">
                     </el-table-column>
@@ -90,10 +95,10 @@
                             label="评论">
                     </el-table-column>
                 </el-table>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="pinglunVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="pinglunVisible = false">确 定</el-button>
-                </div>
+                <!--<div slot="footer" class="dialog-footer">-->
+                    <!--<el-button @click="pinglunVisible = false">取 消</el-button>-->
+                    <!--<el-button type="primary" @click="pinglunVisible = false">确 定</el-button>-->
+                <!--</div>-->
             </el-dialog>
 
 
@@ -375,7 +380,7 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="xiugaiVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="xiugaiVisible = false">确 定</el-button>
+                    <el-button type="primary" @click="modifyCourse(course)">确 定</el-button>
                 </div>
             </el-dialog>
             <el-card class="box-card" shadow="hover" v-for="c in courses" style="margin-top: 5px">
@@ -554,25 +559,26 @@
                     classImg:"../assets/img/1.png",
                     classNums:3,
                 },
-                courses:[{
-                    courseId:"1",
-                    courseName:"SSM",
-                    courseType:"编程开发",
-                    courseStartTime:"2019-04-05 06:00:01",
-                    courseEndTime:"2019-04-05 06:40:01",
-                    courseInfo:"课程介绍",
-                    courseImg:"1.png",
-                    courseNums:3,
-                },{
-                    courseId:"2",
-                    courseName:"SSM2",
-                    courseType:"编程开发2",
-                    courseStartTime:"2019-04-05 02:00:01",
-                    courseEndTime:"2019-04-05 06:42:01",
-                    courseInfo:"课程介绍2",
-                    courseImg:"2.png",
-                    courseNums:3,
-                }],
+                courses:[],
+                // courses:[{
+                //     courseId:"1",
+                //     courseName:"SSM",
+                //     courseType:"编程开发",
+                //     courseStartTime:"2019-04-05 06:00:01",
+                //     courseEndTime:"2019-04-05 06:40:01",
+                //     courseInfo:"课程介绍",
+                //     courseImg:"1.png",
+                //     courseNums:3,
+                // },{
+                //     courseId:"2",
+                //     courseName:"SSM2",
+                //     courseType:"编程开发2",
+                //     courseStartTime:"2019-04-05 02:00:01",
+                //     courseEndTime:"2019-04-05 06:42:01",
+                //     courseInfo:"课程介绍2",
+                //     courseImg:"2.png",
+                //     courseNums:3,
+                // }],
                 pinglunData: [{
                     date: '2016-05-02 03:01:00',
                     name: '王小虎',
@@ -596,7 +602,7 @@
                 }],
                 yuyueData:[{
                     studentName:"hhhh",
-                    yuyueTime:"2016-05-02 03:01:00",
+                    bookTime:"2016-05-02 03:01:00",
                     studentEmail:"123@qq.com"
                 }],
                 addForm:{
@@ -676,18 +682,63 @@
                 return isJPG && isLt2M;
             },
 
-            chakanyuyue(course){
+            chakanyuyue(c){
                this.yuyueVisible=true
-                //查数据库填充预约表
-                // this.form.email="1140131901@qq.com"
-                // this.form.name="hhaha"
-                // this.form.sex="女"
-                // this.form.phone="13535"
-                // this.form.major="哈哈哈哈哈哈"
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/getBookInfo",
+                    data:{
+                        classId:c.classId,
+                    },
+                    type:"post",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.yuyueData = res.data
+                            self.$message({
+                                message: "获取预约情况成功",
+                                type: 'success'
+                            })
+                        } else {
+                            self.$message.error("getBookInfo接口出错")
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+
             },
-            chakanpinglun(course){
+            chakanpinglun(c){
                 this.pinglunVisible=true
                 //查数据库填充评论表
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/getComments",
+                    data:{
+                        classId:c.classId,
+                    },
+                    type:"post",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.pinglunData = res.data
+                            self.$message({
+                                message: "获取评论成功",
+                                type: 'success'
+                            })
+                        } else {
+                            self.$message.error("getComments接口出错")
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
 
             },
             addCourse(tEmail){
@@ -705,7 +756,7 @@
                             teacherEmail :tEmail,
                             classType:this.addForm.courseType,
                             classImg: this.addForm.courseImg,
-                            calssNums:this.addForm.courseNums
+                            classNums:this.addForm.courseNums
                         })
                     ).then(function (res) {
                         console.log(res)
@@ -716,6 +767,7 @@
                                 type: 'success'
                             })
                             self.addCoursesFormVisible=false
+                            self.load()
                         }else{
                             self.$message.error(res.data.message)
                         }
@@ -735,7 +787,7 @@
                             teacherEmail: tEmail,
                             classType: this.addForm.courseType,
                             classImg: this.addForm.courseImg,
-                            calssNums: this.addForm.courseNums
+                            classNums: this.addForm.courseNums
                         },
                         type:"post",
                         traditional:true,
@@ -747,6 +799,7 @@
                                     type: 'success'
                                 })
                                 self.addCoursesFormVisible = false
+                                self.load()
                             } else {
                                 self.$message.error(res.data.message)
                             }
@@ -760,62 +813,125 @@
             xiugaiCourse(c){
                 //修改课程
                 this.xiugaiVisible=true
-                this.course.classType = c.classType
-                this.course.className = c.className
-                this.course.classNums = c.classNums
-                this.course.classStartTime = c.classStartTime
-                this.course.classEndTime = c.classEndTime
-                this.course.classImg = c.classImg
-                this.course.classInfo = c.classInfo
+                var self = this
+                self.course.classId = c.classId
+                self.course.classType = c.classType
+                self.course.className = c.className
+                self.course.classNums = c.classNums
+                self.course.classStartTime = c.classStartTime
+                self.course.classEndTime = c.classEndTime
+                self.course.classImg = c.classImg
+                self.course.classInfo = c.classInfo
+
             },
-            shanchuCourse(course){
+            modifyCourse(c){
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/modify",
+                    data:{
+                        classId:c.classId,
+                        classType :c.classType,
+                        className : c.className,
+                        classNums : c.classNums,
+                        classStartTime :  c.classStartTime,
+                        classEndTime : c.classEndTime,
+                        classImg : c.classImg,
+                        classInfo : c.classInfo,
+                    },
+                    type:"post",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.$message({
+                                message: "课程修改成功",
+                                type: 'success'
+                            })
+                            self.xiugaiVisible=false
+                            self.load()
+                        } else {
+                            self.$message.error(res.data.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+            },
+            shanchuCourse(c){
                 //删除课程
                 // course.shanchuVisible=true
-                this.$confirm('此操作将删除该课程, 是否继续?', '提示', {
+                var self = this
+                var course = c
+                self.$confirm('此操作将删除该课程, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
+                    $.ajax({
+                        url:"/course/delete",
+                        data:{
+                          classId:course.classId
+                        },
+                        type:"post",
+                        traditional:true,
+                        success:function (res) {
+                            console.log(res)
+                            if (res.success == true) {
+                                self.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                                });
+                                self.load();
+                            } else {
+                                self.$message.error(res.data.message)
+                            }
+                        },
+                        error:function (error) {
+                            console.log(error)
+                        }
+                    })
+
                 }).catch(() => {
-                    this.$message({
+                    self.$message({
                         type: 'info',
                         message: '已取消该操作'
                     });
                 });
+            },
+            load(){
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/getAll",
+                    type:"get",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            console.log(self.courses)
+                            self.courses =[]
+                            for(let i=0;i<res.data.length;i++){
+                                self.$set(self.courses,i,res.data[i]);
+                            }
+                            //self.courses = res.data
+                            self.$message({
+                                message: "课程列表获取成功，啊哈",
+                                type: 'success'
+                            })
+                        } else {
+                            self.$message.error(res.data.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
             }
         },
         mounted(){
-            var self = this
-            //查数据库填充课程列表
-            $.ajax({
-                url:"/course/getAll",
-                type:"get",
-                traditional:true,
-                success:function (res) {
-                    console.log(res)
-                    if (res.success == true) {
-                        console.log(self.courses)
-                        localStorage.setItem("course",res.data)
-                        for(let i=0;i<res.data.length;i++){
-                             self.$set(self.courses,i,res.data[i]);
-                        }
-                        //self.courses = res.data
-                        self.$message({
-                            message: "课程列表获取成功，啊哈",
-                            type: 'success'
-                        })
-                    } else {
-                        self.$message.error(res.data.message)
-                    }
-                },
-                error:function (error) {
-                    console.log(error)
-                }
-            })
+            this.load();
         }
     })
 </script>

@@ -1,7 +1,9 @@
 package com.classbooking.web.controller;
 
+import com.classbooking.web.domain.BookInfo;
 import com.classbooking.web.domain.Course;
 import com.classbooking.web.domain.LYPResult;
+import com.classbooking.web.service.BookService;
 import com.classbooking.web.service.CourseService;
 import com.classbooking.web.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,14 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private BookService bookService;
+
     @RequestMapping(value ="getAll",method = RequestMethod.GET)
     @ResponseBody
     public LYPResult getAll(){
         List<Course> courses = courseService.getAllCourse();
-        return !courses.isEmpty() ? new LYPResult().setData(courseService.getAllCourse()) : new LYPResult().setMessage("获取课程列表失败");
+        return !courses.isEmpty() ? new LYPResult().setData(courses) : new LYPResult().setMessage("获取课程列表失败");
     }
 
     @RequestMapping(value="getTypes",method = RequestMethod.GET)
@@ -40,7 +45,7 @@ public class CourseController {
     @ResponseBody
     public LYPResult addCourse(String className, String classStartTime,
                                String classEndTime, String classInfo, String teacherEmail,
-                               String classType, String classImg, Integer calssNums
+                               String classType, String classImg, Integer classNums
     ) {
         Course course = new Course();
         course.setClassName(className);
@@ -50,7 +55,7 @@ public class CourseController {
         course.setClassInfo(classInfo);
         course.setClassType(classType);
         course.setClassImg(classImg);
-        course.setClassNums(calssNums);
+        course.setClassNums(classNums);
         boolean flag = courseService.addCourse(course);
         return flag ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("添加失败，请检查所填信息是否有错");
     }
@@ -59,7 +64,7 @@ public class CourseController {
     @ResponseBody
     public LYPResult addCycleCourse(String className, String[] range, String[] times,
                                     String[] units, String classInfo, String teacherEmail,
-                                    String classType, String classImg, Integer calssNums){
+                                    String classType, String classImg, Integer classNums){
 
         Course course = new Course();
         course.setClassName(className);
@@ -67,7 +72,7 @@ public class CourseController {
         course.setClassInfo(classInfo);
         course.setClassType(classType);
         course.setClassImg(classImg);
-        course.setClassNums(calssNums);
+        course.setClassNums(classNums);
         List<String[]> caculateTimes = TimeUtil.getTime(range,units,times);
         if (!caculateTimes.isEmpty()) {
             for (String[] r : caculateTimes) {
@@ -92,5 +97,53 @@ public class CourseController {
 
 
         return new LYPResult().setData(path);
+    }
+
+    @PostMapping("/modify")
+    @ResponseBody
+    public LYPResult modify(String className, String classStartTime,Integer classId,
+                            String classEndTime, String classInfo,
+                            String classType, String classImg, Integer classNums){
+        //TODO 3天前不能修改，判断
+        Course course = new Course();
+        course.setClassName(className);
+        course.setClassStartTime(classStartTime);
+        course.setClassEndTime(classEndTime);
+        course.setClassInfo(classInfo);
+        course.setClassType(classType);
+        course.setClassImg(classImg);
+        course.setClassNums(classNums);
+        course.setClassId(classId);
+
+        boolean flag = courseService.modifyCourse(course);
+        return flag ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("修改课程失败，请检查所填信息是否有错");
+    }
+
+    @PostMapping("/delete")
+    @ResponseBody
+    public LYPResult delete(Integer classId){
+
+        //TODO 3天前不能删除，判断
+        boolean flag = courseService.deleteCourse(classId);
+        return flag ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("删除课程失败");
+
+    }
+
+    @PostMapping("/getBookInfo")
+    @ResponseBody
+    public LYPResult getBookInfo(Integer classId){
+
+        List<BookInfo> list = bookService.getBookInfo(classId);
+
+        return new LYPResult().setData(list);
+    }
+
+    @PostMapping("/getComments")
+    @ResponseBody
+    public LYPResult getComments(Integer classId){
+
+        List<BookInfo> list = bookService.getComments(classId);
+
+        return new LYPResult().setData(list);
     }
 }

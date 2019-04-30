@@ -12,4 +12,8 @@ public interface CourseService {
     List<String> getAllTeachersName();
 
     boolean addCourse(Course course);
+
+    boolean modifyCourse(Course course);
+
+    boolean deleteCourse(Integer classId);
 }
