@@ -18,4 +18,18 @@ public class Teacher implements Serializable {
     private String teacherDegree;
     private String teacherPhone;
     private String teacherCollege;
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "teacherId=" + teacherId +
+                ", teacherEmail='" + teacherEmail + '\'' +
+                ", teacherName='" + teacherName + '\'' +
+                ", teacherSex='" + teacherSex + '\'' +
+                ", teacherMajor='" + teacherMajor + '\'' +
+                ", teacherDegree='" + teacherDegree + '\'' +
+                ", teacherPhone='" + teacherPhone + '\'' +
+                ", teacherCollege='" + teacherCollege + '\'' +
+                '}';
+    }
 }

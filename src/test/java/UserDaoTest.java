@@ -59,4 +59,9 @@ public class UserDaoTest {
     public void testFindByEmail(){
         System.out.println(userDao.findByEmail("1140131901@qq.com"));
     }
+
+    @Test
+    public void testUpdatePassword(){
+        System.out.println(userDao.updatePassword("2@qq.com","hahhahahahahah"));
+    }
 }

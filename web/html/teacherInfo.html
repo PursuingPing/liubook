@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <!--<script src="/assets/js/vuex.js"></script>-->
 </head>
 <body>
 <header style="width:80%;margin-right:10%;margin-left:10%;">
@@ -44,18 +43,18 @@
             <el-card class="box-card">
                 <el-form  style="margin-left: 35%">
                     <el-form-item label="姓名">
-                        <el-input v-model="teacherInfo.name" style="width: 180px" @focus="showButton"></el-input>
+                        <el-input v-model="teacherInfo.teacherName" style="width: 180px" @focus="showButton"></el-input>
                     </el-form-item>
                     <el-form-item label="性别">
                         <!--<el-input v-model="teacherInfo.sex"></el-input>-->
-                        <el-select v-model="teacherInfo.sex" placeholder="请选择性别" style="width: 80px" @focus="showButton">
+                        <el-select v-model="teacherInfo.teacherSex" placeholder="请选择性别" style="width: 80px" @focus="showButton">
                             <el-option label="男" value="男"></el-option>
                             <el-option label="女" value="女"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="学历">
                         <!--<el-input v-model="teacherInfo.degree"></el-input>-->
-                        <el-select v-model="teacherInfo.degree" placeholder="请选择学历" style="width: 80px" @focus="showButton">
+                        <el-select v-model="teacherInfo.teacherDegree" placeholder="请选择学历" style="width: 80px" @focus="showButton">
                             <el-option label="博士" value="博士"></el-option>
                             <el-option label="硕士" value="硕士"></el-option>
                             <el-option label="学士" value="学士"></el-option>
@@ -64,16 +63,16 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="毕业学校">
-                        <el-input v-model="teacherInfo.college" style="width: 180px" @focus="showButton"></el-input>
+                        <el-input v-model="teacherInfo.teacherCollege" style="width: 180px" @focus="showButton"></el-input>
                     </el-form-item>
                     <el-form-item label="主修">
-                        <el-input v-model="teacherInfo.major" style="width: 180px" @focus="showButton"></el-input>
+                        <el-input v-model="teacherInfo.teacherMajor" style="width: 180px" @focus="showButton"></el-input>
                     </el-form-item>
                     <el-form-item label="电话" >
-                        <el-input v-model="teacherInfo.phone" style="width: 180px" @focus="showButton"></el-input>
+                        <el-input v-model="teacherInfo.teacherPhone" style="width: 180px" @focus="showButton"></el-input>
                     </el-form-item>
                     <el-form-item v-show="buttonShow">
-                        <el-button type="primary" @click="xiugaiInfo(teacherInfo.email)">保存</el-button>
+                        <el-button type="primary" @click="xiugaiInfo(teacherInfo)">保存</el-button>
                         <el-button @click="hideButton(teacherInfo)" >取消</el-button>
                     </el-form-item>
                 </el-form>
@@ -83,7 +82,7 @@
             <el-card class="box-card">
                 <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" style="margin-left: 25%">
                     <el-form-item label="原密码" >
-                        <el-input disabled type="password" style="width: 180px" v-model="ruleForm.originPwd" autocomplete="off"></el-input>
+                        <el-input  type="password" style="width: 180px" v-model="ruleForm.originPwd" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="新密码" prop="pass">
                         <el-input type="password"  style="width: 180px" v-model="ruleForm.pass" autocomplete="off"></el-input>
@@ -105,46 +104,18 @@
 
 
 </div>
-
-
-
-<div style="height: 197px;"></div>
-<div class="footer-clean" style="width: 100%;position: fixed;bottom: 0">
+<div style="height: 100px;"></div>
+<div class="footer-clean" style="width: 100%;height:100px;position: fixed;bottom: 0">
     <footer>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Services</h3>
-                    <ul>
-                        <li><a href="#">Web design</a></li>
-                        <li><a href="#">Development</a></li>
-                        <li><a href="#">Hosting</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>About</h3>
-                    <ul>
-                        <li><a href="#">Company</a></li>
-                        <li><a href="#">Team</a></li>
-                        <li><a href="#">Legacy</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Careers</h3>
-                    <ul>
-                        <li><a href="#">Job openings</a></li>
-                        <li><a href="#">Employee success</a></li>
-                        <li><a href="#">Benefits</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a>
-                    <p class="copyright"
-                       style="font-family:Microsoft YaHei;">刘运平© 2019</p>
-                </div>
+        <div class="container" style="text-align: center">
+            <div>
+                <p class="copyright"
+                   style="font-family:Microsoft YaHei;">版权所有：刘运平© 2019</p>
             </div>
         </div>
     </footer>
 </div>
+
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 <script>
@@ -197,14 +168,13 @@
             };
             return{
                 teacherInfo:{
-                    oldPassword:"",
-                    email:"123@qq.com",
-                    name:"hhh",
-                    sex:"男",
-                    degree:"学士",
-                    major:"jjjj",
-                    college:"gdut",
-                    phone:"123465"
+                    teacherEmail:"123@qq.com",
+                    teacherName:"hhh",
+                    teacherSex:"男",
+                    teacherDegree:"学士",
+                    teacherMajor:"jjjj",
+                    teacherCollege:"gdut",
+                    teacherPhone:"123465"
                 },
                 buttonShow:false,
                 ruleForm: {
@@ -261,9 +231,15 @@
                 this.buttonShow=false
 
             },
-            xiugaiInfo(email){
+            xiugaiInfo(teacherInfo){
                 console.log(email)
+            },
+            getInfo(){
+
             }
+        },
+        mounted(){
+
         }
     })
 </script>

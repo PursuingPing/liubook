@@ -81,6 +81,16 @@ public class UserController {
         }else{
             return new LYPResult().setMessage("激活失败");
         }
-
     }
+
+    @PostMapping("modifyPwd")
+    @ResponseBody
+    public LYPResult modifyPwd(String email,String password,String oldPassword){
+        if(userService.isPasswordCorrect(email,oldPassword)){
+        return userService.updatePassword(email,password) ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("修改密码失败");
+        }else {
+            return new LYPResult().setMessage("原密码错误");
+        }
+    }
+
 }

@@ -1,0 +1,8 @@
+package com.classbooking.web.service;
+
+import com.classbooking.web.domain.Teacher;
+
+public interface TeacherService {
+
+    boolean modifyInfo(Teacher teacher);
+}

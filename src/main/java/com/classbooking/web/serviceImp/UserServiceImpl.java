@@ -47,4 +47,16 @@ public class UserServiceImpl implements UserService {
         return userDao.findByEmail(email);
     }
 
+    @Override
+    public boolean updatePassword(String email, String password) {
+        return userDao.updatePassword(email, password) == 1;
+    }
+
+    @Override
+    public boolean isPasswordCorrect(String email, String password) {
+        User user;
+        user = userDao.login(email, password);
+        return user==null;
+    }
+
 }

@@ -17,4 +17,8 @@ public interface UserService {
 
     String findByEmail(String email);
 
+    boolean updatePassword(String email,String password);
+
+    boolean isPasswordCorrect(String email,String password);
+
 }
