@@ -5,4 +5,6 @@ import com.classbooking.web.domain.Teacher;
 public interface TeacherService {
 
     boolean modifyInfo(Teacher teacher);
+
+    Teacher getTeacherInfo(String email);
 }

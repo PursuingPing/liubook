@@ -15,21 +15,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TeacherController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private TeacherService teacherService;
+
+    @PostMapping("getTeacherInfo")
+    @ResponseBody
+    public LYPResult getTeacherInfo(String teacherEmail) {
+        Teacher teacher = teacherService.getTeacherInfo(teacherEmail);
+        return teacher != null ? new LYPResult().setData(teacher) : new LYPResult().setMessage("获取讲师信息出错");
+
+    }
 
     @PostMapping("modifyInfo")
     @ResponseBody
     public LYPResult modifyInfo(
-             String teacherEmail,
-             String teacherName,
-             String teacherSex,
-             String teacherMajor,
-             String teacherDegree,
-             String teacherPhone,
-             String teacherCollege){
+            String teacherEmail,
+            String teacherName,
+            String teacherSex,
+            String teacherMajor,
+            String teacherDegree,
+            String teacherPhone,
+            String teacherCollege) {
 
         Teacher teacher = new Teacher();
         teacher.setTeacherEmail(teacherEmail);

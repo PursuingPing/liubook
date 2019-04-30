@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -56,7 +57,22 @@ public class UserServiceImpl implements UserService {
     public boolean isPasswordCorrect(String email, String password) {
         User user;
         user = userDao.login(email, password);
-        return user==null;
+        return user!=null;
+    }
+
+    @Override
+    public List<String> getAllSEmail() {
+        return userDao.getAllSEmail();
+    }
+
+    @Override
+    public List<String> getAllTEmail() {
+        return userDao.getAllTEmail();
+    }
+
+    @Override
+    public List<String> getAllMEmail() {
+        return userDao.getAllMEmail();
     }
 
 }

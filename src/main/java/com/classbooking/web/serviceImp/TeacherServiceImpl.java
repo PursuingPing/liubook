@@ -17,4 +17,11 @@ public class TeacherServiceImpl implements TeacherService {
     public boolean modifyInfo(Teacher teacher) {
         return teacherDao.modifyInfo(teacher) == 1;
     }
+
+    @Override
+    public Teacher getTeacherInfo(String email) {
+        return teacherDao.getTeacherInfo(email);
+    }
+
+
 }

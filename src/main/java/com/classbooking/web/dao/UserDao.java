@@ -4,6 +4,8 @@ import com.classbooking.web.domain.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import static com.classbooking.web.util.Constants.LONGINTABLE;
 
 @Repository
@@ -29,4 +31,13 @@ public interface UserDao {
 
     @Update("update login_info set password=#{password} where email = #{email}")
     int updatePassword(@Param("email") String email,@Param("password") String password);
+
+    @Select("select student_email from student_info")
+    List<String> getAllSEmail();
+
+    @Select("select teacher_email from teacher_info")
+    List<String> getAllTEmail();
+
+    @Select("select manager_email from manager_info")
+    List<String> getAllMEmail();
 }

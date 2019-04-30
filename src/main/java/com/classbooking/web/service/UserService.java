@@ -4,6 +4,7 @@ import com.classbooking.web.domain.LYPResult;
 import com.classbooking.web.domain.User;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface UserService {
 
@@ -20,5 +21,11 @@ public interface UserService {
     boolean updatePassword(String email,String password);
 
     boolean isPasswordCorrect(String email,String password);
+
+    List<String> getAllSEmail();
+
+    List<String> getAllTEmail();
+
+    List<String> getAllMEmail();
 
 }

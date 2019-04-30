@@ -25,9 +25,10 @@ public interface TeacherDao {
             @Result(column = "teacher_phone",property = "teacherPhone"),
             @Result(column = "teacher_college",property = "teacherCollege")
     })
-    List<Teacher> getTeacherInfo(@Param("teacherEmail") String teacherEmail);
+    Teacher getTeacherInfo(@Param("teacherEmail") String teacherEmail);
 
     @Update("update teacher_info set teacher_name=#{teacherName},teacher_sex=#{teacherSex} , teacher_major=#{teacherMajor}, teacher_degree=#{teacherDegree}, teacher_phone=#{teacherPhone}," +
             " teacher_college=#{teacherCollege} where teacher_email=#{teacherEmail}")
     int modifyInfo(Teacher teacher);
+
 }

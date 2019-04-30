@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("user")
@@ -36,6 +37,17 @@ public class UserController {
             String token = tokenService.generateToken(userAgent,email);
             user.setPassword("******");
             tokenService.saveToken(token,user);
+
+            List<String> studentEmails = userService.getAllSEmail();
+            List<String> teacherEmails = userService.getAllTEmail();
+
+            if(studentEmails.contains(email)){
+                dto.setRole("s");
+            }else if(teacherEmails.contains(email)){
+                dto.setRole("t");
+            }else{
+                dto.setRole("m");
+            }
 
             dto.setEmail(email);
             dto.setIsLogin("true");

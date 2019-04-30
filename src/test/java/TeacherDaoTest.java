@@ -17,9 +17,23 @@ public class TeacherDaoTest {
 
     @Test
     public void testGetTeacherInfo(){
-        List<Teacher> list = teacherDao.getTeacherInfo("123@qq.com");
-        list.stream().forEach(teacher -> {
-            System.out.println(teacher.toString());
-        });
+        Teacher teacher = teacherDao.getTeacherInfo("123@qq.com");
+        System.out.println(teacher.toString());
+    }
+
+    @Test
+    public void modifyInfo(){
+
+        Teacher teacher = new Teacher();
+        teacher.setTeacherCollege("gdut");
+        teacher.setTeacherPhone("13535035493");
+        teacher.setTeacherDegree("博士");
+        teacher.setTeacherMajor("网络工程");
+        teacher.setTeacherSex("男");
+        teacher.setTeacherName("pursuing");
+        teacher.setTeacherEmail("123@qq.com");
+
+        System.out.println(teacherDao.modifyInfo(teacher));
+
     }
 }
