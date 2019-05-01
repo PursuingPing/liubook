@@ -55,6 +55,14 @@
 </header>
 <!-- 引入组件库 -->
     <div class="container" id="course">
+        <el-dialog title ="评价" :visible.sync="dialogFormVisible">
+            <el-rate v-model="starValue" show-text style="margin-bottom: 5px"></el-rate>
+            <el-input type="textarea" :rows="2" placeholder="写下评论" v-model="textarea" ></el-input>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            </div>
+        </el-dialog>
         <el-tabs value="first" type="border-card">
             <el-tab-pane label="预约列表" name="first">
                 <el-card class="box-card" shadow="hover"  v-for="course in courses" style="margin-top: 5px">
@@ -76,14 +84,14 @@
                                                 <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">结束时间:</a> {{course.courseEndTime}}</p>
                                                 <div style="margin-top:30px;margin-left:75%;width:200px;">
                                                     <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="comment">评价</button>
-                                                <el-dialog title ="评价" :visible.sync="dialogFormVisible">
-                                                    <el-rate v-model="starValue" show-text style="margin-bottom: 5px"></el-rate>
-                                                    <el-input type="textarea" :rows="2" placeholder="写下评论" v-model="textarea" ></el-input>
-                                                    <div slot="footer" class="dialog-footer">
-                                                        <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                                        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-                                                    </div>
-                                                </el-dialog>
+                                                <!--<el-dialog title ="评价" :visible.sync="dialogFormVisible">-->
+                                                    <!--<el-rate v-model="starValue" show-text style="margin-bottom: 5px"></el-rate>-->
+                                                    <!--<el-input type="textarea" :rows="2" placeholder="写下评论" v-model="textarea" ></el-input>-->
+                                                    <!--<div slot="footer" class="dialog-footer">-->
+                                                        <!--<el-button @click="dialogFormVisible = false">取 消</el-button>-->
+                                                        <!--<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>-->
+                                                    <!--</div>-->
+                                                <!--</el-dialog>-->
                                                 <button class="btn btn-primary" type="button" @click = "deleteYuyue" style="font-family:Microsoft YaHei;">取消预约</button>
                                             </div>
                                         </div>
@@ -165,12 +173,8 @@
                     courseType:"编程开发",
                     courseStartTime:"2019-04-05 06:00:01",
                     courseEndTime:"2019-04-05 06:40:01",
-                    courseInfo:"课程介绍",
                     couresImg:"1.png",
-                    yuyueVisible:false,
-                    pinglunVisible:false,
-                    xiugaiVisible:false,
-                    shanchuVisible:false
+
                 },{
                     courseId:"2",
                     courseName:"SSM2",
@@ -178,12 +182,7 @@
                     courseType:"编程开发2",
                     courseStartTime:"2019-04-05 02:00:01",
                     courseEndTime:"2019-04-05 06:42:01",
-                    courseInfo:"课程介绍2",
                     couresImg:"2.png",
-                    yuyueVisible:false,
-                    pinglunVisible:false,
-                    xiugaiVisible:false,
-                    shanchuVisible:false
                 }],
 
             }
@@ -193,6 +192,9 @@
                 this.dialogFormVisible = true
                 this.textarea=''
                 this.starValue=null
+
+            },
+            queRen(){
 
             },
             deleteYuyue() {
@@ -211,9 +213,13 @@
                         message: '已取消该操作'
                     });
                 });
-            }
+            },
+            loadList(){
+
+            },
         },
         mounted(){
+            this.loadList();
         }
     })
 </script>

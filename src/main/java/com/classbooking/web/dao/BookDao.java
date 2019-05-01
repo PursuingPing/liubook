@@ -2,6 +2,7 @@ package com.classbooking.web.dao;
 
 
 import com.classbooking.web.domain.BookInfo;
+import com.classbooking.web.domain.CommentInfo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -43,12 +44,25 @@ public interface BookDao {
     @Insert("insert into booking_info(student_email,teacher_email,class_id,book_time) values(#{studentEmail},#{teacherEmail},#{classId},#{bookTime}) ")
     Integer addBook(BookInfo bookInfo);
 
-    @Update("update book_info set comments=#{comments},comment_time = #{commentTime},comment_star=#{commentStar} where class_id=#{classId} " +
-            " and student_email=#{studentEmail} ")
-    Integer addComments(BookInfo bookInfo);
+    @Update("update booking_info set comments=#{comments},comment_time = #{commentTime},comment_star=#{commentStar} where id =#{bookId}")
+    Integer addComment(@Param("bookId") Integer bookId,
+                       @Param("comments") String comments,
+                       @Param("commentTime") String commentTime,
+                       @Param("commentStar") Integer commentStar);
+
 
     @Select("select id from booking_info where student_email=#{studentEmail} and teacher_email=#{teacherEmail} and class_id=#{classId}")
     List<Integer> checkRepeat(BookInfo bookInfo);
 
+    @Select("select b.id , c.* ,t.teacher_name from booking_info b left join class_info c on b.class_id = c.class_id " +
+            " left join teacher_info t on c.teacher_email = t.teacher_email" +
+            " where b.student_email = #{studentEmail}")
+    @Results({
+            @Result(column = "id",property = "bookId")
+    })
+    List<CommentInfo> getBookList(@Param("studentEmail") String studentEmail);
+
+    @Delete("delete from booking_info where id=#{bookId}")
+    Integer deleteBook(@Param("bookId") Integer bookId);
 
 }

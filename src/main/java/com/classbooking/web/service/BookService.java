@@ -15,4 +15,10 @@ public interface BookService {
     List<BookInfo> getCommentsByName(String className);
 
     boolean addBook(BookInfo bookInfo,String classStartTime,String className);
+
+    boolean comment(Integer bookId,Integer commentStar,String comments);
+
+    boolean cancleBook(Integer bookId);
+
+    boolean checkTime(Integer classId);
 }

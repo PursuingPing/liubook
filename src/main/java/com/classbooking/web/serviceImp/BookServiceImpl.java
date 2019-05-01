@@ -7,6 +7,7 @@ import com.classbooking.web.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -61,5 +62,31 @@ public class BookServiceImpl implements BookService {
             return false;
         }
         return bookDao.addBook(bookInfo) ==1;
+    }
+
+    @Override
+    public boolean comment(Integer bookId, Integer commentStar, String comments) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return bookDao.addComment(bookId,comments,time,commentStar) == 1;
+    }
+
+    @Override
+    public boolean cancleBook(Integer bookId) {
+        return bookDao.deleteBook(bookId) == 1;
+    }
+
+    @Override
+    public boolean checkTime(Integer classId) {
+        String startTime = courseDao.getClassStartTimeById(classId);
+        LocalDateTime startDateTime = LocalDateTime.parse(startTime);
+        LocalDateTime now = LocalDateTime.now();
+        Duration duration = Duration.between(now,startDateTime);
+        if(duration.toDays() > 3 ){
+            //课程开始3天前不可取消预约
+            return true;
+        }else{
+            return false;
+        }
     }
 }

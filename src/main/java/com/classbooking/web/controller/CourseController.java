@@ -220,5 +220,18 @@ public class CourseController {
         return new LYPResult().setSuccess(true);
     }
 
+    @PostMapping("/comment")
+    @ResponseBody
+    public LYPResult comment(Integer bookId,Integer commentStar,String comments){
+        //时间没过才能
+        return new LYPResult();
+    }
 
+    @PostMapping("/cancelBook")
+    @ResponseBody
+    public LYPResult cancelBook(Integer bookId){
+
+
+        return new LYPResult();
+    }
 }
