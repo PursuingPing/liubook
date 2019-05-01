@@ -119,13 +119,14 @@
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 <script>
-    const state={
-        name:"hhh",
-        sex:"男",
-        degree:"学士",
-        major:"jjjj",
-        college:"gdut",
-        phone:"123465"
+    var state={
+        teacherEmail:"",
+        teacherName:"",
+        teacherSex:"",
+        teacherDegree:"",
+        teacherMajor:"",
+        teacherCollege:"",
+        teacherPhone:""
 
     }
     var infos = new Vue({
@@ -248,19 +249,19 @@
 
             },
             hideButton(teacherInfo){
-                if(state.name == teacherInfo.tearcherName && state.sex == teacherInfo.teacherSex
-                    && state.degree == teacherInfo.teacherDegree
-                    && state.major == teacherInfo.teacherMajor
-                    && state.college == teacherInfo.teacherCollege
-                    && state.phone == teacherInfo.teacherPhone
+                if(state.teacherName == teacherInfo.teacherName && state.teacherSex == teacherInfo.teacherSex
+                    && state.teacherDegree == teacherInfo.teacherDegree
+                    && state.teacherMajor == teacherInfo.teacherMajor
+                    && state.teacherCollege == teacherInfo.teacherCollege
+                    && state.teacherPhone == teacherInfo.teacherPhone
                     ){
                 }else {
-                    teacherInfo.teacherName=state.name
-                    teacherInfo.teacherSex=state.sex
-                    teacherInfo.teacherDegree=state.degree
-                    teacherInfo.teacherMajor=state.major
-                    teacherInfo.teacherCollege=state.college
-                    teacherInfo.teacherPhone=state.phone
+                    teacherInfo.teacherName=state.teacherName
+                    teacherInfo.teacherSex=state.teacherSex
+                    teacherInfo.teacherDegree=state.teacherDegree
+                    teacherInfo.teacherMajor=state.teacherMajor
+                    teacherInfo.teacherCollege=state.teacherCollege
+                    teacherInfo.teacherPhone=state.teacherPhone
                 }
                 this.buttonShow=false
 
@@ -314,6 +315,13 @@
                         console.log(res)
                         if (res.success == true) {
                             self.teacherInfo = res.data
+                            state.teacherName=res.data.teacherName
+                            state.teacherSex=res.data.teacherSex
+                            state.teacherDegree=res.data.teacherDegree
+                            state.teacherMajor=res.data.teacherMajor
+                            state.teacherCollege=res.data.teacherCollege
+                            state.teacherPhone=res.data.teacherPhone
+                            state.teacherEmail=res.data.teacherEmail
                             // self.$message({
                             //     message: "获取评论成功",
                             //     type: 'success'

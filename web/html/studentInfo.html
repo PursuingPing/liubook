@@ -42,24 +42,26 @@
             <el-card class="box-card">
                 <el-form  style="margin-left: 35%">
                     <el-form-item label="姓名">
-                        <el-input v-model="studentInfo.name" style="width: 180px" @focus="showButton"></el-input>
+                        <el-input v-model="studentInfo.studentName" style="width: 180px" @focus="showButton"></el-input>
                     </el-form-item>
                     <el-form-item label="性别">
                         <!--<el-input v-model="teacherInfo.sex"></el-input>-->
-                        <el-select v-model="studentInfo.sex" placeholder="请选择性别" style="width: 80px" @focus="showButton">
+                        <el-select v-model="studentInfo.studentSex" placeholder="请选择性别" style="width: 80px" @focus="showButton">
                             <el-option label="男" value="男"></el-option>
                             <el-option label="女" value="女"></el-option>
                         </el-select>
                     </el-form-item>
-
+                    <el-form-item label="学校">
+                        <el-input v-model="studentInfo.studentCollege" style="width: 180px" @focus="showButton"></el-input>
+                    </el-form-item>
                     <el-form-item label="主修">
-                        <el-input v-model="studentInfo.major" style="width: 180px" @focus="showButton"></el-input>
+                        <el-input v-model="studentInfo.studentMajor" style="width: 180px" @focus="showButton"></el-input>
                     </el-form-item>
                     <el-form-item label="电话" >
-                        <el-input v-model="studentInfo.phone" style="width: 180px" @focus="showButton"></el-input>
+                        <el-input v-model="studentInfo.studentPhone" style="width: 180px" @focus="showButton"></el-input>
                     </el-form-item>
                     <el-form-item v-show="buttonShow">
-                        <el-button type="primary" @click="xiugaiInfo(studentInfo.email)">保存</el-button>
+                        <el-button type="primary" @click="xiugaiInfo(studentInfo)">保存</el-button>
                         <el-button @click="hideButton(studentInfo)" >取消</el-button>
                     </el-form-item>
                 </el-form>
@@ -69,7 +71,7 @@
             <el-card class="box-card">
                 <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" style="margin-left: 25%">
                     <el-form-item label="原密码" >
-                        <el-input disabled type="password" style="width: 180px" v-model="ruleForm.originPwd" autocomplete="off"></el-input>
+                        <el-input  type="password" style="width: 180px" v-model="ruleForm.originPwd" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="新密码" prop="pass">
                         <el-input type="password"  style="width: 180px" v-model="ruleForm.pass" autocomplete="off"></el-input>
@@ -90,38 +92,13 @@
     </el-tabs>
 </div>
 
-<div class="footer-clean" style="width: 100%;position: fixed;bottom: 0">
+<div style="height: 100px;"></div>
+<div class="footer-clean" style="width: 100%;height:100px;position: fixed;bottom: 0">
     <footer>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Services</h3>
-                    <ul>
-                        <li><a href="#">Web design</a></li>
-                        <li><a href="#">Development</a></li>
-                        <li><a href="#">Hosting</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>About</h3>
-                    <ul>
-                        <li><a href="#">Company</a></li>
-                        <li><a href="#">Team</a></li>
-                        <li><a href="#">Legacy</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Careers</h3>
-                    <ul>
-                        <li><a href="#">Job openings</a></li>
-                        <li><a href="#">Employee success</a></li>
-                        <li><a href="#">Benefits</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a>
-                    <p class="copyright"
-                       style="font-family:Microsoft YaHei;">刘运平© 2019</p>
-                </div>
+        <div class="container" style="text-align: center">
+            <div>
+                <p class="copyright"
+                   style="font-family:Microsoft YaHei;">版权所有：刘运平© 2019</p>
             </div>
         </div>
     </footer>
@@ -129,11 +106,13 @@
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 <script>
-    const student={
-        name: "fd",
-        sex: "男",
-        phone: "12312",
-        major: "hahha哈哈哈",
+    var state={
+        studentEmail: "",
+        studentName: "",
+        studentSex: "",
+        studentPhone: "",
+        studentMajor: "",
+        studentCollege:""
     }
     var tags = new Vue({
         el:'#tags',
@@ -174,17 +153,18 @@
                 }
             };
             return {
+                fullscreenLoading: false,
                 // inputWidth:'60px',
                 // formLabelWidth:'250px',
                 // dialogFormVisible: false,
                 // dialogFormVisible2: false,
                 studentInfo: {
-                    email: "123@qq.com",
-                    name: "fd",
-                    sex: "男",
-                    phone: "12312",
-                    major: "hahha哈哈哈",
-                    oldPassword:"",
+                    studentEmail: "123@qq.com",
+                    studentName: "fd",
+                    studentSex: "男",
+                    studentPhone: "12312",
+                    studentMajor: "hahha哈哈哈",
+                    studentCollege:"hhh"
                 },
                 buttonShow:false,
                 ruleForm: {
@@ -206,21 +186,44 @@
             }
         },
         methods:{
-            // modifyInfo(){
-            //     this.dialogFormVisible=true
-            //     // this.form.email="1140131901@qq.com"
-            //     // this.form.name="hhaha"
-            //     // this.form.sex="女"
-            //     // this.form.phone="13535"
-            //     // this.form.major="哈哈哈哈哈哈"
-            // },
-            // modifyPassword(){
-            //     this.dialogFormVisible2=true
-            // }
+            openFullScreen() {
+                this.fullscreenLoading = true;
+                setTimeout(() => {
+                    this.fullscreenLoading = false;
+                }, 2000);
+            },
+
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert('submit!');//连接数据库修改
+                        //alert('submit!');//连接数据库修改
+                        var self = this
+                        $.ajax({
+                            url:"/user/modifyPwd",
+                            data:{
+                                email: self.studentInfo.studentEmail,
+                                password: self.ruleForm.pass,
+                                oldPassword: self.ruleForm.originPwd,
+                            },
+                            type:"post",
+                            traditional:true,
+                            success:function (res) {
+                                console.log(res)
+                                if (res.success == true) {
+                                    self.$message({
+                                        message: "修改密码成功,2秒后跳转回登录页面",
+                                        type: 'success'
+                                    })
+                                    self.openFullScreen()
+                                    window.setTimeout("window.location.href='/'",2000);
+                                } else {
+                                    self.$message.error(res.message)
+                                }
+                            },
+                            error:function (error) {
+                                console.log(error)
+                            }
+                        })
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -235,24 +238,94 @@
 
             },
             hideButton(studentInfo){
-                if(student.name == studentInfo.name && student.sex == studentInfo.sex
-                    && student.major == studentInfo.major
-                    && student.phone == studentInfo.phone
+                if(state.studentName === studentInfo.studentName
+                    && state.studentSex === studentInfo.studentSex
+                    && state.studentMajor === studentInfo.studentMajor
+                    && state.studentPhone === studentInfo.studentPhone
+                    && state.studentCollege === studentInfo.studentCollege
                 ){
                 }else {
-                    studentInfo.name = student.name
-                    studentInfo.sex = student.sex
-                    studentInfo.phone = student.phone
-                    studentInfo.major = student.major
+                    studentInfo.studentName = state.studentName
+                    studentInfo.studentSex = state.studentSex
+                    studentInfo.studentPhone = state.studentPhone
+                    studentInfo.studentMajor = state.studentMajor
+                    studentInfo.studentCollege = state.studentCollege
                 }
                 this.buttonShow=false
 
             },
-            xiugaiInfo(email){
-                console.log(email)
+            xiugaiInfo(studentInfo){
+                //console.log(email)
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/student/modifyInfo",
+                    data:{
+                        studentEmail: studentInfo.studentEmail,
+                        studentName: studentInfo.studentName,
+                        studentSex: studentInfo.studentSex,
+                        studentMajor: studentInfo.studentMajor,
+                        studentPhone: studentInfo.studentPhone,
+                        studentCollege: studentInfo.studentCollege
+                    },
+                    type:"post",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.$message({
+                                message: "修改个人信息成功",
+                                type: 'success'
+                            })
+                            self.getInfo()
+                            self.buttonShow = false
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+            },
+            getInfo(){
+                var studentEmail = localStorage.getItem("studentEmail")
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/student/getStudentInfo",
+                    data:{
+                        studentEmail:studentEmail,
+                    },
+                    type:"post",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.studentInfo = res.data
+                            state.studentCollege=res.data.studentCollege
+                            state.studentEmail=res.data.studentEmail
+                            state.studentPhone=res.data.studentPhone
+                            state.studentSex=res.data.studentSex
+                            state.studentMajor = res.data.studentMajor
+                            state.studentName = res.data.studentName
+                            // self.$message({
+                            //     message: "获取评论成功",
+                            //     type: 'success'
+                            // })
+                        } else {
+                            self.$message.error("getStudentInfo接口出错")
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+
             }
         },
         mounted(){
+            this.getInfo()
         }
     })
 </script>

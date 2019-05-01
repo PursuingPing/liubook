@@ -1216,102 +1216,107 @@
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="294" parent="238" name="id_UNIQUE">
+    <column id="294" parent="238" name="student_college">
+      <Position>7</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="295" parent="238" name="id_UNIQUE">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="295" parent="238" name="email_UNIQUE">
+    <index id="296" parent="238" name="email_UNIQUE">
       <ColNames>student_email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="296" parent="238" name="PRIMARY">
+    <key id="297" parent="238" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>student_email</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="297" parent="238" name="id_UNIQUE">
+    <key id="298" parent="238" name="id_UNIQUE">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>id_UNIQUE</UnderlyingIndexName>
     </key>
-    <key id="298" parent="238" name="email_UNIQUE">
+    <key id="299" parent="238" name="email_UNIQUE">
       <ColNames>student_email</ColNames>
       <UnderlyingIndexName>email_UNIQUE</UnderlyingIndexName>
     </key>
-    <foreign-key id="299" parent="238" name="student_email">
+    <foreign-key id="300" parent="238" name="student_email">
       <ColNames>student_email</ColNames>
       <RefSchemaName>lyp_class_booking</RefSchemaName>
       <RefTableName>login_info</RefTableName>
       <RefColNames>email</RefColNames>
     </foreign-key>
-    <column id="300" parent="239" name="id">
+    <column id="301" parent="239" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="301" parent="239" name="teacher_email">
+    <column id="302" parent="239" name="teacher_email">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="302" parent="239" name="teacher_name">
+    <column id="303" parent="239" name="teacher_name">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="303" parent="239" name="teacher_sex">
+    <column id="304" parent="239" name="teacher_sex">
       <Position>4</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="304" parent="239" name="teacher_major">
+    <column id="305" parent="239" name="teacher_major">
       <Position>5</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="305" parent="239" name="teacher_degree">
+    <column id="306" parent="239" name="teacher_degree">
       <Position>6</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="306" parent="239" name="teacher_phone">
+    <column id="307" parent="239" name="teacher_phone">
       <Position>7</Position>
       <DataType>bigint(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="307" parent="239" name="teacher_college">
+    <column id="308" parent="239" name="teacher_college">
       <Position>8</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="308" parent="239" name="id_UNIQUE">
+    <index id="309" parent="239" name="id_UNIQUE">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="309" parent="239" name="teacher_email_UNIQUE">
+    <index id="310" parent="239" name="teacher_email_UNIQUE">
       <ColNames>teacher_email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="310" parent="239" name="PRIMARY">
+    <key id="311" parent="239" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>teacher_email</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="311" parent="239" name="id_UNIQUE">
+    <key id="312" parent="239" name="id_UNIQUE">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>id_UNIQUE</UnderlyingIndexName>
     </key>
-    <key id="312" parent="239" name="teacher_email_UNIQUE">
+    <key id="313" parent="239" name="teacher_email_UNIQUE">
       <ColNames>teacher_email</ColNames>
       <UnderlyingIndexName>teacher_email_UNIQUE</UnderlyingIndexName>
     </key>
-    <foreign-key id="313" parent="239" name="teacher_email">
+    <foreign-key id="314" parent="239" name="teacher_email">
       <ColNames>teacher_email</ColNames>
       <RefSchemaName>lyp_class_booking</RefSchemaName>
       <RefTableName>login_info</RefTableName>
