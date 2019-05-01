@@ -177,7 +177,8 @@
                 coursesInfo:[{
                     courseId:"",
                     courseName:"a基于java的",
-                    courseImg:"/assets/img/61.jpg"
+                    courseImg:"/assets/img/61.jpg",
+                    teacherEmail:"",
                 },{
                     courseId:"",
                     courseName:"a基于java的",
@@ -199,13 +200,13 @@
         },
         methods: {},
         mounted() {
-            axios.get('/course/getTypes').then((response) => {
-                console.log(response)
-                this.menuitems = response.data.data.type
-                this.teachers = response.data.data.teacher
-                console.log(this.menuitems)
-                console.log(this.teachers)
-            });
+            // axios.get('/course/getTypes').then((response) => {
+            //     console.log(response)
+            //     this.menuitems = response.data.data.type
+            //     this.teachers = response.data.data.teacher
+            //     console.log(this.menuitems)
+            //     console.log(this.teachers)
+            // });
 
 
         }

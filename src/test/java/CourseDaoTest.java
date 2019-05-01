@@ -1,5 +1,6 @@
 import com.classbooking.web.dao.CourseDao;
 import com.classbooking.web.dao.TeacherDao;
+import com.classbooking.web.domain.BookInfo;
 import com.classbooking.web.domain.Course;
 import com.classbooking.web.util.TimeUtil;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -106,5 +108,22 @@ public class CourseDaoTest{
     @Test
     public void testGetTeacherEmailByClassId(){
         System.out.println(courseDao.getTeacherEmailByClassId(3));
+    }
+
+    @Test
+    public void testGetTimes(){
+        List<Course> courses = courseDao.getCourseTimes("test");
+        List<String> times = new LinkedList<>();
+        courses.stream().forEach(course -> {
+            String temp = course.getClassStartTime()+"-" + course.getClassEndTime();
+            times.add(temp);
+        });
+        times.forEach(System.out::println);
+    }
+
+    @Test
+    public void testGetCommentsByName(){
+        List<Integer> list = courseDao.getClassIdsByName("test");
+        list.forEach(System.out::println);
     }
 }

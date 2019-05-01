@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("course")
@@ -175,4 +172,53 @@ public class CourseController {
 
         return new LYPResult().setData(list);
     }
+
+
+    @PostMapping("/getCommentsByName")
+    @ResponseBody
+    public LYPResult getCommentsByName(String className){
+
+        List<BookInfo> list = bookService.getCommentsByName(className);
+
+        return new LYPResult().setData(list);
+    }
+
+
+    @PostMapping("/getTeacherEmail")
+    @ResponseBody
+    public LYPResult getTeacherEmail(Integer classId){
+        String teacherEmail = courseService.getTeacherEmailByClassId(classId);
+
+        return teacherEmail!=null&& !teacherEmail.equals("") ? new LYPResult().setData(teacherEmail) : new LYPResult().setMessage("获取email出错");
+    }
+
+    @PostMapping("/getTimes")
+    @ResponseBody
+    public LYPResult getTimes(String className){
+
+        List<String> times = new LinkedList<>();
+        List<Course> courses = courseService.getTimes(className);
+        courses.stream().forEach(course -> {
+            String temp = course.getClassStartTime() +"至" + course.getClassEndTime();
+            times.add(temp);
+        });
+        return new LYPResult().setData(times);
+    }
+
+    @PostMapping("/book")
+    @ResponseBody
+    public LYPResult book(String[] classStartTimes,String className,String studentEmail,String teacherEmail){
+        BookInfo bookInfo = new BookInfo();
+        bookInfo.setStudentEmail(studentEmail);
+        bookInfo.setTeacherEmail(teacherEmail);
+        for(int i = 0 ;i<classStartTimes.length;i++){
+            String[] sande = classStartTimes[i].split("至");
+            if(!bookService.addBook(bookInfo,sande[0],className)){
+                return new LYPResult().setMessage("您已预约该时间段，请去预约列表查看");
+            }
+        }
+        return new LYPResult().setSuccess(true);
+    }
+
+
 }

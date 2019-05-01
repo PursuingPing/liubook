@@ -82,4 +82,10 @@ public interface CourseDao {
 
     })
     List<Course> getCourseTimes(@Param("className") String className );
+
+    @Select("select class_id from class_info where class_name =#{className}")
+    List<Integer> getClassIdsByName(@Param("className") String className);
+
+    @Select("select class_id from class_info where class_name=#{className} and class_startTime = #{classStartTime}")
+    Integer getClassIdByStartTime(@Param("classStartTime") String classStartTime,@Param("className") String className);
 }

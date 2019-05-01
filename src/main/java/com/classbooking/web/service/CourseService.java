@@ -20,4 +20,8 @@ public interface CourseService {
     List<Course> getCourses(String teacherEmail);
 
     Course getCourseById(Integer classId);
+
+    String getTeacherEmailByClassId(Integer classId);
+
+    List<Course> getTimes(String className);
 }

@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -48,13 +50,13 @@
                         <div class="media-body" style="overflow:visible;">
                             <div class="row" style="margin-left:16px;">
                                 <div class="col-md-12">
-                                    <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{courses.courseName}} <br>
+                                    <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{courses.className}} <br>
                                     </p>
-                                    <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">讲师:</a> {{courses.courseTeacher}} <br>
+                                    <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">讲师:</a> {{teacherInfo.teacherName}} <br>
                                     </p>
-                                    <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{courses.courseType}}</p>
+                                    <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{courses.classType}}</p>
                                     <div style="margin-top:30px;margin-left:75%;width:200px;">
-                                        <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="yuyue(courses.courseName)">预约</button>
+                                        <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="yuyue(courses)">预约</button>
                                         <el-dialog title ="预约时间选择" :visible.sync="dialogFormVisible">
                                             <div>
                                                 <el-checkbox-group v-model="timePicks">
@@ -62,8 +64,8 @@
                                                 </el-checkbox-group>
                                             </div>
                                             <div slot="footer" class="dialog-footer">
-                                                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                                                <el-button @click="quxiao()">取 消</el-button>
+                                                <el-button type="primary" @click="book(courses,teacherInfo.teacherEmail)">确 定</el-button>
                                             </div>
                                         </el-dialog>
                                     </div>
@@ -77,7 +79,7 @@
     </el-card>
 <el-tabs value="first" type="border-card">
     <el-tab-pane label="课程介绍" name="first">
-        <el-card shadow="hover"><p>{{courses.courseInfo}}</p></el-card>
+        <el-card shadow="hover"><p>{{courses.classInfo}}</p></el-card>
     </el-tab-pane>
     <el-tab-pane label="课程评论">
         <el-card class="box-card" shadow="hover" v-for="comment in comments" style="margin-top: 5px">
@@ -91,13 +93,13 @@
                                 <div class="col-md-12">
                                     <p><a href="#">{{comment.studentName}}:</a>
                                         <el-rate
-                                            v-model="comment.starValue"
+                                            v-model="comment.commentStar"
                                             disabled
                                             show-score
                                             text-color="#ff9900"
                                             score-template="{value}">
-                                        </el-rate>{{comment.comment}} <br>
-                                        <small class="text-muted">{{comment.time}}</small>
+                                        </el-rate>{{comment.comments}} <br>
+                                        <small class="text-muted">{{comment.commentTime}}</small>
                                     </p>
                                 </div>
                             </div>
@@ -109,11 +111,13 @@
     </el-tab-pane>
 
     <el-tab-pane label="讲师介绍">
-        <el-card shadow="hover"><p>姓名：{{teacherInfo.name}}</p>
-            <p>性别：{{teacherInfo.sex}}</p>
-            <p>主修：{{teacherInfo.major}}</p>
-            <p>学历：{{teacherInfo.degree}}</p>
-            <p>毕业院校：{{teacherInfo.college}}</p></el-card>
+        <el-card shadow="hover"><p>姓名：{{teacherInfo.teacherName}}</p>
+            <p>性别：{{teacherInfo.teacherSex}}</p>
+            <p>邮箱：{{teacherInfo.teacherEmail}}</p>
+            <p>主修：{{teacherInfo.teacherMajor}}</p>
+            <p>学历：{{teacherInfo.teacherDegree}}</p>
+            <p>毕业院校：{{teacherInfo.teacherCollege}}</p>
+        </el-card>
     </el-tab-pane>
 </el-tabs>
 </div>
@@ -235,92 +239,233 @@
 </div>
 <script>
     // var tag = []
-    // var paras = location.search
-    // var result = paras.match(/[^\?&]*=[^&]*/g)
-    // paras = {}
-    // for(i in result){
-    //     var temp = result[i].split('=')
-    //     paras[temp[0]] = temp[1]
-    // }
-    // var itemId = paras.courseId
-    // localStorage.setItem("itemId","itemId")
+    var paras = location.search
+    var result = paras.match(/[^\?&]*=[^&]*/g)
+    paras = {}
+    for(i in result){
+        var temp = result[i].split('=')
+        paras[temp[0]] = temp[1]
+    }
+    var courseId = paras.courseId
+    //localStorage.setItem("itemId","itemId")
     var courseInfo = new Vue({
         el:'#courseInfo',
         data(){
             return {
+                teacherEmail:"",
                 dialogFormVisible:false,
                 courses:{
-                    courseId:"1",
-                    courseName:"SSM",
-                    courseTeacher:"LYP",
-                    courseType:"编程开发",
-                    courseStartTime:"2019-04-05 06:00:01",
-                    courseEndTime:"2019-04-05 06:40:01",
-                    courseInfo:"课程介绍",
-                    couresImg:"1.png",
-                    yuyueVisible:false,
-                    pinglunVisible:false,
-                    xiugaiVisible:false,
-                    shanchuVisible:false
+                    classId:"",
+                    className:"",
+                    classType:"",
+                    classStartTime:"",
+                    classEndTime:"",
+                    classInfo:"",
+                    classImg:"",
                 },
                 // course:{courseName:"程序员lyp",courseInfo:"课程介绍哈哈哈哈",courseType:"IT类",
                 // courseImg:"/assets/img/2.jpg",teacherMajor:"BIG DATA,ITE",teacherName:"刘运平",
-                    comments:[{studentName:"Pursuing",comment:"hahaha",time:"2019-03-06 09:00:01",starValue:2},
-                        {studentName:"Pursuing2",comment:"hahaha",time:"2019-03-06 09:00:01",starValue:4.5}],
+                    comments:[{studentName:"Pursuing",comments:"hahaha",commentTime:"2019-03-06 09:00:01",commentStar:2},
+                        {studentName:"Pursuing2",comments:"hahaha",commentTime:"2019-03-06 09:00:01",commentStar:4.5}],
 
                 // times:["2019-01-01 06:01:01","2019-01-01 06:01:01","2019-01-01 06:01:01"]
                 teacherInfo:{
-                    name:"ffd",
-                    email:"123@qq.com",
-                    phone:"113123",
-                    major:"网络工程",
-                    degree:"学士",
-                    college:"广东工业大学",
-                    sex:"男",
+                    teacherName:"",
+                    teacherEmail:"",
+                    teacherPhone:"",
+                    teacherMajor:"",
+                    teacherDegree:"",
+                    teacherCollege:"",
+                    teacherSex:"",
                 },
                 timePicks:[],
-                times:["2019-06-01 01:03:04","2019-06-01 01:13:04","2019-06-01 01:23:04","2019-06-01 01:33:04","2019-06-01 01:53:04","2019-06-02 01:03:04"]
+                times:[]
             }
         },
         methods:{
-            yuyue(courseName){
+            yuyue(c){
                 this.dialogFormVisible=true
+                this.getCourseTimes(c.className)
+
+            },
+            quxiao(){
+                this.dialogFormVisible = false
+                this.timePicks = []
+            },
+            book(c,tEmail){
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/book",
+                    data:{
+                        teacherEmail:tEmail,
+                        studentEmail:localStorage.getItem("studentEmail"),
+                        className:c.className,
+                        classStartTimes:self.timePicks
+
+                    },
+                    type:"post",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.$message({
+                                message: "预约成功",
+                                type: 'success'
+                            })
+                            self.timePicks=[]
+                            self.dialogFormVisible=false
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+
+            },
+            getTeacherEmailByClassId(){
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/getTeacherEmail",
+                    data:{
+                        classId:courseId,
+                    },
+                    type:"post",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                           self.getTeacherInfo(res.data)
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+
+
+            },
+            getTeacherInfo(tEmail){
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/teacher/getTeacherInfo",
+                    data:{
+                        teacherEmail:tEmail,
+                    },
+                    type:"post",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.teacherInfo = res.data
+                            // self.$message({
+                            //     message: "获取评论成功",
+                            //     type: 'success'
+                            // })
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+            },
+            getCourseInfo(){
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/getCourseInfo",
+                    type:"post",
+                    data:{
+                        classId:courseId
+                    },
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.getComments(res.data.className)
+                            self.courses = res.data
+                            // self.$message({
+                            //     message: "课程列表获取成功，啊哈",
+                            //     type: 'success'
+                            // })
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+
+            },
+            getComments(cName){
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/getCommentsByName",
+                    data:{
+                        className:cName,
+                    },
+                    type:"post",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.comments = res.data
+                            // self.$message({
+                            //     message: "获取评论成功",
+                            //     type: 'success'
+                            // })
+                        } else {
+                            self.$message.error("getCommentsByName接口出错")
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+            },
+            getCourseTimes(courseName){
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/getTimes",
+                    data:{
+                        className:courseName,
+                    },
+                    type:"post",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.times = res.data
+                            // self.$message({
+                            //     message: "获取评论成功",
+                            //     type: 'success'
+                            // })
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
             }
-            // changeColors(index){
-            //     tag.push(index)
-            //     var color = document.getElementById(index).style.backgroundColor.toString()
-            //
-            //     if(color == "rgb(193, 134, 239)"){
-            //         document.getElementById(index).style.backgroundColor="rgb(0,98,204)"
-            //
-            //     }else {
-            //         document.getElementById(index).style.backgroundColor="rgb(193,134,239)"
-            //     }
-            //
-            // },
-            // ack(){
-            //     var sets = new Set(tag)
-            //     var timeChoose =[]
-            //     console.log(sets)
-            //     for(var i of sets){
-            //         if(document.getElementById(i).style.backgroundColor.toString() == "rgb(0, 98, 204)"){
-            //             timeChoose.push(this.times[i])
-            //         }
-            //     }
-            //     console.log(timeChoose)
-            //     $('#myModal').modal('hide')
-            //     console.log(sets)
-            //     for(var i of sets){
-            //         document.getElementById(i).style.backgroundColor="rgb(193,134,239)"
-            //     }
-            // }
         },
         mounted(){
-            // console.log(localStorage.getItem("itemId")+'hh')
-            // // axios.get('/course/getInfo').then((response) => {
-            // //     console.log(response)
-            // //
-            // // });
+            this.getTeacherEmailByClassId();
+            //this.getTeacherInfo();
+            this.getCourseInfo();
+            this.getComments();
         }
     })
 </script>

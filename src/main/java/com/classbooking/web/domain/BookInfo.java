@@ -18,6 +18,9 @@ public class BookInfo implements Serializable {
     private String commentTime;
     private String comments;
     private Integer commentStar;
+    private Integer classId;
+    private String teacherEmail;
+    private Integer bookId;
 
     @Override
     public String toString() {
@@ -27,7 +30,9 @@ public class BookInfo implements Serializable {
                 ", studentEmail='" + studentEmail + '\'' +
                 ", commentTime='" + commentTime + '\'' +
                 ", comments='" + comments + '\'' +
-                ", stars=" + commentStar +
+                ", commentStar=" + commentStar +
+                ", classId=" + classId +
+                ", teacherEmail='" + teacherEmail + '\'' +
                 '}';
     }
 }
