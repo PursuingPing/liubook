@@ -34,6 +34,20 @@ public class CourseController {
         return !courses.isEmpty() ? new LYPResult().setData(courses) : new LYPResult().setMessage("获取课程列表失败");
     }
 
+    @RequestMapping(value ="getCourses",method = RequestMethod.POST)
+    @ResponseBody
+    public LYPResult getCourses(String teacherEmail){
+        List<Course> courses = courseService.getCourses(teacherEmail);
+        return !courses.isEmpty() ? new LYPResult().setData(courses) : new LYPResult().setMessage("获取课程列表失败");
+    }
+
+    @RequestMapping(value ="getCourseInfo",method = RequestMethod.POST)
+    @ResponseBody
+    public LYPResult getCourses(Integer classId){
+        Course  courseInfo = courseService.getCourseById(classId);
+        return courseInfo !=null ? new LYPResult().setData(courseInfo) : new LYPResult().setMessage("获取课程信息失败");
+    }
+
     @RequestMapping(value="getTypes",method = RequestMethod.GET)
     @ResponseBody
     public LYPResult getTypes(){

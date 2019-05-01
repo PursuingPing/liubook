@@ -75,7 +75,7 @@ public class CourseDaoTest{
 
     @Test
     public void testGetCourseById(){
-        Course list = courseDao.getCourseById(25);
+        Course list = courseDao.getCourseById(2);
         System.out.println(list.toString());
 
     }
@@ -101,5 +101,10 @@ public class CourseDaoTest{
     @Test
     public void testDeleteCourseById(){
         System.out.println(courseDao.deleteCourseById(25));
+    }
+
+    @Test
+    public void testGetTeacherEmailByClassId(){
+        System.out.println(courseDao.getTeacherEmailByClassId(3));
     }
 }

@@ -150,95 +150,14 @@
 
     </el-card>
 </div>
-<!--<div class="filter">-->
-<!--<div class="container">-->
-<!--<div id ="menu" class="box">-->
-<!--<dl>-->
-<!--<dt>课程类型</dt>-->
-<!--<dd>-->
-<!--<a href="#" rel="" name="mode" class="all on">全部</a>-->
-<!--<a href="#" :rel="menuitem" name="mode" class="sx_child" v-for="menuitem in menuitems">{{menuitem}}</a>-->
-<!--</dd>-->
-<!--</dl>-->
-<!--<dl>-->
-<!--<dt>上课时间</dt>-->
-<!--<dd>-->
-<!--<a href="#" rel="" name="stage" class="all on">全部</a>-->
-<!--<a href="#" :rel="time" name="stage" class="sx_child" v-for="time in times">{{time}}</a>-->
-<!---->
-<!--</dd>-->
-<!--</dl>-->
-<!--<dl>-->
-<!--<dt>授课教师</dt>-->
-<!--<dd>-->
-<!--<a href="#" rel="" name="sector" class="all on">全部</a>-->
-<!--<a href="#" :rel="teacher" name="sector" class="sx_child" v-for="teacher in teachers">{{teacher}}</a>-->
-<!---->
-<!--</dd>-->
-<!--</dl>-->
-<!--&lt;!&ndash;<dl>&ndash;&gt;-->
-<!--&lt;!&ndash;<dt>热度评价</dt>&ndash;&gt;-->
-<!--&lt;!&ndash;<dd>&ndash;&gt;-->
-<!--&lt;!&ndash;<a href="#" rel="" name="board" class="all on">全部</a>&ndash;&gt;-->
-<!--&lt;!&ndash;<a href="#" :rel="star" name="board" class="sx_child" v-for="star in stars">{{star}}</a>&ndash;&gt;-->
 
-<!--&lt;!&ndash;</dd>&ndash;&gt;-->
-<!--&lt;!&ndash;</dl>&ndash;&gt;-->
-<!---->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-
-<!-- 代码 结束 -->
-
-<!--<div  id="course" class="row container" style="margin:0 auto;background-color:rgba(255,255,255,0.6);">-->
-<!--<div class="col-2" style="height:251px;" v-for="row in rows">-->
-<!--<img :src="row.img" style="width:100%;height:200px;background-repeat:no-repeat;background-size:100%;margin-bottom:8px;" />-->
-<!--<div style="text-align:center;"><p @click="getInfo(row.id)" style="cursor:pointer">{{row.name}}</p></div>-->
-<!--</div>-->
-
-<!--</div>-->
-<!--<div class="col">-->
-<!--<div style="text-align:center;">-->
-<!--<div role="group" class="btn-group"><button class="btn btn-primary" type="button" style="margin-right:25px;">上一页</button></div><button class="btn btn-primary" type="button">下一页</button></div>-->
-<!--</div>-->
-
-<div style="height: 197px;"></div>
-<div class="footer-clean" style="width: 100%;position: fixed;bottom: 0">
+<div style="height: 100px;"></div>
+<div class="footer-clean" style="width: 100%;height:100px;position: fixed;bottom: 0">
     <footer>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Services</h3>
-                    <ul>
-                        <li><a href="#">Web design</a></li>
-                        <li><a href="#">Development</a></li>
-                        <li><a href="#">Hosting</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>About</h3>
-                    <ul>
-                        <li><a href="#">Company</a></li>
-                        <li><a href="#">Team</a></li>
-                        <li><a href="#">Legacy</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Careers</h3>
-                    <ul>
-                        <li><a href="#">Job openings</a></li>
-                        <li><a href="#">Employee success</a></li>
-                        <li><a href="#">Benefits</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i
-                        class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a
-                        href="#"><i class="icon ion-social-instagram"></i></a>
-                    <p class="copyright"
-                       style="font-family:Microsoft YaHei;">刘运平© 2019</p>
-                </div>
+        <div class="container" style="text-align: center">
+            <div>
+                <p class="copyright"
+                   style="font-family:Microsoft YaHei;">版权所有：刘运平© 2019</p>
             </div>
         </div>
     </footer>
@@ -258,7 +177,8 @@
                 coursesInfo:[{
                     courseId:"",
                     courseName:"a基于java的",
-                    courseImg:"/assets/img/61.jpg"
+                    courseImg:"/assets/img/61.jpg",
+                    teacherEmail:"",
                 },{
                     courseId:"",
                     courseName:"a基于java的",
@@ -280,13 +200,13 @@
         },
         methods: {},
         mounted() {
-            axios.get('/course/getTypes').then((response) => {
-                console.log(response)
-                this.menuitems = response.data.data.type
-                this.teachers = response.data.data.teacher
-                console.log(this.menuitems)
-                console.log(this.teachers)
-            });
+            // axios.get('/course/getTypes').then((response) => {
+            //     console.log(response)
+            //     this.menuitems = response.data.data.type
+            //     this.teachers = response.data.data.teacher
+            //     console.log(this.menuitems)
+            //     console.log(this.teachers)
+            // });
 
 
         }

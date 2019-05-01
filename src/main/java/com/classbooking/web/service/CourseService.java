@@ -16,4 +16,8 @@ public interface CourseService {
     boolean modifyCourse(Course course);
 
     boolean deleteCourse(Integer classId);
+
+    List<Course> getCourses(String teacherEmail);
+
+    Course getCourseById(Integer classId);
 }

@@ -67,8 +67,19 @@ public interface CourseDao {
             @Result(column = "class_info",property = "classInfo")
 
     })
-    Course getCourseById(@Param("classId") int classId);
+    Course getCourseById(@Param("classId") Integer classId);
 
     @Delete("delete from class_info where class_id=#{classId}")
-    int deleteCourseById(@Param("classId") int classId);
+    int deleteCourseById(@Param("classId") Integer classId);
+
+    @Select("select teacher_email from class_info where class_id = #{classId}")
+    String getTeacherEmailByClassId(@Param("classId") Integer classId);
+
+    @Select("select class_startTime,class_endTime from class_info where class_name=#{className}")
+    @Results({
+            @Result(column = "class_startTime",property = "classStartTime"),
+            @Result(column = "class_endTime",property = "classEndTime")
+
+    })
+    List<Course> getCourseTimes(@Param("className") String className );
 }

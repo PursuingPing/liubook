@@ -901,11 +901,15 @@
                 });
             },
             load(){
+                var teacherEmail = localStorage.getItem("teacherEmail")
                 var self = this
                 //查数据库填充课程列表
                 $.ajax({
-                    url:"/course/getAll",
-                    type:"get",
+                    url:"/course/getCourses",
+                    type:"post",
+                    data:{
+                        teacherEmail:teacherEmail
+                    },
                     traditional:true,
                     success:function (res) {
                         console.log(res)

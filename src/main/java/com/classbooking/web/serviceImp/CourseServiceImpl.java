@@ -56,4 +56,14 @@ public class CourseServiceImpl implements CourseService {
         return r == 1;
     }
 
+    @Override
+    public List<Course> getCourses(String teacherEmail) {
+        return courseDao.getCourseByTEmail(teacherEmail);
+    }
+
+    @Override
+    public Course getCourseById(Integer classId) {
+        return courseDao.getCourseById(classId);
+    }
+
 }
