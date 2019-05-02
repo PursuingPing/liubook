@@ -62,7 +62,7 @@ public class MailUtil implements Runnable {
             // 2.2设置接收人
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             // 2.3设置邮件主题
-            message.setSubject("LYP Class Booking System给你发送了一封账号激活邮件");
+            message.setSubject("LYP Class Booking System给你发送了一封邮件");
             // 2.4设置邮件内容
             String content ="";
             if(code != null && !code.equals("")){
