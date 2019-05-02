@@ -60,7 +60,7 @@
             <el-input type="textarea" :rows="2" placeholder="写下评论" v-model="textarea" ></el-input>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                <el-button type="primary" @click="queRen(bookId,starValue,textarea)">确 定</el-button>
             </div>
         </el-dialog>
         <el-tabs value="first" type="border-card">
@@ -75,15 +75,15 @@
                                     <div class="media-body" style="overflow:visible;">
                                         <div class="row" style="margin-left:16px;">
                                             <div class="col-md-12">
-                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{course.courseName}} <br>
+                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{course.className}} <br>
                                                 </p>
-                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">讲师:</a> {{course.courseTeacher}} <br>
+                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">讲师:</a> {{course.classTeacher}} <br>
                                                 </p>
-                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{course.courseType}}</p>
-                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">开始时间:</a> {{course.courseStartTime}} </p>
-                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">结束时间:</a> {{course.courseEndTime}}</p>
+                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{course.classType}}</p>
+                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">开始时间:</a> {{course.classStartTime}} </p>
+                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">结束时间:</a> {{course.classEndTime}}</p>
                                                 <div style="margin-top:30px;margin-left:75%;width:200px;">
-                                                    <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="comment">评价</button>
+                                                    <button class="btn btn-primary" type="button" style="font-family:Microsoft YaHei;" @click="comment(course)">评价</button>
                                                 <!--<el-dialog title ="评价" :visible.sync="dialogFormVisible">-->
                                                     <!--<el-rate v-model="starValue" show-text style="margin-bottom: 5px"></el-rate>-->
                                                     <!--<el-input type="textarea" :rows="2" placeholder="写下评论" v-model="textarea" ></el-input>-->
@@ -92,7 +92,7 @@
                                                         <!--<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>-->
                                                     <!--</div>-->
                                                 <!--</el-dialog>-->
-                                                <button class="btn btn-primary" type="button" @click = "deleteYuyue" style="font-family:Microsoft YaHei;">取消预约</button>
+                                                <button class="btn btn-primary" type="button" @click = "deleteYuyue(course.bookId)" style="font-family:Microsoft YaHei;">取消预约</button>
                                             </div>
                                         </div>
                                     </div>
@@ -184,29 +184,82 @@
                     courseEndTime:"2019-04-05 06:42:01",
                     couresImg:"2.png",
                 }],
+                bookId:"",
 
             }
         },
         methods:{
-            comment(){
+            comment(course){
                 this.dialogFormVisible = true
                 this.textarea=''
                 this.starValue=null
+                this.bookId=course.bookId;
 
             },
-            queRen(){
+            queRen(bookId,starValue,textarea){
+                var self = this
+                console.log(bookId,starValue,textarea)
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/comment",
+                    type:"post",
+                    data:{
+                       bookId:bookId,
+                       commentStar:starValue,
+                       comments:textarea
+
+                    },
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.$message({
+                                message: "评论成功",
+                                type: 'success'
+                            })
+                            self.dialogFormVisible = false
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
 
             },
-            deleteYuyue() {
+            deleteYuyue(bookId) {
+                var self = this
                 this.$confirm('此操作将取消该课程预约, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$message({
-                        type: 'success',
-                        message: '取消预约成功!'
-                    });
+                    console.log(bookId)
+                    //查数据库填充课程列表
+                    $.ajax({
+                        url:"/course/cancelBook",
+                        type:"post",
+                        data:{
+                            bookId:bookId,
+                        },
+                        traditional:true,
+                        success:function (res) {
+                            console.log(res)
+                            if (res.success == true) {
+                                self.$message({
+                                    message: "取消预约成功",
+                                    type: 'success'
+                                })
+                                self.loadList();
+                            } else {
+                                self.$message.error(res.message)
+                            }
+                        },
+                        error:function (error) {
+                            console.log(error)
+                        }
+                    })
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -215,7 +268,31 @@
                 });
             },
             loadList(){
-
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/getBooks",
+                    type:"post",
+                    data:{
+                        studentEmail:localStorage.getItem("studentEmail")
+                    },
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.courses = res.data
+                            self.$message({
+                                message: "预约列表获取成功，啊哈",
+                                type: 'success'
+                            })
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
             },
         },
         mounted(){

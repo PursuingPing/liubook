@@ -24,4 +24,5 @@ public interface CourseService {
     String getTeacherEmailByClassId(Integer classId);
 
     List<Course> getTimes(String className);
+
 }

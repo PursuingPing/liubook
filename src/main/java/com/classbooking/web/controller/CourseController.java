@@ -1,10 +1,12 @@
 package com.classbooking.web.controller;
 
 import com.classbooking.web.domain.BookInfo;
+import com.classbooking.web.domain.CommentInfo;
 import com.classbooking.web.domain.Course;
 import com.classbooking.web.domain.LYPResult;
 import com.classbooking.web.service.BookService;
 import com.classbooking.web.service.CourseService;
+import com.classbooking.web.util.MailUtil;
 import com.classbooking.web.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -130,7 +132,6 @@ public class CourseController {
     public LYPResult modify(String className, String classStartTime,Integer classId,
                             String classEndTime, String classInfo,
                             String classType, String classImg, Integer classNums){
-        //TODO 3天前不能修改，判断
         Course course = new Course();
         course.setClassName(className);
         course.setClassStartTime(classStartTime);
@@ -140,19 +141,49 @@ public class CourseController {
         course.setClassImg(classImg);
         course.setClassNums(classNums);
         course.setClassId(classId);
+        //3天前不能修改，判断，修改后发邮件
 
-        boolean flag = courseService.modifyCourse(course);
-        return flag ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("修改课程失败，请检查所填信息是否有错");
+        if(bookService.checkTime(classId)){
+            boolean flag = courseService.modifyCourse(course);
+            List<BookInfo> bookInfos = bookService.getBookInfo(classId);
+            if(!bookInfos.isEmpty()){
+                Course c = courseService.getCourseById(classId);
+                String notice = "您所预约的课程："+c.getClassName() +"开始时间为： "+c.getClassStartTime()+"已被修改，请登录LYP Booking Sys 查看！";
+                bookInfos.forEach(bookInfo -> {
+                    String email = bookInfo.getStudentEmail();
+                    new Thread(new MailUtil(email,notice,"")).start();
+                });
+
+            }
+            return flag ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("修改课程失败，请检查所填信息是否有错");
+        }else {
+            return new LYPResult().setMessage("课程修改只能在开始时间3天前！");
+        }
+
     }
 
     @PostMapping("/delete")
     @ResponseBody
     public LYPResult delete(Integer classId){
 
-        //TODO 3天前不能删除，判断
-        boolean flag = courseService.deleteCourse(classId);
-        return flag ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("删除课程失败");
+        // 3天前不能删除，判断，删除后发邮件
+        boolean canDo = bookService.checkTime(classId);
+        if(canDo){
+            boolean flag = courseService.deleteCourse(classId);
+            List<BookInfo> bookInfos = bookService.getBookInfo(classId);
+            if(!bookInfos.isEmpty()){
+                Course course = courseService.getCourseById(classId);
+                String notice = "您所预约的课程："+course.getClassName() +"开始时间为： "+course.getClassStartTime()+"已被删除，请登录LYP Booking Sys 查看！";
+                bookInfos.forEach(bookInfo -> {
+                    String email = bookInfo.getStudentEmail();
+                    new Thread(new MailUtil(email,notice,"")).start();
+                });
 
+            }
+            return flag ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("删除课程失败");
+        }else{
+            return new LYPResult().setMessage("课程删除只能在开始时间3天前！");
+        }
     }
 
     @PostMapping("/getBookInfo")
@@ -169,8 +200,13 @@ public class CourseController {
     public LYPResult getComments(Integer classId){
 
         List<BookInfo> list = bookService.getComments(classId);
-
-        return new LYPResult().setData(list);
+        List<BookInfo> result = new ArrayList<>();
+        list.forEach(bookInfo -> {
+            if(bookInfo.getCommentTime()!=null && !bookInfo.getCommentTime().equals("")){
+                result.add(bookInfo);
+            }
+        });
+        return new LYPResult().setData(result);
     }
 
 
@@ -220,18 +256,27 @@ public class CourseController {
         return new LYPResult().setSuccess(true);
     }
 
+    @PostMapping("/getBooks")
+    @ResponseBody
+    public LYPResult getBooks(String studentEmail){
+        List<CommentInfo> books = bookService.getBooksByEmail(studentEmail);
+//        return !books.isEmpty() ? new LYPResult().setData(books) : new LYPResult().setMessage("");
+        return new LYPResult().setData(books);
+    }
+
     @PostMapping("/comment")
     @ResponseBody
     public LYPResult comment(Integer bookId,Integer commentStar,String comments){
-        //时间没过才能
-        return new LYPResult();
+        //TODO  课程开始后才能评论,评论过，不能再评论
+
+        return bookService.comment(bookId,commentStar,comments) ? new LYPResult().setData(true) : new LYPResult().setMessage("评论失败啊");
     }
 
     @PostMapping("/cancelBook")
     @ResponseBody
     public LYPResult cancelBook(Integer bookId){
+        //TODO 课程没开始才能取消预约
 
-
-        return new LYPResult();
+        return bookService.cancelBook(bookId) ? new LYPResult().setData(true) : new LYPResult().setMessage("取消预约失败");
     }
 }

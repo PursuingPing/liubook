@@ -851,7 +851,8 @@
                             self.xiugaiVisible=false
                             self.load()
                         } else {
-                            self.$message.error(res.data.message)
+                            self.xiugaiVisible=false
+                            self.$message.error(res.message)
                         }
                     },
                     error:function (error) {
@@ -885,7 +886,7 @@
                                 });
                                 self.load();
                             } else {
-                                self.$message.error(res.data.message)
+                                self.$message.error(res.message)
                             }
                         },
                         error:function (error) {

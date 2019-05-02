@@ -15,10 +15,17 @@ public class MailUtil implements Runnable {
     /*=========收件人的信息==========*/
     private String email;// 收件人邮箱
     private String code;// 激活码
+    private String notice;//提示
     /*=========初始化===============*/
     public MailUtil(String email, String code) {
         this.email = email;
         this.code = code;
+    }
+
+    public MailUtil(String email,String notice,String code){
+        this.code = code;
+        this.notice=notice;
+        this.email = email;
     }
 
     public void run() {
@@ -57,16 +64,30 @@ public class MailUtil implements Runnable {
             // 2.3设置邮件主题
             message.setSubject("LYP Class Booking System给你发送了一封账号激活邮件");
             // 2.4设置邮件内容
-            String content =
-                    "<html><head></head><body>" +
-                            "<h1>这是一封激活邮件,激活请将以下验证码回填</h1>" +
-                            "<h3>" +
-                            "<p>" +
-                             code
-                            + "</p>" +
-                            "</h3>" +
-                            "</body>" +
-                            "</html>";
+            String content ="";
+            if(code != null && !code.equals("")){
+                content =
+                        "<html><head></head><body>" +
+                                "<h1>这是一封激活邮件,激活请将以下验证码回填</h1>" +
+                                "<h3>" +
+                                "<p>" +
+                                code
+                                + "</p>" +
+                                "</h3>" +
+                                "</body>" +
+                                "</html>";
+            }else {
+                content =
+                        "<html><head></head><body>" +
+                                "<h1>这是一封提醒邮件,你所预约的课程信息被修改或删除，请前往LYPBooking 系统查看</h1>" +
+                                "<h3>" +
+                                "<p>" +
+                                notice
+                                + "</p>" +
+                                "</h3>" +
+                                "</body>" +
+                                "</html>";
+            }
             message.setContent(content, "text/html;charset=UTF-8");
 
             // 3.发送邮件

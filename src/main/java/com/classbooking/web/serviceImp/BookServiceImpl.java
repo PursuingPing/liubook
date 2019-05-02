@@ -3,6 +3,7 @@ package com.classbooking.web.serviceImp;
 import com.classbooking.web.dao.BookDao;
 import com.classbooking.web.dao.CourseDao;
 import com.classbooking.web.domain.BookInfo;
+import com.classbooking.web.domain.CommentInfo;
 import com.classbooking.web.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,21 +73,41 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean cancleBook(Integer bookId) {
+    public boolean cancelBook(Integer bookId) {
         return bookDao.deleteBook(bookId) == 1;
     }
 
     @Override
     public boolean checkTime(Integer classId) {
         String startTime = courseDao.getClassStartTimeById(classId);
-        LocalDateTime startDateTime = LocalDateTime.parse(startTime);
+        LocalDateTime startDateTime = LocalDateTime.parse(startTime,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         LocalDateTime now = LocalDateTime.now();
         Duration duration = Duration.between(now,startDateTime);
         if(duration.toDays() > 3 ){
-            //课程开始3天前不可取消预约
+            //课程开始3天前不可取修改、删除
             return true;
         }else{
             return false;
         }
     }
+
+    @Override
+    public boolean checkCommentTime(Integer classId) {
+        String startTime = courseDao.getClassStartTimeById(classId);
+        LocalDateTime startDateTime = LocalDateTime.parse(startTime,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime now = LocalDateTime.now();
+        Duration duration = Duration.between(now,startDateTime);
+        if(duration.getSeconds()  < 0 ){
+            //课程开始后才可评论
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public List<CommentInfo> getBooksByEmail(String studentEmail) {
+        return bookDao.getBookList(studentEmail);
+    }
+
 }
