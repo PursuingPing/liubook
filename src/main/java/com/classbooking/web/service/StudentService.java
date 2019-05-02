@@ -8,4 +8,7 @@ public interface StudentService {
 
     boolean modifyInfo(Student student);
 
+    boolean addStudent(String email);
+
+
 }

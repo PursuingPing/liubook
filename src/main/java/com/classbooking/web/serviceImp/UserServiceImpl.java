@@ -75,4 +75,9 @@ public class UserServiceImpl implements UserService {
         return userDao.getAllMEmail();
     }
 
+    @Override
+    public boolean deleteUser(String email) {
+        return userDao.deleteUser(email)== 1;
+    }
+
 }

@@ -1001,18 +1001,24 @@
       <RefSchemaName>lyp_class_booking</RefSchemaName>
       <RefTableName>student_info</RefTableName>
       <RefColNames>student_email</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <foreign-key id="254" parent="234" name="teachers_email">
       <ColNames>teacher_email</ColNames>
       <RefSchemaName>lyp_class_booking</RefSchemaName>
       <RefTableName>teacher_info</RefTableName>
       <RefColNames>teacher_email</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <foreign-key id="255" parent="234" name="class_id">
       <ColNames>class_id</ColNames>
       <RefSchemaName>lyp_class_booking</RefSchemaName>
       <RefTableName>class_info</RefTableName>
       <RefColNames>class_id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <column id="256" parent="235" name="class_id">
       <Position>1</Position>
@@ -1087,6 +1093,8 @@
       <RefSchemaName>lyp_class_booking</RefSchemaName>
       <RefTableName>teacher_info</RefTableName>
       <RefColNames>teacher_email</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <column id="270" parent="236" name="id">
       <Position>1</Position>
@@ -1249,6 +1257,8 @@
       <RefSchemaName>lyp_class_booking</RefSchemaName>
       <RefTableName>login_info</RefTableName>
       <RefColNames>email</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <column id="301" parent="239" name="id">
       <Position>1</Position>
@@ -1321,6 +1331,8 @@
       <RefSchemaName>lyp_class_booking</RefSchemaName>
       <RefTableName>login_info</RefTableName>
       <RefColNames>email</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
   </database-model>
 </dataSource>

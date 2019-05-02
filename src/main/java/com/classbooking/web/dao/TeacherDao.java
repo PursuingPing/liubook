@@ -31,4 +31,10 @@ public interface TeacherDao {
             " teacher_college=#{teacherCollege} where teacher_email=#{teacherEmail}")
     int modifyInfo(Teacher teacher);
 
+    @Insert("insert into teacher_info(teacher_email) values(#{teacherEmail})")
+    Integer addTeacher(@Param("teacherEmail") String teacherEmail);
+
+    @Delete("delete from teacher_info where teacher_email=#{teacherEmail}")
+    Integer deleteTeacher(@Param("teacherEmail") String teacherEmail);
+
 }

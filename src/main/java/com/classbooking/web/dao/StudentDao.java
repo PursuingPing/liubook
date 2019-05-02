@@ -23,4 +23,10 @@ public interface StudentDao {
     @Update("update student_info set student_name=#{studentName},student_sex=#{studentSex} , student_major=#{studentMajor},  student_phone=#{studentPhone}," +
             " student_college=#{studentCollege} where student_email=#{studentEmail}")
     int modifyInfo(Student student);
+
+    @Insert("insert into student_info(student_email) values(#{studentEmail})")
+    Integer addStudent(@Param("studentEmail") String studentEmail);
+
+    @Delete("delete from student_info where student_email=#{studentEmail}")
+    Integer deleteStudent(@Param("studentEmail") String studentEmail);
 }

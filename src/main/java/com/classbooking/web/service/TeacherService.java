@@ -7,4 +7,6 @@ public interface TeacherService {
     boolean modifyInfo(Teacher teacher);
 
     Teacher getTeacherInfo(String email);
+
+    boolean addTeacher(String email);
 }

@@ -64,4 +64,10 @@ public class UserDaoTest {
     public void testUpdatePassword(){
         System.out.println(userDao.updatePassword("2@qq.com","hahhahahahahah"));
     }
+
+    @Test
+    public void testDeleteStudent(){
+        String email = "999@qq.com";
+        System.out.println(userDao.deleteUser(email));
+    }
 }

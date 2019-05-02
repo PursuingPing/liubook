@@ -22,4 +22,9 @@ public class StudentServiceImpl implements StudentService {
     public boolean modifyInfo(Student student) {
         return studentDao.modifyInfo(student) == 1;
     }
+
+    @Override
+    public boolean addStudent(String email) {
+        return studentDao.addStudent(email) ==1;
+    }
 }

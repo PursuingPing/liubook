@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.classbooking.web.domain.Dto;
 import com.classbooking.web.domain.LYPResult;
 import com.classbooking.web.domain.User;
+import com.classbooking.web.service.StudentService;
 import com.classbooking.web.service.UserService;
 import com.classbooking.web.serviceImp.TokenServiceImpl;
 import com.classbooking.web.util.CodeUtil;
@@ -20,6 +21,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StudentService studentService;
 
     @Autowired
     private HttpServletRequest request;
@@ -89,7 +93,11 @@ public class UserController {
             user.setState(1);
             user.setCode(null);
             int ack =userService.update(user);
-            return ack==1 ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("激活失败");
+            if(ack ==1){
+                return studentService.addStudent(user.getEmail()) ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("激活失败");
+            }else {
+                return new LYPResult().setMessage("激活失败");
+            }
         }else{
             return new LYPResult().setMessage("激活失败");
         }

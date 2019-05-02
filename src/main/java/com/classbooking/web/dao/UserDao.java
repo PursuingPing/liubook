@@ -40,4 +40,7 @@ public interface UserDao {
 
     @Select("select manager_email from manager_info")
     List<String> getAllMEmail();
+
+    @Delete("delete from login_info where email = #{email}")
+    Integer deleteUser(@Param("email") String email);
 }

@@ -34,4 +34,16 @@ public class StudentDaoTest {
 
         System.out.println(studentDao.modifyInfo(student));
     }
+
+    @Test
+    public void testAddStudent(){
+        String email = "999@qq.com";
+        System.out.println(studentDao.addStudent(email));
+    }
+
+    @Test
+    public void testDeleteStudent(){
+        String email = "999@qq.com";
+        System.out.println(studentDao.deleteStudent(email));
+    }
 }
