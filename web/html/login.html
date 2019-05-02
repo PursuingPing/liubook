@@ -114,6 +114,7 @@
                                 localStorage.setItem("teacherEmail",res.data.email)
                                 location.replace('html/teacherCourse.html?user=' + res.data.email)
                             }else{
+                                location.replace('html/manager.html?user=' + res.data.email)
                                 localStorage.setItem("managerEmail",res.data.email)
                             }
                         }else{
