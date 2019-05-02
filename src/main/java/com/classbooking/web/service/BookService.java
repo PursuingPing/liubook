@@ -26,4 +26,6 @@ public interface BookService {
     boolean checkCommentTime(Integer classId);
 
     List<CommentInfo> getBooksByEmail(String studentEmail);
+
+    boolean HasComment(Integer classId);
 }

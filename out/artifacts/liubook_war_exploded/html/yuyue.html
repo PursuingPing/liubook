@@ -60,7 +60,7 @@
             <el-input type="textarea" :rows="2" placeholder="写下评论" v-model="textarea" ></el-input>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="queRen(bookId,starValue,textarea)">确 定</el-button>
+                <el-button type="primary" @click="queRen(bookId,starValue,textarea,classId)">确 定</el-button>
             </div>
         </el-dialog>
         <el-tabs value="first" type="border-card">
@@ -77,7 +77,7 @@
                                             <div class="col-md-12">
                                                 <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">课程名:</a> {{course.className}} <br>
                                                 </p>
-                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">讲师:</a> {{course.classTeacher}} <br>
+                                                <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">讲师:</a> {{course.teacherName}} <br>
                                                 </p>
                                                 <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">类别:</a> {{course.classType}}</p>
                                                 <p style="margin-bottom:5px;font-family:Microsoft YaHei;"><a href="#">开始时间:</a> {{course.classStartTime}} </p>
@@ -92,7 +92,7 @@
                                                         <!--<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>-->
                                                     <!--</div>-->
                                                 <!--</el-dialog>-->
-                                                <button class="btn btn-primary" type="button" @click = "deleteYuyue(course.bookId)" style="font-family:Microsoft YaHei;">取消预约</button>
+                                                <button class="btn btn-primary" type="button" @click = "deleteYuyue(course.bookId,course.classId)" style="font-family:Microsoft YaHei;">取消预约</button>
                                             </div>
                                         </div>
                                     </div>
@@ -185,6 +185,7 @@
                     couresImg:"2.png",
                 }],
                 bookId:"",
+                classId:"",
 
             }
         },
@@ -194,11 +195,12 @@
                 this.textarea=''
                 this.starValue=null
                 this.bookId=course.bookId;
+                this.classId = course.classId;
 
             },
-            queRen(bookId,starValue,textarea){
+            queRen(bookId,starValue,textarea,cId){
                 var self = this
-                console.log(bookId,starValue,textarea)
+                console.log(bookId,starValue,textarea,cId)
                 //查数据库填充课程列表
                 $.ajax({
                     url:"/course/comment",
@@ -206,7 +208,8 @@
                     data:{
                        bookId:bookId,
                        commentStar:starValue,
-                       comments:textarea
+                       comments:textarea,
+                       classId:cId
 
                     },
                     traditional:true,
@@ -220,6 +223,7 @@
                             self.dialogFormVisible = false
                         } else {
                             self.$message.error(res.message)
+                            self.dialogFormVisible = false
                         }
                     },
                     error:function (error) {
@@ -228,20 +232,21 @@
                 })
 
             },
-            deleteYuyue(bookId) {
+            deleteYuyue(bookId,cId) {
                 var self = this
                 this.$confirm('此操作将取消该课程预约, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    console.log(bookId)
+                    console.log(bookId,cId)
                     //查数据库填充课程列表
                     $.ajax({
                         url:"/course/cancelBook",
                         type:"post",
                         data:{
                             bookId:bookId,
+                            classId:cId
                         },
                         traditional:true,
                         success:function (res) {

@@ -266,17 +266,29 @@ public class CourseController {
 
     @PostMapping("/comment")
     @ResponseBody
-    public LYPResult comment(Integer bookId,Integer commentStar,String comments){
-        //TODO  课程开始后才能评论,评论过，不能再评论
+    public LYPResult comment(Integer bookId,Integer commentStar,String comments,Integer classId){
+        //  课程开始后才能评论,评论过，不能再评论
+        if(bookService.checkCommentTime(classId)){
+            if(!bookService.HasComment(classId)){
+                return bookService.comment(bookId,commentStar,comments) ? new LYPResult().setData(true) : new LYPResult().setMessage("评论失败啊");
+            }else {
+                return new LYPResult().setMessage("该课程已经评论过，不能重复评论!");
+            }
+        }else{
+            return new LYPResult().setMessage("课程未开始，不能评论 Sorry");
+        }
 
-        return bookService.comment(bookId,commentStar,comments) ? new LYPResult().setData(true) : new LYPResult().setMessage("评论失败啊");
     }
 
     @PostMapping("/cancelBook")
     @ResponseBody
-    public LYPResult cancelBook(Integer bookId){
-        //TODO 课程没开始才能取消预约
+    public LYPResult cancelBook(Integer bookId,Integer classId){
+        // 课程没开始才能取消预约
+        if(!bookService.checkCommentTime(classId)){
+            return bookService.cancelBook(bookId) ? new LYPResult().setData(true) : new LYPResult().setMessage("取消预约失败");
+        }else {
+            return new LYPResult().setMessage("课程已开始，不能取消预约！");
+        }
 
-        return bookService.cancelBook(bookId) ? new LYPResult().setData(true) : new LYPResult().setMessage("取消预约失败");
     }
 }

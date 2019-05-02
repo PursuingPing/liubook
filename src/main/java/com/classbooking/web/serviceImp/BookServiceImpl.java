@@ -110,4 +110,10 @@ public class BookServiceImpl implements BookService {
         return bookDao.getBookList(studentEmail);
     }
 
+    @Override
+    public boolean HasComment(Integer bookId) {
+        String cTime = bookDao.getCommentTime(bookId);
+        return cTime != null && !cTime.equals("");
+    }
+
 }

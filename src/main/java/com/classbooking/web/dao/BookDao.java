@@ -65,4 +65,6 @@ public interface BookDao {
     @Delete("delete from booking_info where id=#{bookId}")
     Integer deleteBook(@Param("bookId") Integer bookId);
 
+    @Select("select comment_time from booking_info where id = #{bookId}")
+    String getCommentTime(@Param("bookId") Integer bookId);
 }
