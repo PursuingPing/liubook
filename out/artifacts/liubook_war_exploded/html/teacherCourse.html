@@ -108,7 +108,7 @@
                     <div></div>
                     <div class="media-body">
                         <div class="media" style="overflow:visible;">
-                            <div style="width:250px;height:190px;"><img src="/assets/img/1.jpg" class="mr-3" style="width:250px;height:190px;"></div>
+                            <div style="width:250px;height:190px;"><img :src="c.classImg" class="mr-3" style="width:250px;height:190px;"></div>
                             <div class="media-body" style="overflow:visible;">
                                 <div class="row" style="margin-left:16px;">
                                     <div class="col-md-12">
@@ -196,9 +196,9 @@
                             <el-form-item label="课程图片" :label-width="formLabelWidth">
                                 <el-upload
                                         class="avatar-uploader"
-                                        action="http://localhost:8080/assets/img"
+                                        action="/course/upload"
                                         :show-file-list="false"
-                                        :on-success="handleAvatarSuccess"
+                                        :on-success="handleAvatarSuccess1"
                                         :before-upload="beforeAvatarUpload">
                                     <img v-if="addForm.courseImg" :src="addForm.courseImg" class="avatar">
                                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -250,9 +250,9 @@
                             <el-form-item label="课程图片" :label-width="formLabelWidth">
                                 <el-upload
                                         class="avatar-uploader"
-                                        action="http://localhost:8080/assets/img"
+                                        action="/course/upload"
                                         :show-file-list="false"
-                                        :on-success="handleAvatarSuccess"
+                                        :on-success="handleAvatarSuccess1"
                                         :before-upload="beforeAvatarUpload">
                                     <img v-if="addForm.courseImg" :src="addForm.courseImg" class="avatar">
                                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -319,7 +319,7 @@
                     </el-tab-pane>
                 </el-tabs>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="addCoursesFormVisible = false">取 消</el-button>
+                    <el-button @click="quxiaoAdd">取 消</el-button>
                     <el-button type="primary" @click="addCourse(teacher.email)">确 定</el-button>
                 </div>
             </el-dialog>
@@ -330,9 +330,9 @@
                     <el-form-item label="课程图片" :label-width="formLabelWidth">
                         <el-upload
                                 class="avatar-uploader"
-                                action="http://localhost:8080/assets/img"
+                                action="/course/upload"
                                 :show-file-list="false"
-                                :on-success="handleAvatarSuccess"
+                                :on-success="handleAvatarSuccess3"
                                 :before-upload="beforeAvatarUpload">
                             <img v-if="course.classImg" :src="course.classImg" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -389,7 +389,7 @@
                         <div></div>
                         <div class="media-body">
                             <div class="media" style="overflow:visible;">
-                                <div style="width:250px;height:190px;"><img src="/assets/img/1.jpg" class="mr-3" style="width:250px;height:190px;"></div>
+                                <div style="width:250px;height:190px;"><img :src="c.classImg" class="mr-3" style="width:250px;height:190px;"></div>
                                 <div class="media-body" style="overflow:visible;">
                                     <div class="row" style="margin-left:16px;">
                                         <div class="col-md-12">
@@ -612,7 +612,7 @@
                     courseEndTime:"",
                     courseInfo:"",
                     courseImg:"",
-                    courseNums:5,
+                    courseNums:0,
                     range:[],
                     unit: [],
                     times:[new Date(2016, 9, 10, 0, 0), new Date(2016, 9, 10, 0, 0)],
@@ -666,8 +666,11 @@
         },
         methods:{
 
-            handleAvatarSuccess(res, file) {
-                this.addForm.courseImg = URL.createObjectURL(file.raw);
+            handleAvatarSuccess1(res, file) {
+                this.addForm.courseImg = res.data
+            },
+            handleAvatarSuccess3(res, file) {
+                this.course.classImg = res.data
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
@@ -809,6 +812,21 @@
                         }
                     })
                  }
+            },
+            quxiaoAdd(){
+                var self = this
+                self.addCoursesFormVisible=false
+                self.addForm.courseImg=""
+                self.addForm.courseNums=""
+                self.addForm.courseName=""
+                self.addForm.courseType=""
+                self.addForm.courseStartTime=""
+                self.addForm.courseEndTime=""
+                self.addForm.courseInfo=""
+                self.addForm.courseImg=""
+                self.addForm.courseNums=0
+                self.addForm.range=[]
+                self.addForm. unit=[]
             },
             xiugaiCourse(c){
                 //修改课程

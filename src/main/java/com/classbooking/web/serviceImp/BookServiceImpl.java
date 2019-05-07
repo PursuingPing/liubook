@@ -83,7 +83,8 @@ public class BookServiceImpl implements BookService {
         LocalDateTime startDateTime = LocalDateTime.parse(startTime,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         LocalDateTime now = LocalDateTime.now();
         Duration duration = Duration.between(now,startDateTime);
-        if(duration.toDays() > 3 ){
+        long durationSeconds = duration.toMillis();
+        if(durationSeconds >= 259200000L ){
             //课程开始3天前不可取修改、删除
             return true;
         }else{
