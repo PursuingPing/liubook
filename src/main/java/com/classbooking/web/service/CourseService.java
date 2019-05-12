@@ -3,6 +3,7 @@ package com.classbooking.web.service;
 import com.classbooking.web.domain.Course;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CourseService {
     List<Course> getAllCourse();
@@ -24,5 +25,7 @@ public interface CourseService {
     String getTeacherEmailByClassId(Integer classId);
 
     List<Course> getTimes(String className);
+
+    List<Course> getCourseByMenu(Map<String,Object> param);
 
 }

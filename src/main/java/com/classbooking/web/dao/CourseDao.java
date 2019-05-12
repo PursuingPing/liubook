@@ -1,10 +1,12 @@
 package com.classbooking.web.dao;
 
 import com.classbooking.web.domain.Course;
+import com.classbooking.web.dynamicSqlProvider.CourseDynaSqlProvider;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.classbooking.web.util.Constants.CLASSTABLE;
 import static com.classbooking.web.util.Constants.TEACHERTABLE;
@@ -91,4 +93,7 @@ public interface CourseDao {
 
     @Select("select class_startTime from class_info where class_id = #{classId}")
     String getClassStartTimeById(@Param("classId") Integer classId);
+
+    @SelectProvider(type = CourseDynaSqlProvider.class,method = "selectWithParam")
+    List<Course> getClasses(Map<String,Object> param);
 }

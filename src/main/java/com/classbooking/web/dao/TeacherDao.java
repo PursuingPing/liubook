@@ -37,4 +37,6 @@ public interface TeacherDao {
     @Delete("delete from teacher_info where teacher_email=#{teacherEmail}")
     Integer deleteTeacher(@Param("teacherEmail") String teacherEmail);
 
+    @Select("select teacher_email from teacher_info where teacher_name=#{teacherName}")
+    String getTeacherEmailByName(@Param("teacherName") String teacherName);
 }

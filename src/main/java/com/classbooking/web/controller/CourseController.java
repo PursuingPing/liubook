@@ -6,6 +6,7 @@ import com.classbooking.web.domain.Course;
 import com.classbooking.web.domain.LYPResult;
 import com.classbooking.web.service.BookService;
 import com.classbooking.web.service.CourseService;
+import com.classbooking.web.service.TeacherService;
 import com.classbooking.web.util.MailUtil;
 import com.classbooking.web.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("course")
@@ -28,6 +30,9 @@ public class CourseController {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private TeacherService teacherService;
 
     @RequestMapping(value ="getAll",method = RequestMethod.GET)
     @ResponseBody
@@ -325,6 +330,38 @@ public class CourseController {
         }else {
             return new LYPResult().setMessage("课程已开始，不能取消预约！");
         }
+    }
 
+    @PostMapping("/getClasses")
+    @ResponseBody
+    public LYPResult getClasses(String type ,String teacherName,String timeRange){
+
+        Map<String,Object> param = new HashMap<>();
+        if(!type.equals("全部")){
+            param.put("type",type);
+        }
+        if(!teacherName.equals("全部")){
+            String tEmail= teacherService.getTEmailByName(teacherName);
+            param.put("teacherEmail",tEmail);
+        }
+        List<Course> courses = courseService.getCourseByMenu(param);
+        if(courses.isEmpty()){
+            return new LYPResult().setData(courses);
+        }else{
+            if(!timeRange.equals("全部")){
+                String[] range =  timeRange.split("-");
+                int start = TimeUtil.getHourByString(range[0]);
+                int end = TimeUtil.getHourByString(range[1]);
+                List<Course> result = courses.stream()
+                        .filter(course ->
+                                TimeUtil.getHour(course.getClassStartTime()) >= start && TimeUtil.getHour(course.getClassEndTime()) <= end
+                                        && TimeUtil.getHour(course.getClassStartTime()) <= end
+                        ).collect(Collectors.toList());
+
+                return new LYPResult().setData(result);
+            }else {
+                return new LYPResult().setData(courses);
+            }
+        }
     }
 }

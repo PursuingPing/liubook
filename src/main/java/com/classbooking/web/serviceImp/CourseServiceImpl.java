@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class CourseServiceImpl implements CourseService {
 
@@ -74,6 +76,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getTimes(String className) {
         return courseDao.getCourseTimes(className);
+    }
+
+    @Override
+    public List<Course> getCourseByMenu(Map<String, Object> param) {
+        return courseDao.getClasses(param);
     }
 
 }

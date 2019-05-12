@@ -9,8 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:applicationContext.xml"})
@@ -125,5 +130,35 @@ public class CourseDaoTest{
     public void testGetCommentsByName(){
         List<Integer> list = courseDao.getClassIdsByName("test");
         list.forEach(System.out::println);
+    }
+
+    @Test
+    public void testSelectWithParam(){
+        Map<String,Object> param = new HashMap<>();
+        param.put("type","生活兴趣");
+        param.put("teacherEmail","2@qq.com");
+        List<Course> list = courseDao.getClasses(param);
+        list.stream().forEach(course -> {
+            System.out.println(course.getClassType() +"--"+course.getTeacherEmail());
+        });
+    }
+
+    @Test
+    public void testHourCompare(){
+        String time = "2019-01-02 01:00:03";
+        LocalDateTime localDateTime = LocalDateTime.parse(time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalTime localTime = localDateTime.toLocalTime();
+        int hour = localTime.getHour();
+        System.out.println(hour);
+        System.out.println(TimeUtil.getHour(time));
+    }
+
+    @Test
+    public void testStringToHour(){
+        String s = "09:00";
+        LocalTime localTime = LocalTime.parse(s, DateTimeFormatter.ofPattern("HH:mm"));
+        int hour = localTime.getHour();
+        System.out.println(hour);
+        System.out.println(TimeUtil.getHourByString(s));
     }
 }

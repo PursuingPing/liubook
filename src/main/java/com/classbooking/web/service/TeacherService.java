@@ -9,4 +9,6 @@ public interface TeacherService {
     Teacher getTeacherInfo(String email);
 
     boolean addTeacher(String email);
+
+    String getTEmailByName(String name);
 }

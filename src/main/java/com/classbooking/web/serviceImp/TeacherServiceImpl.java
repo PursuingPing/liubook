@@ -28,5 +28,10 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherDao.addTeacher(email) ==1;
     }
 
+    @Override
+    public String getTEmailByName(String name) {
+        return teacherDao.getTeacherEmailByName(name);
+    }
+
 
 }

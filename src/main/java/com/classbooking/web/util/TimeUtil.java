@@ -50,7 +50,15 @@ public class TimeUtil {
         return list;
     }
 
+    public static int getHour(String time){
+        LocalDateTime localDateTime = LocalDateTime.parse(time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalTime localTime = localDateTime.toLocalTime();
+        return localTime.getHour();
+    }
 
-
+    public static int getHourByString(String time){
+        LocalTime localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+        return localTime.getHour();
+    }
 
 }
