@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:applicationContext.xml"})
 public class StudentDaoTest {
@@ -45,5 +47,13 @@ public class StudentDaoTest {
     public void testDeleteStudent(){
         String email = "999@qq.com";
         System.out.println(studentDao.deleteStudent(email));
+    }
+
+    @Test
+    public void testGetAllStudent(){
+        List<Student> list = studentDao.getAllStudent();
+        list.stream().forEach(s -> {
+            System.out.println(s.toString());
+        });
     }
 }

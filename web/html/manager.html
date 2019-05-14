@@ -38,42 +38,249 @@
     </nav>
 </header>
 <div class="container" id="manager">
+    <el-dialog title="增加学生" :visible.sync="studentFormVisible">
+    <el-form :model="addSForm">
+        <el-form-item label="邮箱" :label-width="formLabelWidth">
+            <el-input v-model="addSForm.email" autocomplete="off" style="width: 200px"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" :label-width="formLabelWidth">
+            <el-input v-model="addSForm.password" autocomplete="off" style="width: 200px"></el-input>
+        </el-form-item>
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+            <el-input v-model="addSForm.name" autocomplete="off" style="width: 200px"></el-input>
+        </el-form-item>
+        <el-form-item label="性别" :label-width="formLabelWidth">
+            <!--<el-input v-model="addSForm.sex" autocomplete="off" style="width: 200px"></el-input>-->
+            <el-select v-model="addSForm.sex" placeholder="请选择性别" style="width: 200px">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="主修" :label-width="formLabelWidth">
+            <el-input v-model="addSForm.major" autocomplete="off" style="width: 200px"></el-input>
+        </el-form-item>
+        <el-form-item label="学校" :label-width="formLabelWidth">
+            <el-input v-model="addSForm.college" autocomplete="off" style="width: 200px"></el-input>
+        </el-form-item>
+        <el-form-item label="手机" :label-width="formLabelWidth">
+            <el-input v-model="addSForm.phone" autocomplete="off" style="width: 200px"></el-input>
+        </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+        <el-button @click="studentFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addStudent">确 定</el-button>
+    </div>
+</el-dialog>
+    <el-dialog title="修改学生" :visible.sync="sMFVisible">
+        <el-form :model="modifySForm">
+            <el-form-item label="邮箱" :label-width="formLabelWidth">
+                <el-input v-model="modifySForm.email" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" :label-width="formLabelWidth">
+                <el-input v-model="modifySForm.password" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="姓名" :label-width="formLabelWidth">
+                <el-input v-model="modifySForm.name" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="性别" :label-width="formLabelWidth">
+                <!--<el-input v-model="addSForm.sex" autocomplete="off" style="width: 200px"></el-input>-->
+                <el-select v-model="modifySForm.sex" placeholder="请选择性别" style="width: 200px">
+                    <el-option label="男" value="男"></el-option>
+                    <el-option label="女" value="女"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="主修" :label-width="formLabelWidth">
+                <el-input v-model="modifySForm.major" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="学校" :label-width="formLabelWidth">
+                <el-input v-model="modifySForm.college" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="手机" :label-width="formLabelWidth">
+                <el-input v-model="modifySForm.phone" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="sMFVisible = false">取 消</el-button>
+            <el-button type="primary" @click="modifyStudent">确 定</el-button>
+        </div>
+    </el-dialog>
+    <el-dialog title="增加教师" :visible.sync="teacherFormVisible">
+        <el-form :model="addTForm">
+            <el-form-item label="邮箱" :label-width="formLabelWidth">
+                <el-input v-model="addTForm.email" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" :label-width="formLabelWidth">
+                <el-input v-model="addTForm.password" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="姓名" :label-width="formLabelWidth">
+                <el-input v-model="addTForm.name" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="性别" :label-width="formLabelWidth">
+                <!--<el-input v-model="addSForm.sex" autocomplete="off" style="width: 200px"></el-input>-->
+                <el-select v-model="addTForm.sex" placeholder="请选择性别" style="width: 200px">
+                    <el-option label="男" value="男"></el-option>
+                    <el-option label="女" value="女"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="主修" :label-width="formLabelWidth">
+                <el-input v-model="addTForm.major" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="学历" :label-width="formLabelWidth">
+                <el-input v-model="addTForm.degree" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="学校" :label-width="formLabelWidth">
+                <el-input v-model="addTForm.college" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="手机" :label-width="formLabelWidth">
+                <el-input v-model="addTForm.phone" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="teacherFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addTeacher">确 定</el-button>
+        </div>
+    </el-dialog>
+    <el-dialog title="修改教师" :visible.sync="tMFVisible">
+        <el-form :model="modifyTForm">
+            <el-form-item label="邮箱" :label-width="formLabelWidth">
+                <el-input v-model="modifyTForm.email" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" :label-width="formLabelWidth">
+                <el-input v-model="modifyTForm.password" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="姓名" :label-width="formLabelWidth">
+                <el-input v-model="modifyTForm.name" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="性别" :label-width="formLabelWidth">
+                <!--<el-input v-model="addSForm.sex" autocomplete="off" style="width: 200px"></el-input>-->
+                <el-select v-model="modifyTForm.sex" placeholder="请选择性别" style="width: 200px">
+                    <el-option label="男" value="男"></el-option>
+                    <el-option label="女" value="女"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="主修" :label-width="formLabelWidth">
+                <el-input v-model="modifyTForm.major" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="学历" :label-width="formLabelWidth">
+                <el-input v-model="modifyTForm.degree" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="学校" :label-width="formLabelWidth">
+                <el-input v-model="modifyTForm.college" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="手机" :label-width="formLabelWidth">
+                <el-input v-model="modifyTForm.phone" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="tMFVisible = false">取 消</el-button>
+            <el-button type="primary" @click="modifyTeacher">确 定</el-button>
+        </div>
+    </el-dialog>
+    <el-dialog title="增加课程" :visible.sync="courseFormVisible">
+        <el-form :model="addCForm">
+            <el-form-item label="课程名" :label-width="formLabelWidth">
+                <el-input v-model="addCForm.className" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="教师邮箱" :label-width="formLabelWidth">
+                <el-input v-model="addCForm.teacherEmail" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="课程类别" :label-width="formLabelWidth">
+                <el-input v-model="addCForm.classType" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="限制人数" :label-width="formLabelWidth">
+                <el-input v-model="addCForm.classNums" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="开始时间" :label-width="formLabelWidth">
+                <el-input v-model="addCForm.classStartTime" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="结束时间" :label-width="formLabelWidth">
+                <el-input v-model="addCForm.classEndTime" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="图片" :label-width="formLabelWidth">
+                <el-input v-model="addCForm.classImg" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="介绍" :label-width="formLabelWidth">
+                <el-input type = "textarea" autosize placeholder ="请输入课程介绍" v-model="addCForm.classInfo" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="courseFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addCourse">确 定</el-button>
+        </div>
+    </el-dialog>
+    <el-dialog title="修改课程" :visible.sync="cMFVisible">
+        <el-form :model="modifyCForm">
+            <el-form-item label="课程名" :label-width="formLabelWidth">
+                <el-input v-model="modifyCForm.className" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="教师邮箱" :label-width="formLabelWidth">
+                <el-input v-model="modifyCForm.teacherEmail" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="课程类别" :label-width="formLabelWidth">
+                <el-input v-model="modifyCForm.classType" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="限制人数" :label-width="formLabelWidth">
+                <el-input v-model="modifyCForm.classNums" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="开始时间" :label-width="formLabelWidth">
+                <el-input v-model="modifyCForm.classStartTime" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="结束时间" :label-width="formLabelWidth">
+                <el-input v-model="modifyCForm.classEndTime" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="图片" :label-width="formLabelWidth">
+                <el-input v-model="modifyCForm.classImg" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="介绍" :label-width="formLabelWidth">
+                <el-input type = "textarea" autosize placeholder ="请输入课程介绍" v-model="modifyCForm.classInfo" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="cMFVisible = false">取 消</el-button>
+            <el-button type="primary" @click="modifyCourse">确 定</el-button>
+        </div>
+    </el-dialog>
     <el-tabs tab-position='left' >
         <el-tab-pane label="学生管理">
             <el-card class="box-card">
                 <el-table
-                        :data="tableData"
+                        :data="studentData"
                         border
                         style="width: 100%">
                     <el-table-column
                             fixed
-                            prop="date"
-                            label="日期"
-                            width="150">
+                            prop="studentEmail"
+                            label="邮箱"
+                            width="180">
                     </el-table-column>
                     <el-table-column
-                            prop="name"
+                            prop="password"
+                            label="密码"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="studentName"
                             label="姓名"
-                            width="120">
+                            width="100">
                     </el-table-column>
                     <el-table-column
-                            prop="province"
-                            label="省份"
-                            width="120">
+                            prop="studentSex"
+                            label="性别"
+                            width="80">
                     </el-table-column>
                     <el-table-column
-                            prop="city"
-                            label="市区"
-                            width="120">
+                            prop="studentMajor"
+                            label="主修"
+                            width="80">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
-                            label="地址"
-                            width="300">
+                            prop="studentCollege"
+                            label="学校"
+                            width="180">
                     </el-table-column>
                     <el-table-column
-                            prop="zip"
-                            label="邮编"
+                            prop="studentPhone"
+                            label="手机"
                             width="120">
                     </el-table-column>
                     <el-table-column
@@ -81,19 +288,143 @@
                             label="操作"
                             width="100">
                         <template slot-scope="scope">
-                            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                            <el-button type="text" size="small">编辑</el-button>
+                            <el-button @click="modifyS(scope.row)" type="text" size="small">修改</el-button>
+                            <el-button @click="deleteS(scope.row)" type="text" size="small">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
+                <div style="text-align: center;margin-top: 10px">
+                    <el-button icon="el-icon-plus" circle  @click = "studentFormVisible=true" style="width: 50px;height: 50px;background-color: rgb(0,123,255);color:rgb(255,255,255)"></el-button>
+                </div>
             </el-card>
         </el-tab-pane>
         <el-tab-pane label="讲师管理">
             <el-card class="box-card">
+                <el-table
+                        :data="teacherData"
+                        border
+                        style="width: 100%">
+                    <el-table-column
+                            fixed
+                            prop="teacherEmail"
+                            label="邮箱"
+                            width="160">
+                    </el-table-column>
+                    <el-table-column
+                            prop="password"
+                            label="密码"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="teacherName"
+                            label="姓名"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="teacherSex"
+                            label="性别"
+                            width="80">
+                    </el-table-column>
+                    <el-table-column
+                        prop="teacherMajor"
+                        label="主修"
+                        width="80">
+                </el-table-column>
+                    <el-table-column
+                            prop="teacherDegree"
+                            label="学历"
+                            width="80">
+                    </el-table-column>
+                    <el-table-column
+                            prop="teacherCollege"
+                            label="学校"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            prop="teacherPhone"
+                            label="手机"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            fixed="right"
+                            label="操作"
+                            width="100">
+                        <template slot-scope="scope">
+                            <el-button @click="modifyT(scope.row)" type="text" size="small">修改</el-button>
+                            <el-button @click="deleteT(scope.row)" type="text" size="small">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <div style="text-align: center;margin-top: 10px">
+                    <el-button icon="el-icon-plus" circle  @click = "teacherFormVisible=true" style="width: 50px;height: 50px;background-color: rgb(0,123,255);color:rgb(255,255,255)"></el-button>
+                </div>
             </el-card>
         </el-tab-pane>
         <el-tab-pane label="课程管理">
             <el-card class="box-card">
+                <el-table
+                        :data="courseData"
+                        border
+                        style="width: 100%">
+                    <el-table-column
+                            fixed
+                            prop="className"
+                            label="课程名"
+                            width="90">
+                    </el-table-column>
+                    <el-table-column
+                            prop="classId"
+                            label="编号"
+                            width="50">
+                    </el-table-column>
+                    <el-table-column
+                            prop="teacherEmail"
+                            label="教师邮箱"
+                            width="160">
+                    </el-table-column>
+                    <el-table-column
+                            prop="classType"
+                            label="课程类别"
+                            width="80">
+                    </el-table-column>
+                    <el-table-column
+                            prop="classNums"
+                            label="限制人数"
+                            width="60">
+                    </el-table-column>
+                    <el-table-column
+                            prop="classStartTime"
+                            label="开始时间"
+                            width="160">
+                    </el-table-column>
+                    <el-table-column
+                            prop="classEndTime"
+                            label="结束时间"
+                            width="160">
+                    </el-table-column>
+                    <el-table-column
+                            prop="classImg"
+                            label="图片"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="classInfo"
+                            label="介绍"
+                            width="300">
+                    </el-table-column>
+                    <el-table-column
+                            fixed="right"
+                            label="操作"
+                            width="100">
+                        <template slot-scope="scope">
+                            <el-button @click="modifyC(scope.row)" type="text" size="small">修改</el-button>
+                            <el-button @click="deleteC(scope.row)" type="text" size="small">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <div style="text-align: center;margin-top: 10px">
+                    <el-button icon="el-icon-plus" circle  @click = "courseFormVisible = true" style="width: 50px;height: 50px;background-color: rgb(0,123,255);color:rgb(255,255,255)"></el-button>
+                </div>
             </el-card>
         </el-tab-pane>
     </el-tabs>
@@ -116,45 +447,421 @@
         el:'#manager',
         data(){
             return{
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    zip: 200333
+                formLabelWidth:"38%",
+                studentFormVisible: false,
+                teacherFormVisible: false,
+                courseFormVisible: false,
+                sMFVisible:false,
+                tMFVisible:false,
+                cMFVisible:false,
+                addSForm:{
+                    email: '',
+                    password:"",
+                    name: '',
+                    sex: '',
+                    major: '',
+                    college: '',
+                    phone: ''
+                },
+                addTForm:{
+                    email: '',
+                    password:"",
+                    name: '',
+                    sex: '',
+                    major: '',
+                    degree:"",
+                    college: '',
+                    phone: ''
+                },
+                addCForm:{
+                    className: '',
+                    teacherEmail: '',
+                    classType: '',
+                    classNums: '',
+                    classStartTime: '',
+                    classEndTime: '',
+                    classInfo:"",
+                    classImg:"",
+                },
+                modifyCForm:{
+                    className: '',
+                    teacherEmail: '',
+                    classType: '',
+                    classNums: '',
+                    classStartTime: '',
+                    classEndTime: '',
+                    classInfo:"",
+                    classImg:"",
+                },
+                modifySForm:{
+                    email: '',
+                    password:"",
+                    name: '',
+                    sex: '',
+                    major: '',
+                    college: '',
+                    phone: ''
+                },
+                modifyTForm:{
+                    email: '',
+                    password:"",
+                    name: '',
+                    sex: '',
+                    major: '',
+                    degree:"",
+                    college: '',
+                    phone: ''
+                },
+                studentData: [{
+                    studentEmail: '1140131901@qq.com',
+                    password:"111223132",
+                    studentName: '王小1',
+                    studentSex: '男',
+                    studentMajor: '网络工程',
+                    studentCollege: '广东工业大学',
+                    studentPhone: '13535035493'
                 }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1517 弄',
-                    zip: 200333
+                    studentEmail: '1140131901@qq.com',
+                    password:"111223132",
+                    studentName: '王小2',
+                    studentSex: '男',
+                    studentMajor: '网络工程',
+                    studentCollege: '广东工业大学',
+                    studentPhone: '13535035493'
                 }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1519 弄',
-                    zip: 200333
+                    studentEmail: '1140131901@qq.com',
+                    password:"111223132",
+                    studentName: '王小3',
+                    studentSex: '男',
+                    studentMajor: '网络工程',
+                    studentCollege: '广东工业大学',
+                    studentPhone: '13535035493'
                 }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1516 弄',
-                    zip: 200333
+                    studentEmail: '1140131901@qq.com',
+                    password:"111223132",
+                    studentName: '王小5',
+                    studentSex: '男',
+                    studentMajor: '网络工程',
+                    studentCollege: '广东工业大学',
+                    studentPhone: '13535035493'
+                }],
+                teacherData: [{
+                    teacherEmail: '2@qq.com',
+                    password:"111223132",
+                    teacherName: '王小1',
+                    teacherSex: '男',
+                    teacherDegree:"博士",
+                    teacherMajor: '网络工程',
+                    teacherCollege: '广东工业大学',
+                    teacherPhone: '13535035493'
+                }, {
+                    teacherEmail: '3@qq.com',
+                    password:"111223132",
+                    teacherName: '王小1',
+                    teacherSex: '男',
+                    teacherDegree:"博士",
+                    teacherMajor: '网络工程',
+                    teacherCollege: '广东工业大学',
+                    teacherPhone: '13535035493'
+                }, {
+                    teacherEmail: '6@qq.com',
+                    password:"111223132",
+                    teacherName: '王小1',
+                    teacherSex: '男',
+                    teacherDegree:"博士",
+                    teacherMajor: '网络工程',
+                    teacherCollege: '广东工业大学',
+                    teacherPhone: '13535035493'
+                }, {
+                    teacherEmail: '8@qq.com',
+                    password:"111223132",
+                    teacherName: '王小1',
+                    teacherSex: '男',
+                    teacherDegree:"博士3",
+                    teacherMajor: '网络工程',
+                    teacherCollege: '广东工业大学',
+                    teacherPhone: '13535035493'
+                }],
+                courseData: [{
+                    classId:"1",
+                    className: '哈哈哈',
+                    teacherEmail: '1140131901@qq.com',
+                    classType: '编程开发',
+                    classNums: '323',
+                    classStartTime: '2019-01-01 01:02:03',
+                    classEndTime: '2019-01-01 01:02:03',
+                    classInfo:"这是一首简单的小情歌",
+                    classImg:"/fffffffff/fff",
+                }, {
+                    classId:"2",
+                    className: '哈哈哈',
+                    teacherEmail: '1140131901@qq.com',
+                    classType: '编程开发',
+                    classNums: '323',
+                    classStartTime: '2019-01-01 01:02:03',
+                    classEndTime: '2019-01-01 01:02:03',
+                    classInfo:"这是一首简单的小情歌",
+                    classImg:"/fffffffff/fff",
+                }, {
+                    classId:"3",
+                    className: '哈哈哈',
+                    teacherEmail: '1140131901@qq.com',
+                    classType: '编程开发',
+                    classNums: '323',
+                    classStartTime: '2019-01-01 01:02:03',
+                    classEndTime: '2019-01-01 01:02:03',
+                    classInfo:"这是一首简单的小情歌",
+                    classImg:"/fffffffff/fff",
                 }]
             }
         },
         methods:{
-            handleClick(row) {
-                console.log(row);
+            modifyS(row) {
+                this.sMFVisible=true
+                this.modifySForm.email = row.studentEmail
+                this.modifySForm.name = row.studentName
+                this.modifySForm.password = row.password
+                this.modifySForm.sex = row.studentSex
+                this.modifySForm.major = row.studentMajor
+                this.modifySForm.college = row.studentCollege
+                this.modifySForm.phone = row.studentPhone
             },
+            modifyStudent(){
+                console.log(this.modifySForm)
+                var self = this
+                $.ajax({
+                    url:"/manager/modifyStudent",
+                    type:"post",
+                    data:{
+                        studentEmail:self.modifySForm.email,
+                        studentName:self.modifySForm.name,
+                        studentSex:self.modifySForm.sex,
+                        studentPhone:self.modifySForm.phone,
+                        studentMajor:self.modifySForm.major,
+                        studentCollege:self.modifySForm.college,
+                        password:self.modifySForm.password
+                    },
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.$message({
+                                message: "修改学生成功",
+                                type: 'success'
+                            })
+                            self.sMFVisible=false
+                        } else {
+                            self.$message.error(res.data.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+            },
+            deleteS(row){
+                this.$confirm('此操作将永久删除该学生, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    console.log(row)
+                    var self = this
+                    $.ajax({
+                        url:"/manager/deleteStudent",
+                        type:"post",
+                        data:{
+                           email:row.email
+                        },
+                        traditional:true,
+                        success:function (res) {
+                            console.log(res)
+                            if (res.success == true) {
+                                self.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                                });
+                            } else {
+                                self.$message.error(res.data.message)
+                            }
+                        },
+                        error:function (error) {
+                            console.log(error)
+                        }
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            addStudent(){
+                var self = this
+                $.ajax({
+                    url:"/manager/addStudent",
+                    type:"post",
+                    data:{
+                        email:self.addSForm.email,
+                        name:self.addSForm.name,
+                        sex:self.addSForm.sex,
+                        phone:self.addSForm.phone,
+                        major:self.addSForm.major,
+                        college:self.addSForm.college,
+                        password:self.addSForm.password
+                    },
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.$message({
+                                message: "增加学生成功",
+                                type: 'success'
+                            })
+                            self.studentFormVisible = false
+                        } else {
+                            self.$message.error(res.data.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+            },
+            modifyT(row) {
+                this.tMFVisible=true
+                this.modifyTForm.email = row.teacherEmail
+                this.modifyTForm.name = row.teacherName
+                this.modifyTForm.password = row.password
+                this.modifyTForm.sex = row.teacherSex
+                this.modifyTForm.major = row.teacherMajor
+                this.modifyTForm.degree = row.teacherDegree
+                this.modifyTForm.college = row.teacherCollege
+                this.modifyTForm.phone = row.teacherPhone
+            },
+            modifyTeacher(){
+                console.log(this.modifyTForm)
+            },
+            deleteT(row){
+                this.$confirm('此操作将永久删除该教师, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    console.log(row)
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            addTeacher(){
+
+            },
+            modifyC(row) {
+                this.cMFVisible=true
+                this.modifyCForm.classId = row.classId
+                this.modifyCForm.className = row.className
+                this.modifyCForm.teacherEmail = row.teacherEmail
+                this.modifyCForm.classType = row.classType
+                this.modifyCForm.classNums = row.classNums
+                this.modifyCForm.classStartTime = row.classStartTime
+                this.modifyCForm.classEndTime = row.classEndTime
+                this.modifyCForm.classImg = row.classImg
+                this.modifyCForm.classInfo = row.classInfo
+            },
+            modifyCourse(){
+                console.log(this.modifyCForm)
+            },
+            deleteC(row){
+                this.$confirm('此操作将永久删除该课程, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    console.log(row)
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            addCourse(){
+
+            },
+            getStudentTable(){
+                var self = this
+                $.ajax({
+                    url:"/manager/getAllStudent",
+                    type:"get",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.studentData = res.data
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+            },
+            getTeacherTable(){
+                var self = this
+                $.ajax({
+                    url:"/manager/getAllTeacher",
+                    type:"get",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.teacherData = res.data
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+            },
+            getCourseTable(){
+                var self = this
+                $.ajax({
+                    url:"/manager/getAllCourse",
+                    type:"get",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.courseData = res.data
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+            }
 
         },
         mounted(){
-
+            this.getStudentTable();
+            this.getTeacherTable();
+            this.getCourseTable();
         }
     })
 

@@ -6,6 +6,8 @@ import com.classbooking.web.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
@@ -31,6 +33,16 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public String getTEmailByName(String name) {
         return teacherDao.getTeacherEmailByName(name);
+    }
+
+    @Override
+    public List<Teacher> getAllTeacher() {
+        return teacherDao.getAllTeacher();
+    }
+
+    @Override
+    public boolean deleteTeacher(String email) {
+        return teacherDao.deleteTeacher(email)==1;
     }
 
 

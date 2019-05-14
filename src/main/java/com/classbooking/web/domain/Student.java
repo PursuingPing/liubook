@@ -20,6 +20,7 @@ public class Student implements Serializable {
     private String studentMajor;
     private String studentSex;
     private String studentCollege;
+    private String password;
 
     @Override
     public String toString() {
@@ -31,6 +32,7 @@ public class Student implements Serializable {
                 ", studentMajor='" + studentMajor + '\'' +
                 ", studentSex='" + studentSex + '\'' +
                 ", studentCollege='" + studentCollege + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

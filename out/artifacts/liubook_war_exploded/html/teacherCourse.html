@@ -804,7 +804,7 @@
                                 self.addCoursesFormVisible = false
                                 self.load()
                             } else {
-                                self.$message.error(res.data.message)
+                                self.$message.error(res.message)
                             }
                         },
                         error:function (error) {
@@ -944,7 +944,7 @@
                                 type: 'success'
                             })
                         } else {
-                            self.$message.error(res.data.message)
+                            self.$message.error(res.message)
                         }
                     },
                     error:function (error) {
@@ -967,7 +967,7 @@
                             }
 
                         } else {
-                            self.$message.error(res.data.message)
+                            self.$message.error(res.message)
                         }
                     },
                     error:function (error) {

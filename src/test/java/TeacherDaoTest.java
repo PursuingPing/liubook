@@ -48,4 +48,12 @@ public class TeacherDaoTest {
         String email = "999@qq.com";
         System.out.println(teacherDao.deleteTeacher(email));
     }
+
+    @Test
+    public void testGetAllTeacher(){
+        List<Teacher> list = teacherDao.getAllTeacher();
+        list.stream().forEach(teacher -> {
+            System.out.println(teacher.toString());
+        });
+    }
 }

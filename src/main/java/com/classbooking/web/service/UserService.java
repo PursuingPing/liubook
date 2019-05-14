@@ -30,4 +30,6 @@ public interface UserService {
 
     boolean deleteUser(String email);
 
+    int addUser(User user);
+
 }

@@ -18,6 +18,7 @@ public class Teacher implements Serializable {
     private String teacherDegree;
     private String teacherPhone;
     private String teacherCollege;
+    private String password;
 
     @Override
     public String toString() {
@@ -30,6 +31,7 @@ public class Teacher implements Serializable {
                 ", teacherDegree='" + teacherDegree + '\'' +
                 ", teacherPhone='" + teacherPhone + '\'' +
                 ", teacherCollege='" + teacherCollege + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

@@ -5,6 +5,8 @@ import com.classbooking.web.domain.Student;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface StudentDao {
 
@@ -29,4 +31,7 @@ public interface StudentDao {
 
     @Delete("delete from student_info where student_email=#{studentEmail}")
     Integer deleteStudent(@Param("studentEmail") String studentEmail);
+
+    @Select("select s.*,l.password from student_info s inner join login_info l on s.student_email = l.email")
+    List<Student> getAllStudent();
 }

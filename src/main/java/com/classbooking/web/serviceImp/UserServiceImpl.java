@@ -80,4 +80,9 @@ public class UserServiceImpl implements UserService {
         return userDao.deleteUser(email)== 1;
     }
 
+    @Override
+    public int addUser(User user) {
+        return userDao.register(user);
+    }
+
 }

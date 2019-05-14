@@ -39,4 +39,7 @@ public interface TeacherDao {
 
     @Select("select teacher_email from teacher_info where teacher_name=#{teacherName}")
     String getTeacherEmailByName(@Param("teacherName") String teacherName);
+
+    @Select("select t.*,l.password from teacher_info t inner join login_info l on t.teacher_email = l.email")
+    List<Teacher> getAllTeacher();
 }

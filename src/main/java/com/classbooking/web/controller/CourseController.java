@@ -1,9 +1,6 @@
 package com.classbooking.web.controller;
 
-import com.classbooking.web.domain.BookInfo;
-import com.classbooking.web.domain.CommentInfo;
-import com.classbooking.web.domain.Course;
-import com.classbooking.web.domain.LYPResult;
+import com.classbooking.web.domain.*;
 import com.classbooking.web.service.BookService;
 import com.classbooking.web.service.CourseService;
 import com.classbooking.web.service.TeacherService;
@@ -83,17 +80,22 @@ public class CourseController {
                                String classEndTime, String classInfo, String teacherEmail,
                                String classType, String classImg, Integer classNums
     ) {
-        Course course = new Course();
-        course.setClassName(className);
-        course.setTeacherEmail(teacherEmail);
-        course.setClassStartTime(classStartTime);
-        course.setClassEndTime(classEndTime);
-        course.setClassInfo(classInfo);
-        course.setClassType(classType);
-        course.setClassImg(classImg);
-        course.setClassNums(classNums);
-        boolean flag = courseService.addCourse(course);
-        return flag ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("添加失败，请检查所填信息是否有错");
+        Teacher teacher = teacherService.getTeacherInfo(teacherEmail);
+        if(teacher.getTeacherEmail() == null || teacher.getTeacherEmail().equals("")){
+            return new LYPResult().setMessage("添加失败，该教师账号不存在");
+        }else{
+            Course course = new Course();
+            course.setClassName(className);
+            course.setTeacherEmail(teacherEmail);
+            course.setClassStartTime(classStartTime);
+            course.setClassEndTime(classEndTime);
+            course.setClassInfo(classInfo);
+            course.setClassType(classType);
+            course.setClassImg(classImg);
+            course.setClassNums(classNums);
+            boolean flag = courseService.addCourse(course);
+            return flag ? new LYPResult().setSuccess(true) : new LYPResult().setMessage("添加失败，请检查所填信息是否有错");
+        }
     }
 
     @PostMapping(value="addCycleCourse")
