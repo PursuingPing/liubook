@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping("manager")
+@RequestMapping("manage")
 public class ManagerController {
 
     @Autowired
@@ -152,7 +152,7 @@ public class ManagerController {
     @ResponseBody
     public LYPResult modifyCourse(String className, String classStartTime,Integer classId,
                             String classEndTime, String classInfo,
-                            String classType, String classImg, Integer classNums){
+                            String classType, String classImg, Integer classNums,String teacherEmail){
         Course course = new Course();
         course.setClassName(className);
         course.setClassStartTime(classStartTime);
@@ -162,10 +162,11 @@ public class ManagerController {
         course.setClassImg(classImg);
         course.setClassNums(classNums);
         course.setClassId(classId);
+        course.setTeacherEmail(teacherEmail);
 
+        List<BookInfo> bookInfos = bookService.getBookInfo(classId);
         boolean flag = courseService.modifyCourse(course);
         if(flag){
-            List<BookInfo> bookInfos = bookService.getBookInfo(classId);
             if (!bookInfos.isEmpty()) {
                 Course c = courseService.getCourseById(classId);
                 String notice = "您所预约的课程：" + c.getClassName() + "开始时间为： " + c.getClassStartTime() + "已被修改，请登录LYP Booking  查看！";
@@ -184,7 +185,7 @@ public class ManagerController {
     @PostMapping("/deleteStudent")
     @ResponseBody
     public LYPResult deleteStudent(String email){
-        if(userService.deleteUser(email) && studentService.deleteStudent(email)){
+        if(userService.deleteUser(email) ){
             return new LYPResult().setSuccess(true);
         }else {
             return new LYPResult().setMessage("删除学生失败");
@@ -194,7 +195,7 @@ public class ManagerController {
     @PostMapping("/deleteTeacher")
     @ResponseBody
     public LYPResult deleteTeacher(String email){
-        if(userService.deleteUser(email) && teacherService.deleteTeacher(email)){
+        if(userService.deleteUser(email)){
             return new LYPResult().setSuccess(true);
         }else {
             return new LYPResult().setMessage("删除教师失败");
@@ -205,8 +206,8 @@ public class ManagerController {
     @ResponseBody
     public LYPResult deleteCourse(Integer classId){
 
+        List<BookInfo> bookInfos = bookService.getBookInfo(classId);
         if(courseService.deleteCourse(classId)){
-            List<BookInfo> bookInfos = bookService.getBookInfo(classId);
             if (!bookInfos.isEmpty()) {
                 Course course = courseService.getCourseById(classId);
                 String notice = "您所预约的课程：" + course.getClassName() + "--开始时间--： " + course.getClassStartTime() + "已被删除，请登录LYP Booking Sys 查看！";

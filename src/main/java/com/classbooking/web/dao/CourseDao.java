@@ -37,7 +37,7 @@ public interface CourseDao {
     int addCourse(Course course);
 
     @Update("update class_info set class_name=#{className},class_startTime=#{classStartTime},class_endTime=#{classEndTime}," +
-            "class_info=#{classInfo} , class_type=#{classType}, class_img=#{classImg}, class_nums=#{classNums} " +
+            "class_info=#{classInfo} , class_type=#{classType}, class_img=#{classImg}, class_nums=#{classNums} ,teacher_email = #{teacherEmail} " +
             " where class_id=#{classId}")
     int updateCourse(Course course);
 

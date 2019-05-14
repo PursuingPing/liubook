@@ -492,6 +492,7 @@
                     classEndTime: '',
                     classInfo:"",
                     classImg:"",
+                    classId:"",
                 },
                 modifySForm:{
                     email: '',
@@ -627,10 +628,9 @@
                 this.modifySForm.phone = row.studentPhone
             },
             modifyStudent(){
-                console.log(this.modifySForm)
                 var self = this
                 $.ajax({
-                    url:"/manager/modifyStudent",
+                    url:"/manage/modifyStudent",
                     type:"post",
                     data:{
                         studentEmail:self.modifySForm.email,
@@ -650,6 +650,7 @@
                                 type: 'success'
                             })
                             self.sMFVisible=false
+                            self.getStudentTable()
                         } else {
                             self.$message.error(res.data.message)
                         }
@@ -668,10 +669,10 @@
                     console.log(row)
                     var self = this
                     $.ajax({
-                        url:"/manager/deleteStudent",
+                        url:"/manage/deleteStudent",
                         type:"post",
                         data:{
-                           email:row.email
+                           email:row.studentEmail
                         },
                         traditional:true,
                         success:function (res) {
@@ -681,8 +682,9 @@
                                     type: 'success',
                                     message: '删除成功!'
                                 });
+                                self.getStudentTable()
                             } else {
-                                self.$message.error(res.data.message)
+                                self.$message.error(res.message)
                             }
                         },
                         error:function (error) {
@@ -699,7 +701,7 @@
             addStudent(){
                 var self = this
                 $.ajax({
-                    url:"/manager/addStudent",
+                    url:"/manage/addStudent",
                     type:"post",
                     data:{
                         email:self.addSForm.email,
@@ -719,6 +721,7 @@
                                 type: 'success'
                             })
                             self.studentFormVisible = false
+                            self.getStudentTable()
                         } else {
                             self.$message.error(res.data.message)
                         }
@@ -740,7 +743,38 @@
                 this.modifyTForm.phone = row.teacherPhone
             },
             modifyTeacher(){
-                console.log(this.modifyTForm)
+                var self = this
+                $.ajax({
+                    url:"/manage/modifyTeacher",
+                    type:"post",
+                    data:{
+                        teacherEmail:self.modifyTForm.email,
+                        teacherName:self.modifyTForm.name,
+                        teacherSex:self.modifyTForm.sex,
+                        teacherPhone:self.modifyTForm.phone,
+                        teacherMajor:self.modifyTForm.major,
+                        teacherDegree:self.modifyTForm.degree,
+                        teacherCollege:self.modifyTForm.college,
+                        password:self.modifyTForm.password
+                    },
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.$message({
+                                message: "修改教师成功",
+                                type: 'success'
+                            })
+                            self.tMFVisible=false
+                            self.getTeacherTable()
+                        } else {
+                            self.$message.error(res.data.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
             },
             deleteT(row){
                 this.$confirm('此操作将永久删除该教师, 是否继续?', '提示', {
@@ -749,10 +783,30 @@
                     type: 'warning'
                 }).then(() => {
                     console.log(row)
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
+                    var self = this
+                    $.ajax({
+                        url:"/manage/deleteTeacher",
+                        type:"post",
+                        data:{
+                            email:row.teacherEmail
+                        },
+                        traditional:true,
+                        success:function (res) {
+                            console.log(res)
+                            if (res.success == true) {
+                                self.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                                });
+                                self.getTeacherTable()
+                            } else {
+                                self.$message.error(res.message)
+                            }
+                        },
+                        error:function (error) {
+                            console.log(error)
+                        }
+                    })
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -761,7 +815,38 @@
                 });
             },
             addTeacher(){
-
+                var self = this
+                $.ajax({
+                    url:"/manage/addTeacher",
+                    type:"post",
+                    data:{
+                        email:self.addTForm.email,
+                        name:self.addTForm.name,
+                        sex:self.addTForm.sex,
+                        phone:self.addTForm.phone,
+                        major:self.addTForm.major,
+                        degree:self.addTForm.degree,
+                        college:self.addTForm.college,
+                        password:self.addTForm.password
+                    },
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.$message({
+                                message: "增加教师成功",
+                                type: 'success'
+                            })
+                            self.teacherFormVisible = false
+                            self.getTeacherTable()
+                        } else {
+                            self.$message.error(res.data.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
             },
             modifyC(row) {
                 this.cMFVisible=true
@@ -777,6 +862,39 @@
             },
             modifyCourse(){
                 console.log(this.modifyCForm)
+                var self = this
+                $.ajax({
+                    url:"/manage/modifyCourse",
+                    type:"post",
+                    data:{
+                        className:self.modifyCForm.className,
+                        classStartTime:self.modifyCForm.classStartTime,
+                        classEndTime:self.modifyCForm.classEndTime,
+                        classType:self.modifyCForm.classType,
+                        classImg:self.modifyCForm.classImg,
+                        classInfo:self.modifyCForm.classInfo,
+                        classNums:self.modifyCForm.classNums,
+                        teacherEmail:self.modifyCForm.teacherEmail,
+                        classId:self.modifyCForm.classId
+                    },
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.$message({
+                                message: "修改课程成功",
+                                type: 'success'
+                            })
+                            self.cMFVisible=false
+                            self.getCourseTable()
+                        } else {
+                            self.$message.error(res.data.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
             },
             deleteC(row){
                 this.$confirm('此操作将永久删除该课程, 是否继续?', '提示', {
@@ -785,10 +903,30 @@
                     type: 'warning'
                 }).then(() => {
                     console.log(row)
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
+                    var self = this
+                    $.ajax({
+                        url:"/manage/deleteCourse",
+                        type:"post",
+                        data:{
+                            classId:row.classId
+                        },
+                        traditional:true,
+                        success:function (res) {
+                            console.log(res)
+                            if (res.success == true) {
+                                self.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                                });
+                                self.getCourseTable()
+                            } else {
+                                self.$message.error(res.message)
+                            }
+                        },
+                        error:function (error) {
+                            console.log(error)
+                        }
+                    })
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -797,12 +935,44 @@
                 });
             },
             addCourse(){
+                var self = this
+                $.ajax({
+                    url:"/course/addCourse",
+                    type:"post",
+                    data:{
+                        className:self.addCForm.className,
+                        classStartTime:self.addCForm.classStartTime,
+                        classEndTime:self.addCForm.classEndTime,
+                        classType:self.addCForm.classType,
+                        classImg:self.addCForm.classImg,
+                        classInfo:self.addCForm.classInfo,
+                        classNums:self.addCForm.classNums,
+                        teacherEmail:self.addCForm.teacherEmail
+                    },
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            self.$message({
+                                message: "增加课程成功",
+                                type: 'success'
+                            })
+                            self.cMFVisible=false
+                            self.getCourseTable()
+                        } else {
+                            self.$message.error(res.data.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
 
             },
             getStudentTable(){
                 var self = this
                 $.ajax({
-                    url:"/manager/getAllStudent",
+                    url:"/manage/getAllStudent",
                     type:"get",
                     traditional:true,
                     success:function (res) {
@@ -821,7 +991,7 @@
             getTeacherTable(){
                 var self = this
                 $.ajax({
-                    url:"/manager/getAllTeacher",
+                    url:"/manage/getAllTeacher",
                     type:"get",
                     traditional:true,
                     success:function (res) {
@@ -840,7 +1010,7 @@
             getCourseTable(){
                 var self = this
                 $.ajax({
-                    url:"/manager/getAllCourse",
+                    url:"/manage/getAllCourse",
                     type:"get",
                     traditional:true,
                     success:function (res) {

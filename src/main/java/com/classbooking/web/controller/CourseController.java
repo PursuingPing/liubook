@@ -81,7 +81,7 @@ public class CourseController {
                                String classType, String classImg, Integer classNums
     ) {
         Teacher teacher = teacherService.getTeacherInfo(teacherEmail);
-        if(teacher.getTeacherEmail() == null || teacher.getTeacherEmail().equals("")){
+        if(teacher !=null && (teacher.getTeacherEmail() == null || teacher.getTeacherEmail().equals(""))){
             return new LYPResult().setMessage("添加失败，该教师账号不存在");
         }else{
             Course course = new Course();
@@ -174,7 +174,7 @@ public class CourseController {
     @ResponseBody
     public LYPResult modify(String className, String classStartTime,Integer classId,
                             String classEndTime, String classInfo,
-                            String classType, String classImg, Integer classNums){
+                            String classType, String classImg, Integer classNums,String teacherEmail){
         Course course = new Course();
         course.setClassName(className);
         course.setClassStartTime(classStartTime);
@@ -184,6 +184,7 @@ public class CourseController {
         course.setClassImg(classImg);
         course.setClassNums(classNums);
         course.setClassId(classId);
+        course.setTeacherEmail(teacherEmail);
         //3天前不能修改，判断，修改后发邮件
 
         if(bookService.checkTime(classId)){
@@ -211,9 +212,9 @@ public class CourseController {
 
         // 3天前不能删除，判断，删除后发邮件
         boolean canDo = bookService.checkTime(classId);
+        List<BookInfo> bookInfos = bookService.getBookInfo(classId);
         if(canDo){
             boolean flag = courseService.deleteCourse(classId);
-            List<BookInfo> bookInfos = bookService.getBookInfo(classId);
             if(!bookInfos.isEmpty()){
                 Course course = courseService.getCourseById(classId);
                 String notice = "您所预约的课程："+course.getClassName() +"开始时间为： "+course.getClassStartTime()+"已被删除，请登录LYP Booking Sys 查看！";
