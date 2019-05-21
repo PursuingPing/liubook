@@ -200,6 +200,9 @@
                 $.ajax({
                     url:"/course/getClasses",
                     type:"post",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                       type:self.courseTypePick,
                       teacherName:self.courseTeacherPick,

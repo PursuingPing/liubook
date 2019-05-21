@@ -86,9 +86,9 @@
                 </el-form>
             </el-card>
         </el-tab-pane>
-        <el-tab-pane label="预约统计">
+        <!--<el-tab-pane label="预约统计">-->
 
-        </el-tab-pane>
+        <!--</el-tab-pane>-->
     </el-tabs>
 </div>
 
@@ -200,6 +200,9 @@
                         var self = this
                         $.ajax({
                             url:"/user/modifyPwd",
+                            headers:{
+                                'Authorization' : localStorage.getItem("token")
+                            },
                             data:{
                                 email: self.studentInfo.studentEmail,
                                 password: self.ruleForm.pass,
@@ -260,6 +263,9 @@
                 //查数据库填充课程列表
                 $.ajax({
                     url:"/student/modifyInfo",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         studentEmail: studentInfo.studentEmail,
                         studentName: studentInfo.studentName,
@@ -296,6 +302,9 @@
                     url:"/student/getStudentInfo",
                     data:{
                         studentEmail:studentEmail,
+                    },
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
                     },
                     type:"post",
                     traditional:true,

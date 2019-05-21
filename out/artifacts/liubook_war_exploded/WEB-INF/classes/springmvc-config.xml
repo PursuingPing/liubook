@@ -31,6 +31,9 @@
                         <value>/user/login</value>
                         <value>/user/active</value>
                         <value>/user/signUp</value>
+                        <value>/user/**</value>
+                        <value>/course/upload</value>
+                        <value>/course/addCourse</value>
                         <value>*.js</value>
                         <value>*.css</value>
                         <value>/html/**</value>

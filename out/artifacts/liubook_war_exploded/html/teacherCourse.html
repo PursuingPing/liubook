@@ -691,6 +691,9 @@
                 //查数据库填充课程列表
                 $.ajax({
                     url:"/course/getBookInfo",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         classId:c.classId,
                     },
@@ -721,6 +724,9 @@
                 //查数据库填充课程列表
                 $.ajax({
                     url:"/course/getComments",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         classId:c.classId,
                     },
@@ -781,6 +787,9 @@
                     //周期性课程
                     $.ajax({
                         url:"/course/addCycleCourse",
+                        headers:{
+                            'Authorization' : localStorage.getItem("token")
+                        },
                         data:{
                             className: this.addForm.courseName,
                             range: this.addForm.range,
@@ -847,6 +856,9 @@
                 //查数据库填充课程列表
                 $.ajax({
                     url:"/course/modify",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         classId:c.classId,
                         classType :c.classType,
@@ -891,6 +903,9 @@
                 }).then(() => {
                     $.ajax({
                         url:"/course/delete",
+                        headers:{
+                            'Authorization' : localStorage.getItem("token")
+                        },
                         data:{
                           classId:course.classId
                         },
@@ -926,6 +941,9 @@
                 //查数据库填充课程列表
                 $.ajax({
                     url:"/course/getCourses",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     type:"post",
                     data:{
                         teacherEmail:teacherEmail
@@ -957,6 +975,9 @@
                 var self = this
                 $.ajax({
                     url:"/course/getCourseTypes",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     type:"get",
                     traditional:true,
                     success:function (res) {

@@ -210,6 +210,9 @@
                         var self = this
                         $.ajax({
                             url:"/user/modifyPwd",
+                            headers:{
+                                'Authorization' : localStorage.getItem("token")
+                            },
                             data:{
                                 email: self.teacherInfo.teacherEmail,
                                 password: self.ruleForm.pass,
@@ -270,6 +273,9 @@
                 //查数据库填充课程列表
                 $.ajax({
                     url:"/teacher/modifyInfo",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         teacherEmail: teacherInfo.teacherEmail,
                         teacherName: teacherInfo.teacherName,
@@ -305,6 +311,9 @@
                 //查数据库填充课程列表
                 $.ajax({
                     url:"/teacher/getTeacherInfo",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         teacherEmail:teacherEmail,
                     },

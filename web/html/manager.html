@@ -632,6 +632,9 @@
                 $.ajax({
                     url:"/manage/modifyStudent",
                     type:"post",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         studentEmail:self.modifySForm.email,
                         studentName:self.modifySForm.name,
@@ -671,6 +674,9 @@
                     $.ajax({
                         url:"/manage/deleteStudent",
                         type:"post",
+                        headers:{
+                            'Authorization' : localStorage.getItem("token")
+                        },
                         data:{
                            email:row.studentEmail
                         },
@@ -703,6 +709,9 @@
                 $.ajax({
                     url:"/manage/addStudent",
                     type:"post",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         email:self.addSForm.email,
                         name:self.addSForm.name,
@@ -747,6 +756,9 @@
                 $.ajax({
                     url:"/manage/modifyTeacher",
                     type:"post",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         teacherEmail:self.modifyTForm.email,
                         teacherName:self.modifyTForm.name,
@@ -790,6 +802,9 @@
                         data:{
                             email:row.teacherEmail
                         },
+                        headers:{
+                            'Authorization' : localStorage.getItem("token")
+                        },
                         traditional:true,
                         success:function (res) {
                             console.log(res)
@@ -819,6 +834,9 @@
                 $.ajax({
                     url:"/manage/addTeacher",
                     type:"post",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         email:self.addTForm.email,
                         name:self.addTForm.name,
@@ -866,6 +884,9 @@
                 $.ajax({
                     url:"/manage/modifyCourse",
                     type:"post",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         className:self.modifyCForm.className,
                         classStartTime:self.modifyCForm.classStartTime,
@@ -907,6 +928,9 @@
                     $.ajax({
                         url:"/manage/deleteCourse",
                         type:"post",
+                        headers:{
+                            'Authorization' : localStorage.getItem("token")
+                        },
                         data:{
                             classId:row.classId
                         },
@@ -939,6 +963,9 @@
                 $.ajax({
                     url:"/course/addCourse",
                     type:"post",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         className:self.addCForm.className,
                         classStartTime:self.addCForm.classStartTime,
@@ -974,6 +1001,9 @@
                 $.ajax({
                     url:"/manage/getAllStudent",
                     type:"get",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     traditional:true,
                     success:function (res) {
                         console.log(res)
@@ -993,6 +1023,9 @@
                 $.ajax({
                     url:"/manage/getAllTeacher",
                     type:"get",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     traditional:true,
                     success:function (res) {
                         console.log(res)
@@ -1012,6 +1045,9 @@
                 $.ajax({
                     url:"/manage/getAllCourse",
                     type:"get",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     traditional:true,
                     success:function (res) {
                         console.log(res)

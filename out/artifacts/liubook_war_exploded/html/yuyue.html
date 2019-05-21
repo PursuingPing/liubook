@@ -204,6 +204,9 @@
                 //查数据库填充课程列表
                 $.ajax({
                     url:"/course/comment",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     type:"post",
                     data:{
                        bookId:bookId,
@@ -243,6 +246,9 @@
                     //查数据库填充课程列表
                     $.ajax({
                         url:"/course/cancelBook",
+                        headers:{
+                            'Authorization' : localStorage.getItem("token")
+                        },
                         type:"post",
                         data:{
                             bookId:bookId,
@@ -277,6 +283,9 @@
                 //查数据库填充课程列表
                 $.ajax({
                     url:"/course/getBooks",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     type:"post",
                     data:{
                         studentEmail:localStorage.getItem("studentEmail")

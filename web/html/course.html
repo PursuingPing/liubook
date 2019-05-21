@@ -312,6 +312,9 @@
                         classStartTimes:self.timePicks
 
                     },
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     type:"post",
                     traditional:true,
                     success:function (res) {
@@ -341,6 +344,9 @@
                     data:{
                         classId:courseId,
                     },
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     type:"post",
                     traditional:true,
                     success:function (res) {
@@ -365,6 +371,9 @@
                     url:"/teacher/getTeacherInfo",
                     data:{
                         teacherEmail:tEmail,
+                    },
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
                     },
                     type:"post",
                     traditional:true,
@@ -391,6 +400,9 @@
                 $.ajax({
                     url:"/course/getCourseInfo",
                     type:"post",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     data:{
                         classId:courseId
                     },
@@ -422,6 +434,9 @@
                     data:{
                         className:cName,
                     },
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
                     type:"post",
                     traditional:true,
                     success:function (res) {
@@ -448,6 +463,9 @@
                     url:"/course/getTimes",
                     data:{
                         className:courseName,
+                    },
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
                     },
                     type:"post",
                     traditional:true,
