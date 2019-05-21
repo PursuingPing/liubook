@@ -65,58 +65,58 @@ public class AuthorizedInterceptor  implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
-//        /** 默认用户没有登录 */
-//        /** 获得请求的ServletPath */
-//        String servletPath = request.getServletPath();
-//        /**  判断请求是否需要拦截 */
-//        String requestUri = request.getRequestURI();
-//        if(requestUri.startsWith(request.getContextPath())){
-//            requestUri = requestUri.substring(request.getContextPath().length(), requestUri.length());
-//        }
-//        //系统根目录
-//        if (StringUtils.equals("/",requestUri)) {
-//            return true;
-//        }
-//        //放行exceptUrls中配置的url
-//        for (String url:excludedUrls) {
-//            if (url.endsWith("/**")) {
-//                if (requestUri.startsWith(url.substring(0, url.length() - 3))) {
-//                    return true;
-//                }
-//            } else if (requestUri.startsWith(url)) {
-//                return true;
-//            }
-//        }
-//        /** 拦截请求 */
-//            /** 1.获取session中的用户  */
-//            String tokenFormWeb = request.getHeader("Authorization");
-//            if( tokenFormWeb==null || tokenFormWeb==""){
-//                System.out.println("拦截成功"+requestUri);
-//                Map<String ,Object> result = new HashMap<>();
-//                result.put("success",false);
-//                result.put("code",1000);
-//                result.put("message","Wihout Auth please GO TO LOG IN firstly");
-//                response.getWriter().print(new JSONObject(result));
-//                return false;
-//            }
-//            String user = redisUtil.get(tokenFormWeb);
-//            //User user = (User) request.getSession().getAttribute("user");
-//            /** 2.判断用户是否已经登录 */
-//            if(user==null || user==""){
-//                System.out.println("拦截成功"+requestUri);
-//                /** 如果用户没有登录，跳转到登录页面 */
-////                request.setAttribute("message", "请先登录再访问网站!");
-////                request.getRequestDispatcher(Constants.LOGIN).forward(request, response);
-//                Map<String ,Object> result = new HashMap<>();
-//                result.put("success",false);
-//                result.put("code",1001);
-//                result.put("message","Wihout Auth please GO TO LOG IN firstly");
-//                response.getWriter().print(new JSONObject(result));
-//                return false;
-//            }else{
-//                 return true;
-//            }
-        return true;
+        /** 默认用户没有登录 */
+        /** 获得请求的ServletPath */
+        String servletPath = request.getServletPath();
+        /**  判断请求是否需要拦截 */
+        String requestUri = request.getRequestURI();
+        if(requestUri.startsWith(request.getContextPath())){
+            requestUri = requestUri.substring(request.getContextPath().length(), requestUri.length());
+        }
+        //系统根目录
+        if (StringUtils.equals("/",requestUri)) {
+            return true;
+        }
+        //放行exceptUrls中配置的url
+        for (String url:excludedUrls) {
+            if (url.endsWith("/**")) {
+                if (requestUri.startsWith(url.substring(0, url.length() - 3))) {
+                    return true;
+                }
+            } else if (requestUri.startsWith(url)) {
+                return true;
+            }
+        }
+        /** 拦截请求 */
+            /** 1.获取session中的用户  */
+            String tokenFormWeb = request.getHeader("Authorization");
+            if( tokenFormWeb==null || tokenFormWeb==""){
+                System.out.println("拦截成功"+requestUri);
+                Map<String ,Object> result = new HashMap<>();
+                result.put("success",false);
+                result.put("code",1000);
+                result.put("message","Wihout Auth please GO TO LOG IN firstly");
+                response.getWriter().print(new JSONObject(result));
+                return false;
+            }
+            String user = redisUtil.get(tokenFormWeb);
+            //User user = (User) request.getSession().getAttribute("user");
+            /** 2.判断用户是否已经登录 */
+            if(user==null || user==""){
+                System.out.println("拦截成功"+requestUri);
+                /** 如果用户没有登录，跳转到登录页面 */
+//                request.setAttribute("message", "请先登录再访问网站!");
+//                request.getRequestDispatcher(Constants.LOGIN).forward(request, response);
+                Map<String ,Object> result = new HashMap<>();
+                result.put("success",false);
+                result.put("code",1001);
+                result.put("message","Wihout Auth please GO TO LOG IN firstly");
+                response.getWriter().print(new JSONObject(result));
+                return false;
+            }else{
+                 return true;
+            }
+//        return true;
     }
 
 }

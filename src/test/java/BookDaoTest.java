@@ -1,4 +1,5 @@
 import com.classbooking.web.dao.BookDao;
+import com.classbooking.web.dao.CourseDao;
 import com.classbooking.web.domain.BookInfo;
 import com.classbooking.web.domain.CommentInfo;
 import org.junit.Test;
@@ -18,6 +19,9 @@ public class BookDaoTest {
 
     @Autowired
     private BookDao bookDao;
+
+    @Autowired
+    private CourseDao courseDao;
 
     @Test
     public  void testGetComments(){
@@ -67,5 +71,11 @@ public class BookDaoTest {
         LocalDateTime now = LocalDateTime.now();
         Duration duration = Duration.between(now,startDateTime);
         System.out.println(duration.toDays());
+    }
+
+    @Test
+    public void testGetNums(){
+        System.out.println(bookDao.getNums(8));
+        System.out.println(courseDao.getClassNums(8));
     }
 }

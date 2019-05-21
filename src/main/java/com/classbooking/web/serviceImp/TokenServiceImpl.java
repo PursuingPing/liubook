@@ -39,7 +39,7 @@ public class TokenServiceImpl {
     public String generateToken(String userAgent,String userEmail){
         StringBuilder token = new StringBuilder();
 
-        token.append("token:");
+        //token.append("token:");
 
         UserAgent userAgent1 = UserAgent.parseUserAgentString(userAgent);
         if(userAgent1.getOperatingSystem().isMobileDevice()){
@@ -61,7 +61,7 @@ public class TokenServiceImpl {
 
     public void saveToken(String token, User user){
 
-        if(token.startsWith("token:PC")){
+        if(token.startsWith("PC")){
             redisUtil.setex(token, JSONObject.toJSONString(user),2*60*60);
         }else {
             redisUtil.set(token,JSONObject.toJSONString(user));

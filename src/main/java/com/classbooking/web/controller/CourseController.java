@@ -278,7 +278,10 @@ public class CourseController {
 
         List<String> times = new LinkedList<>();
         List<Course> courses = courseService.getTimes(className);
-        courses.stream().forEach(course -> {
+        List<Course> results = courses.stream()
+                .filter(course -> TimeUtil.getMillonSecond(course.getClassStartTime()) >= System.currentTimeMillis())
+                .collect(Collectors.toList());
+        results.stream().forEach(course -> {
             String temp = course.getClassStartTime() +"至" + course.getClassEndTime();
             times.add(temp);
         });
@@ -293,6 +296,11 @@ public class CourseController {
         bookInfo.setTeacherEmail(teacherEmail);
         for(int i = 0 ;i<classStartTimes.length;i++){
             String[] sande = classStartTimes[i].split("至");
+            //判断是否人数已满
+            if(!bookService.checkNums(sande[0],className)){
+                return new LYPResult().setMessage("课程该时间段已预约满人，请选择其他时间段");
+            }
+            //判断是否重复预约
             if(!bookService.addBook(bookInfo,sande[0],className)){
                 return new LYPResult().setMessage("您已预约该时间段，请去预约列表查看");
             }

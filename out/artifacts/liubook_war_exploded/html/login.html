@@ -108,14 +108,20 @@
                         console.log(res.data.isLogin)
                         if(res.data.isLogin =='true'){
                             if(res.data.role ==='s'){
-                                location.replace('html/home.html?user=' + res.data.email)
+
                                 localStorage.setItem("studentEmail",res.data.email)
+                                localStorage.setItem("token",res.data.token)
+                                //location.replace('html/home.html?user=' + res.data.email)
                             }else if(res.data.role ==='t'){
-                                localStorage.setItem("teacherEmail",res.data.email)
+
                                 location.replace('html/teacherCourse.html?user=' + res.data.email)
+                                localStorage.setItem("token",res.data.token)
+                                localStorage.setItem("teacherEmail",res.data.email)
                             }else{
-                                location.replace('html/manager.html?user=' + res.data.email)
+
                                 localStorage.setItem("managerEmail",res.data.email)
+                                localStorage.setItem("token",res.data.token)
+                                location.replace('html/manager.html?user=' + res.data.email)
                             }
                         }else{
                             self.$message.error('错了哦，检查邮箱及密码');

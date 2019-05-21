@@ -67,4 +67,7 @@ public interface BookDao {
 
     @Select("select comment_time from booking_info where id = #{bookId}")
     String getCommentTime(@Param("bookId") Integer bookId);
+
+    @Select("select count(1) from booking_info where class_id = #{classId}")
+    Integer getNums(@Param("classId") Integer classId);
 }

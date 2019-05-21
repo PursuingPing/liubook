@@ -28,4 +28,6 @@ public interface BookService {
     List<CommentInfo> getBooksByEmail(String studentEmail);
 
     boolean HasComment(Integer classId);
+
+    boolean checkNums(String classStartTime,String className);
 }

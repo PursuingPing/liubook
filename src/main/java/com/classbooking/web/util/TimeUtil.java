@@ -2,10 +2,7 @@ package com.classbooking.web.util;
 
 import org.apache.log4j.Logger;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
@@ -59,6 +56,12 @@ public class TimeUtil {
     public static int getHourByString(String time){
         LocalTime localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
         return localTime.getHour();
+    }
+
+    public static long getMillonSecond(String time){
+        LocalDateTime localDateTime = LocalDateTime.parse(time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        long timestamp = localDateTime.toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+        return timestamp;
     }
 
 }

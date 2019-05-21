@@ -117,4 +117,16 @@ public class BookServiceImpl implements BookService {
         return cTime != null && !cTime.equals("");
     }
 
+    @Override
+    public boolean checkNums(String classStartTime, String className) {
+        Integer classId = courseDao.getClassIdByStartTime(classStartTime,className);
+        Integer classNums = courseDao.getClassNums(classId);
+        Integer nows = bookDao.getNums(classId);
+        if(nows < classNums){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }

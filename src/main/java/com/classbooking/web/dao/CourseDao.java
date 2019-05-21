@@ -96,4 +96,7 @@ public interface CourseDao {
 
     @SelectProvider(type = CourseDynaSqlProvider.class,method = "selectWithParam")
     List<Course> getClasses(Map<String,Object> param);
+
+    @Select("select class_nums from class_info where class_id = #{classId}")
+    Integer getClassNums(@Param("classId") Integer classId);
 }
