@@ -42,7 +42,7 @@ public class CourseController {
     @ResponseBody
     public LYPResult getCourses(String teacherEmail){
         List<Course> courses = courseService.getCourses(teacherEmail);
-        return !courses.isEmpty() ? new LYPResult().setData(courses) : new LYPResult().setMessage("获取课程列表失败");
+        return new LYPResult().setData(courses);
     }
 
     @RequestMapping(value ="getCourseInfo",method = RequestMethod.POST)

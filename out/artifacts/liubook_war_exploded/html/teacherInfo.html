@@ -367,6 +367,10 @@
                         if (res.success == true) {
                             var data = res.data
                             if(data.length ==0){
+                                self.$message({
+                                    message: "暂无统计数据",
+                                    type: 'warning'
+                                })
                                 return
                             }
                             for(var i = 0 ; i < data.length ; i++){

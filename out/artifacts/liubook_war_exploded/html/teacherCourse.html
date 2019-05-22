@@ -775,7 +775,8 @@
                                 message:"课程添加成功(^_−)☆",
                                 type: 'success'
                             })
-                            self.addCoursesFormVisible=false
+                            // self.addCoursesFormVisible=false
+                            self.quxiaoAdd()
                             self.load()
                         }else{
                             self.$message.error(res.data.message)
@@ -952,16 +953,24 @@
                     success:function (res) {
                         console.log(res)
                         if (res.success == true) {
-                            console.log(self.courses)
-                            self.courses =[]
-                            for(let i=0;i<res.data.length;i++){
-                                self.$set(self.courses,i,res.data[i]);
+                            if(res.data.length != 0){
+                                console.log(self.courses)
+                                self.courses =[]
+                                for(let i=0;i<res.data.length;i++){
+                                    self.$set(self.courses,i,res.data[i]);
+                                }
+                                //self.courses = res.data
+                                self.$message({
+                                    message: "课程列表获取成功，啊哈",
+                                    type: 'success'
+                                })
+                            }else{
+                                self.$message({
+                                    message: "课程列表为空",
+                                    type: 'warning'
+                                })
                             }
-                            //self.courses = res.data
-                            self.$message({
-                                message: "课程列表获取成功，啊哈",
-                                type: 'success'
-                            })
+
                         } else {
                             self.$message.error(res.message)
                         }
