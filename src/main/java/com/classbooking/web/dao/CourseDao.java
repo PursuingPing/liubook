@@ -99,4 +99,7 @@ public interface CourseDao {
 
     @Select("select class_nums from class_info where class_id = #{classId}")
     Integer getClassNums(@Param("classId") Integer classId);
+
+    @Select("select * from class_info where class_name like CONCAT('%',#{className},'%') ")
+    List<Course> getCourseByName(@Param("className") String className);
 }

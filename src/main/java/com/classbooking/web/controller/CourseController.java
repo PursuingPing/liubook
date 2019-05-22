@@ -376,5 +376,10 @@ public class CourseController {
         }
     }
 
+    @PostMapping("/getCourse")
+    @ResponseBody
+    public LYPResult getCourse(String className){
+        return new LYPResult().setData(courseService.getCourseByName(className));
+    }
 
 }

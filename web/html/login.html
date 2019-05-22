@@ -111,7 +111,7 @@
 
                                 localStorage.setItem("studentEmail",res.data.email)
                                 localStorage.setItem("token",res.data.token)
-                                //location.replace('html/home.html?user=' + res.data.email)
+                                location.replace('html/home.html?user=' + res.data.email)
                             }else if(res.data.role ==='t'){
 
                                 location.replace('html/teacherCourse.html?user=' + res.data.email)

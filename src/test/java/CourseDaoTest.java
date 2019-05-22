@@ -161,4 +161,13 @@ public class CourseDaoTest{
         System.out.println(hour);
         System.out.println(TimeUtil.getHourByString(s));
     }
+
+    @Test
+    public void testGetCourseByName(){
+        String className = "te";
+        List<Course> list = courseDao.getCourseByName(className);
+        list.forEach(course -> {
+            System.out.println(course.toString());
+        });
+    }
 }

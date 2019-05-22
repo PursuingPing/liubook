@@ -139,7 +139,6 @@
         methods:{
             search(){
                 var self = this
-                console.log(self.searcher)
                 courses.searchCourse(self.searcher);
             }
         }
@@ -160,11 +159,38 @@
             }
         },
         methods: {
-            log(){
-                console.log("hhh")
-            },
             searchCourse(condition){
-
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/getCourse",
+                    type:"post",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
+                    data:{
+                      className:condition
+                    },
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            if(res.data.length === 0){
+                                self.$message({
+                                    message: "暂无数据，可更换筛选条件",
+                                    type: 'warning'
+                                })
+                            }else {
+                                self.coursesInfo = res.data
+                            }
+                        } else {
+                            self.$message.error(res.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
             },
             getMenu(){
                 var self = this

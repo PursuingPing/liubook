@@ -28,4 +28,6 @@ public interface CourseService {
 
     List<Course> getCourseByMenu(Map<String,Object> param);
 
+    List<Course> getCourseByName(String className);
+
 }

@@ -83,4 +83,9 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getClasses(param);
     }
 
+    @Override
+    public List<Course> getCourseByName(String className) {
+        return courseDao.getCourseByName(className);
+    }
+
 }
