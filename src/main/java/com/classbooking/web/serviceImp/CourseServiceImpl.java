@@ -2,6 +2,7 @@ package com.classbooking.web.serviceImp;
 
 import com.classbooking.web.dao.CourseDao;
 import com.classbooking.web.dao.TeacherDao;
+import com.classbooking.web.domain.CountInfo;
 import com.classbooking.web.domain.Course;
 import com.classbooking.web.service.CourseService;
 import org.apache.log4j.Logger;
@@ -86,6 +87,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCourseByName(String className) {
         return courseDao.getCourseByName(className);
+    }
+
+    @Override
+    public List<CountInfo> getCounts(String teacherEmail) {
+        return courseDao.getCounts(teacherEmail);
     }
 
 }

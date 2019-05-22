@@ -1,6 +1,7 @@
 import com.classbooking.web.dao.CourseDao;
 import com.classbooking.web.dao.TeacherDao;
 import com.classbooking.web.domain.BookInfo;
+import com.classbooking.web.domain.CountInfo;
 import com.classbooking.web.domain.Course;
 import com.classbooking.web.util.TimeUtil;
 import org.junit.Test;
@@ -169,5 +170,13 @@ public class CourseDaoTest{
         list.forEach(course -> {
             System.out.println(course.toString());
         });
+    }
+
+    @Test
+    public void testGetCounts(){
+       List<CountInfo> list = courseDao.getCounts("123@qq.com");
+       list.forEach(countInfo -> {
+           System.out.println(countInfo.getClassName()+"--" + countInfo.getCounts());
+       });
     }
 }

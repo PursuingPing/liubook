@@ -1,5 +1,6 @@
 package com.classbooking.web.service;
 
+import com.classbooking.web.domain.CountInfo;
 import com.classbooking.web.domain.Course;
 
 import java.util.List;
@@ -29,5 +30,7 @@ public interface CourseService {
     List<Course> getCourseByMenu(Map<String,Object> param);
 
     List<Course> getCourseByName(String className);
+
+    List<CountInfo> getCounts(String teacherEmail);
 
 }

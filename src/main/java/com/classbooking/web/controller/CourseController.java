@@ -382,4 +382,9 @@ public class CourseController {
         return new LYPResult().setData(courseService.getCourseByName(className));
     }
 
+    @PostMapping("/getCounts")
+    @ResponseBody
+    public LYPResult getCounts(String teacherEmail){
+        return new LYPResult().setData(courseService.getCounts(teacherEmail));
+    }
 }

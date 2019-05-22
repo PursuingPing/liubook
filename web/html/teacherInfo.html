@@ -349,11 +349,54 @@
 
             },
             getCharts(){
+                var teacherEmail = localStorage.getItem("teacherEmail")
+                var self = this
+                //查数据库填充课程列表
+                $.ajax({
+                    url:"/course/getCounts",
+                    headers:{
+                        'Authorization' : localStorage.getItem("token")
+                    },
+                    data:{
+                        teacherEmail:teacherEmail,
+                    },
+                    type:"post",
+                    traditional:true,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.success == true) {
+                            var data = res.data
+                            if(data.length ==0){
+                                return
+                            }
+                            for(var i = 0 ; i < data.length ; i++){
+                                names.push(data[i].className);
+                                nums.push(data[i].counts);
+                            }
+                            myChart.hideLoading();
+                            myChart.setOption({
+                                xAxis :{
+                                    data : names
+                                },
+                                series :[{
+                                    name:"人数",
+                                    data:nums
+                                }]
+                            })
+                        } else {
+                            self.$message.error("接口出错")
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
 
             }
         },
         mounted(){
             this.getInfo()
+            this.getCharts()
         }
     })
 
@@ -363,7 +406,7 @@
     option = null;
     app.title = '坐标轴刻度与标签对齐';
 
-    option = {
+    myChart.setOption({
         title:{
             text:"预约选课统计"
         },
@@ -375,7 +418,7 @@
             }
         },
         legend: {
-            data:['选课人数']
+            data:['人数']
         },
         grid: {
             left: '3%',
@@ -399,17 +442,17 @@
         ],
         series : [
             {
-                name:'选课人数',
+                name:'人数',
                 type:'bar',
                 barWidth: '30%',
                 data:[10, 52, 200, 334, 390, 330, 220,20,30]
             }
         ]
-    };
-    ;
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
+    });
+    myChart.showLoading();
+
+    var nums = [];
+    var names = [];
 
 </script>
 </body>

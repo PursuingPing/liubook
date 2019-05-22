@@ -1,5 +1,6 @@
 package com.classbooking.web.dao;
 
+import com.classbooking.web.domain.CountInfo;
 import com.classbooking.web.domain.Course;
 import com.classbooking.web.dynamicSqlProvider.CourseDynaSqlProvider;
 import org.apache.ibatis.annotations.*;
@@ -102,4 +103,8 @@ public interface CourseDao {
 
     @Select("select * from class_info where class_name like CONCAT('%',#{className},'%') ")
     List<Course> getCourseByName(@Param("className") String className);
+
+    @Select("select c.class_name ,count(1) counts from class_info c inner join booking_info b on c.class_id = b.class_id where " +
+            "c.teacher_email = #{teacherEmail} group by c.class_name")
+    List<CountInfo> getCounts(@Param("teacherEmail") String teacherEmail);
 }
